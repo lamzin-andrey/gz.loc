@@ -3,8 +3,8 @@ class CUpAction {
 	public $id;
 	public $title;
 	public function __construct() {
-		//получить id  ипроверить, честь ли право доднимать это объявлени
-		//если есть поднять если нет выести сообщение об ошибке
+		//получить id  ипроверить, есть ли право поднимать это объявлени
+		//если есть поднять если нет вывести сообщение об ошибке
 		$this->id = $id = @$_GET["edit_id"];
 		$phone = @$_SESSION["phone"];
 		if ($id && $phone) {
@@ -15,7 +15,7 @@ class CUpAction {
 				$_SESSION["ok_msg"] = "У вас нет прав на действие с этим объявлением";
 				utils_302("/cabinet?status=1"); 
 			}
-			if (a($_POST, "cp") == @$_SESSION["ccode"]) {
+			if (a($_SESSION, "ccode") && a($_POST, "cp") === @$_SESSION["ccode"]) {
 				$cmd = "SELECT max(delta) + 2 FROM main";
 				$d = dbvalue($cmd);
 				query("UPDATE main SET delta = {$d} WHERE id = $id", $nR, $aR);

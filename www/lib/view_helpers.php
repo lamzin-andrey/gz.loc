@@ -1,4 +1,4 @@
-<?
+<?php
 	class FV {
 		static public $obj = null;
 		

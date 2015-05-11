@@ -115,6 +115,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		$handler = "advert.php";
 		$inner = TPLS . "/advert.tpl.php";
 	}
+	if (strpos($url, "login/facebook_callback") === 1) {
+		$handler = "facebook.php";
+		$inner = TPLS . "/facebook.tpl.php";
+	}
 	if (strpos($url, "cabinet") === 1) {
 		$showCabBtn = false;
 		$handler = "cabinet.php";

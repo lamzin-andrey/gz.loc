@@ -27,7 +27,7 @@
 			</div>
 			<div class="cabcontrols">
 				<a href="/cabinet/edit/<?=$n['id'] ?>">Редактировать</a>
-				<a href="/cabinet/up/<?=$n['id'] ?>">Поднять</a>
+				<a href="/cabinet/up/<?=$n['id'] ?>/">Поднять</a>
 				<a href="/cabinet/<?=($n["is_hide"] == 0 ? 'hide' : 'show') ?>/<?=$n["id"] ?>" class="hideshow"><?=($n["is_hide"] == 0 ? 'Скрыть' : 'Показать') ?></a>
 				<a href="/cabinet/delete/<?=$n['id'] ?>" class="delitem">Удалить</a>
 				<? if (!$n["is_moderate"]) {?>

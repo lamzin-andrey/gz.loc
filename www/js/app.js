@@ -93,6 +93,7 @@ function initAjaxPaging() {
 }
 function onPublic(data) {
 	$$(".dbtn").setProperty("disabled", null);
+	$$(".aupbtn").setProperty("disabled", null);
 	if (to_i(data.publicId) > 0) {
 		$("item-" + data.publicId).dispose();
 	} else {
@@ -115,6 +116,15 @@ function initActions() {
 				var id = this.getAttribute("data-id");
 				this.disabled = "disabled";
 				Tool.post("/actions", {id:id, action:'delete'}, onPublic);
+			}
+		}
+	);
+	$$(".aupbtn").each(
+		function(b) {
+			b.onclick = function() {
+				var id = this.getAttribute("data-id");
+				this.disabled = "disabled";
+				Tool.post("/private/newadv", {id:id, action:'up_admin'}, onPublic);
 			}
 		}
 	);

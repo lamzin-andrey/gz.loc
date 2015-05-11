@@ -1,4 +1,4 @@
-<?
+<?php
 class CRequestPatcher {
 	static private $bind = array( 1 => 43, 2 => 39, 3 => 25, 4 => 56, 5 => 60, 6 => 36,
 								  7 => 45, 8 => 50, 9 => 54, 10 => 65, 17 => 76, 128 => 153,

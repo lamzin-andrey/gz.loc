@@ -32,7 +32,9 @@
 				<?=FV::but("delete", "Удалить", 'dbtn', array("id" => $n["id"])) ?>
 				<? if (!$n["is_moderate"]) {?>
 					<span class="cabitem darkred pt10">Не проверено модератором</span>
-				<?} ?>
+				<?} else {?>
+					<?=FV::but("up", "Поднять", 'aupbtn', array("id" => $n["id"])) ?>
+				<?}?>
 			</div>
 			<div class="both"></div>
 			<div class="pt10">

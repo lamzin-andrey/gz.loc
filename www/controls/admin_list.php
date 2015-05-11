@@ -17,6 +17,7 @@
  	public $is_deleted = 0;
  	
  	public function __construct() {
+ 		$this->_up();
  		$_GET["country"] = 3;
  		$_POST["country"] = 3;
  		$this->setFilter();
@@ -88,6 +89,17 @@
  			$f .= " AND m.is_moderate = 0";
  		}
  		$this->filter = $f;
+ 	}
+ 	
+ 	private function _up() {
+ 		if (isset($_POST['xhr']) && isset($_POST['action']) && $_POST['action'] == 'up_admin') {
+ 			if (isset($_POST['id']) && $id = intval($_POST['id'])) {
+ 				$cmd = "SELECT max(delta) + 2 FROM main";
+ 				$d = dbvalue($cmd);
+ 				query("UPDATE main SET delta = {$d} WHERE id = $id", $nR, $aR);
+ 				json_ok('publicId', $id);
+ 			}
+ 		}
  	}
  }
  
