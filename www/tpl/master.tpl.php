@@ -3,11 +3,11 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$GLOBALS["title"]?></title>
-		<link href="/styles/main.css?1394700" media="all" rel="stylesheet" type="text/css" />
+		<link href="/styles/main.css?114700" media="all" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="/js/mootools1.4.5.js"></script>
 		<?=@$javascript ?>
 		<script type="text/javascript" src="/js/lib.js"></script>
-		<script type="text/javascript" src="/js/app.js?a=14"></script>
+		<script type="text/javascript" src="/js/app.js?a=15"></script>
 		<script type="text/javascript">
 			var token = '<?=@$_SESSION['utoken']; ?>';
 			var uid   = '<?=@$_SESSION['uid']?>';

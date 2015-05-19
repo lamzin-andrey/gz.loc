@@ -211,7 +211,7 @@ li {
 .shortitemtext {
 	padding-top:15px;
 	overflow:hidden;
-	min-width:400px;
+	/*min-width:400px;*/
 }
 
 .button {
