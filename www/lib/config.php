@@ -5,7 +5,7 @@ define("LIB_HROOT", "/lib");
 define("LIB_CACHE_TIMEOFLIFE", 100*24*3600);
 define("LIB_DEFAULT_RECORDSET_LIMIT", 10);
 define("LIB_DEFAULT_RECORDSET_ITEM_PER_PAGING", 12);
-define("LIB_UPLOAD_IMAGE_FOLDER", DOC_ROOT . "/img");
+define("LIB_UPLOAD_IMAGE_FOLDER", DR . "/img");
 define("LIB_UPLOAD_MAX_SIZE", 5*1024*1024);
 define("SUMMER_TIME", 3600);
 define("LIB_DEV_MODE", 1);

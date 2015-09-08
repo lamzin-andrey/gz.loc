@@ -52,6 +52,7 @@ function addFormPostAction() {
 					<tr>
 						<td>
 							<input type="file" id="image" name="image" style="width:173px"/>
+							<div class="red" id="imerr"></div>
 						</td>
 						<td>
 							<img src="/images/l-w.gif" id="upLdr" class="hide"/>

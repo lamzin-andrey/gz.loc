@@ -66,7 +66,7 @@ class CAdd {
 			return;
 		}
 		if (count($_FILES)) {
-			$file =  $_FILES["file"];
+			$file =  a($_FILES, "file");
 			if (!$file) {
 				$file =  $_FILES["image"];
 			}
@@ -76,7 +76,7 @@ class CAdd {
 			$dest = DR . "/images/$subdir/$name.$ext";
 			move_uploaded_file($file["tmp_name"], $dest);
 			$mime = utils_getImageMime($dest, $w, $h);
-			if ($mime) {//die($mime);
+			if ($mime) {
 				if($w >= $h) {
 		        	$new_size_w = MAX_WIDTH;
 		        	$h = $h*MAX_WIDTH/$w;
@@ -97,8 +97,11 @@ class CAdd {
 					case "image/jpeg":
 						utils_jpgResize($dest, $dest, $w, $h, 100);
 				}
+			} else {
+				unlink($dest);
+				json_error('msg', 'Ошибка загрузки файла');
 			}
-			if ($_GET["ajaxUpload"] == 1) {
+			if (a($_GET, "ajaxUpload") == 1) {
 				$dest = str_replace(DR, '', $dest);
 				die(trim($dest));
 			}

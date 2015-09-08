@@ -261,10 +261,18 @@ function initUploader() {
 				//progress.setStyle('width', parseInt(loaded / total * 100, 10).limit(0, 100) + '%');
 			},
 			onComplete: function(path){
-				//progress.setStyle('width', '100%');
 				$("upLdr").addClass("hide");
 				$("addsubmit").disabled = false;
-				$("ipath").value =  $("imgview").src = path.trim();
+				$("imerr").set('text', '');
+				try {
+					var data = JSON.parse(path);
+					if (data.status == 'error') {
+						$("imerr").set('text', data.msg);
+					}
+				} catch (e) {
+					//progress.setStyle('width', '100%');
+					$("ipath").value =  $("imgview").src = path.trim();
+				}
 			}
 		});
 		for (var i = 0; i < sz($("image").files); i++) {
