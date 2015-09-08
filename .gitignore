@@ -5,4 +5,5 @@ error.log
 .buildpath
 .setting
 userscr
+www/config.php
 
