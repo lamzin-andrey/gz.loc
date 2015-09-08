@@ -6,4 +6,11 @@ error.log
 .setting
 userscr
 www/config.php
-
+www/old
+www/upload
+www/articles/log.log
+www/articles/log.php
+www/articles/logview.php
+www/images/11.xml
+www/images/2015/
+www/images/lo.php
