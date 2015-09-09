@@ -8,11 +8,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	$url = $aUrl[0];
 	$baseUrl = '';
 	
+	//переправить человека на страницу его города / региона, если на ней есть объявления
+	CRequestPatcher::moveToRegion();
+	
 	//---start add PAU --
 	$aUrl = explode('/', $url);
 	if (count($aUrl) > 1) {
 		$firstWord = @$aUrl[1];
-		if (
+		if (							//основная работа по обработке поискового запроса
 			($firstWord != "private")
 			&& ($firstWord != "logout")
 			&& ($firstWord != "podat_obyavlenie")
@@ -23,7 +26,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 			&& ($firstWord != "regions") //TODO проверить, а надо ли
 			//&& ($firstWord != "advert") скорее всего не надо
 		) {
-			CRequestPatcher::move302();
+			CRequestPatcher::move302();									//редирект cityId, regionId
 			if ((int)@$_GET["region"] > 0) {
 				$regName = Shared::getRegNameById((int)@$_GET["region"]);
 				$loc = "/$regName";
@@ -45,6 +48,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 				}
 				utils_302($loc);
 			}
+			
+			//обработка запроса на поиск
 			$regId = Shared::getRegion($firstWord);
 			$cityId = 0;
 			$advId = 0;
