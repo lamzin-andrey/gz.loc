@@ -5,7 +5,7 @@ class CGeoIp {
 		$SxGeo = new SxGeo(dirname(__FILE__) . '/SxGeo22_API/SxGeoCity.dat');
 		$city_obj = $SxGeo->get($ip_addr);
 		if (is_array($city_obj)) {
-			$city = $city_obj['city']['name_en'];
+			$city = utils_utf8($city_obj['city']['name_ru']);
 			$country = $city_obj['country']['iso'];
 		}
 		if (!$country) {
