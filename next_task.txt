@@ -15,8 +15,9 @@ http://ipgeobase.ru/cgi-bin/AdvSearch.cgi?country=RU&city=&region=&district=&adv
 
 завтра начну потихоньку пилить локации
 
- надо вспомнить, можно ли поисковых роботов по ua определить (тоже помечен TODO)
- 
+
+
+Релиз в октябре
  
 
 При релизе 
