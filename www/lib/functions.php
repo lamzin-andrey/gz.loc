@@ -418,7 +418,7 @@ function setAutoFlag($data) {
 			}
 			continue;
 		}
-		$M = count($s);
+		$M = strlen($s);
 		if ($M > 4) {
 			$data->nm = 1;
 			break;

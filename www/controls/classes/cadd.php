@@ -245,9 +245,8 @@ class CAdd {
 			$obj = new StdClass();
 			$obj->addtext = $addtext;
 			$obj = setAutoFlag($obj);
-			$automoderate = isset($obj->nm) ? 1 : $automoderate;
+			$automoderate = isset($obj->nm) ? 0 : 1;
 		}
-		$automoderate = $automoderate ? 0 : 1;
 		$name = $this->deinject(@$_POST["name"]);
 		$rawpass = $pwd = '';
 		$email = @$_POST["email"];
@@ -278,6 +277,7 @@ class CAdd {
 		$insert = "INSERT INTO main (region, city, people, price, box, term, far, near, piknik, title, image, name, 
 		                       addtext, phone, is_moderate, codename, automoderate) 
 		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename', {$automoderate})";
+		die($insert);
 		$id = query($insert);
 		if ($id) {
 			

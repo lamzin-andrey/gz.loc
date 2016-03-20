@@ -91,7 +91,7 @@ class CCabinetEdit extends CAdd {
 			$obj = new StdClass();
 			$obj->addtext = $addtext;
 			$obj = setAutoFlag($obj);
-			$automoderate = isset($obj->nm) ? 1 : $automoderate;
+			$automoderate = isset($obj->nm) ? 0 : 1;
 		}
 		$automoderate = $automoderate ? 0 : 1;
 		
