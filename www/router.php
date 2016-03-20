@@ -185,14 +185,21 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 			print json_encode(array('success'=>'20', 'msg'=>'Нет прав')); exit;
 		}
 		$id = (int)@$_POST["id"];
-		if (@$_POST["action"] == "public" && $id) {
-			query("UPDATE main SET is_moderate = 1 WHERE id = $id", $nR, $aR);
+		if ( (@$_POST["action"] == "public" || @$_POST["action"] == "publicAccept") && $id) {
+			query("UPDATE main SET is_moderate = 1, automoderate = 0 WHERE id = $id", $nR, $aR);
 			//die("UPDATE main SET is_moderate = 1 WHERE id = $id");
 			if ($aR) {
 				print json_encode(array('success'=>'1', 'msg'=>'Ok', 'publicId' => $id)); exit;
 			}
 			print json_encode(array('success'=>'10', 'msg'=>'Не найдена запись')); exit;
 		}
+		/*if (@$_POST["action"] == "publicAccept" && $id) {
+			query("UPDATE main SET is_moderate = 1, automoderate = 0 WHERE id = $id", $nR, $aR);
+			if ($aR) {
+				print json_encode(array('success'=>'1', 'msg'=>'Ok', 'publicId' => $id)); exit;
+			}
+			print json_encode(array('success'=>'10', 'msg'=>'Не найдена запись')); exit;
+		}*/
 		if (@$_POST["action"] == "delete" && $id) {
 			query("UPDATE main SET is_deleted = 1 WHERE id = $id", $nR, $aR);
 			if ($aR) {
@@ -208,6 +215,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 			include_once DR . "/lib/phone.php";
 			exit;
 		}
+	}
+	if ($url == '/worker') {
+		$handler = "worker.php";
 	}
 	
 	if (strpos($url, "private") === 1) {
@@ -227,6 +237,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		if (strpos($url, "private/newadv") === 1) {
 			$handler = "admin_list.php";
 			$inner = TPLS . "/admin_mainpage.tpl.php";
+			$showAddAdvBtn = false;
+		}
+		if (strpos($url, "private/autoadv") === 1) {
+			$handler = "admin_automlist.php";
+			$inner = TPLS . "/admin_automodpage.tpl.php";
 			$showAddAdvBtn = false;
 		}
 		if (strpos($url, "private/users") === 1) {

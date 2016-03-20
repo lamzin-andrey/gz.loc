@@ -25,18 +25,17 @@
 			</div>
 			<div class="cabcontrols">
 				<?php 
+					$title = "Скрыть";
 					if (!$n["is_moderate"]) {
-						print FV::but("moder", "Публиковать", 'mbtn', array("id" => $n["id"]));
+						$title = "Публиковать";
 					}
+					print FV::but("autoModer", $title, 'mbtn', array("id" => $n["id"]));
 				?>
 				<?=FV::but("delete", "Удалить", 'dbtn', array("id" => $n["id"])) ?>
 				<? if (!$n["is_moderate"]) {?>
 					<span class="cabitem darkred pt10">Не проверено модератором</span>
 				<?} else {?>
 					<?=FV::but("up", "Поднять", 'aupbtn', array("id" => $n["id"])) ?>
-				<?}?>
-				<? if ($n["automoderate"]) {?>
-					<span class="cabitem darkblue pt10">Автомодерация!</span>
 				<?}?>
 			</div>
 			<div class="both"></div>

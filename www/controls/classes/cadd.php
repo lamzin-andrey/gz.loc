@@ -65,7 +65,7 @@ class CAdd {
 		if ($this->cpError) {
 			return;
 		}
-		if (count($_FILES)) {
+		if (count($_FILES) && isset($_FILES["image"]) && $_FILES['image']['size']) {
 			$file =  a($_FILES, "file");
 			if (!$file) {
 				$file =  $_FILES["image"];
@@ -98,7 +98,7 @@ class CAdd {
 						utils_jpgResize($dest, $dest, $w, $h, 100);
 				}
 			} else {
-				unlink($dest);
+				@unlink($dest);
 				json_error('msg', 'Ошибка загрузки файла');
 			}
 			if (a($_GET, "ajaxUpload") == 1) {
@@ -234,12 +234,20 @@ class CAdd {
 		$far = (int)@$_POST["far"];
 		$near = (int)@$_POST["near"];
 		$piknik = (int)@$_POST["piknik"];
+		$automoderate = (int)isset($_POST["nm"]) ? $_POST["nm"] : 0;
 		
 		$phone = $this->preparePhone($_POST["phone"]);
 		$price = doubleval( str_replace(',', '.', $_POST["price"]) );
 		
 		$title = $this->deinject(@$_POST["title"]);
 		$addtext = $this->deinject(@$_POST["addtext"]);
+		if (!$automoderate) {
+			$obj = new StdClass();
+			$obj->addtext = $addtext;
+			$obj = setAutoFlag($obj);
+			$automoderate = isset($obj->nm) ? 1 : $automoderate;
+		}
+		$automoderate = $automoderate ? 0 : 1;
 		$name = $this->deinject(@$_POST["name"]);
 		$rawpass = $pwd = '';
 		$email = @$_POST["email"];
@@ -268,8 +276,8 @@ class CAdd {
 		$is_moderate = $this->is_moderate;
 		$codename = utils_translite_url(utils_cp1251($title));
 		$insert = "INSERT INTO main (region, city, people, price, box, term, far, near, piknik, title, image, name, 
-		                       addtext, phone, is_moderate, codename) 
-		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename')";
+		                       addtext, phone, is_moderate, codename, automoderate) 
+		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename', {$automoderate})";
 		$id = query($insert);
 		if ($id) {
 			

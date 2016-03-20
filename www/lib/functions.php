@@ -394,3 +394,41 @@ function o($v, $k) {
 	}
 	return null;
 }
+/**
+ * @description Проверяет, нет ли в тексте номера телефона
+ * @param {StdClass} data
+ * @return {StdClass}
+*/	
+function setAutoFlag($data) {
+	$s = mb_strtolower(strval($data->addtext), 'UTF-8' );
+	$safe;
+	$a = preg_split("/\s+/", $s);
+	$j = 0;
+	$prevIsNumber = 0;
+	$mx = 0;
+	$L = count($a);
+	for ($i = 0; $i < $L; $i++) {
+		$safe = $a[$i];
+		$s = trim(preg_replace("/\D/mis", '', $a[$i]));
+		if (!$s || $safe == '-' || $safe == 'x' || $safe == '(' || $safe == ')') {
+			if ($safe && $safe != '-' && $safe != 'x' && $safe != '(' && $safe != ')') {
+				$prevIsNumber = 0;
+				$mx = $mx > $j ? $mx : $j;
+				$j = 0;
+			}
+			continue;
+		}
+		$M = count($s);
+		if ($M > 4) {
+			$data->nm = 1;
+			break;
+		} else if ($M > 0) {
+			$prevIsNumber = 1;
+			$j++;
+		}
+	}
+	if ($mx > 2 || $j > 2) {
+		$data->nm = 1;
+	}
+	return $data;
+}

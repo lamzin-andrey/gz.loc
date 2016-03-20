@@ -35,7 +35,7 @@ class CMainList {
 			return;
 		}
 		$cmd = "SELECT m.codename, m.id, m.people, m.price, m.box, m.term, m.far, m.near, m.piknik, m.title, m.image, m.name,
-		         m.addtext, m.phone, m.created, m.is_moderate, m.is_hide, r.region_name, c.city_name
+		         m.addtext, m.phone, m.created, m.is_moderate, m.is_hide, m.automoderate, r.region_name, c.city_name
 		FROM main AS m
 		LEFT JOIN regions AS r ON m.region = r.id
 		LEFT JOIN cities AS c ON m.city = c.id

@@ -79,12 +79,22 @@ class CCabinetEdit extends CAdd {
 		$far = (int)@$_POST["far"];
 		$near = (int)@$_POST["near"];
 		$piknik = (int)@$_POST["piknik"];
+		$automoderate = (int)isset($_POST["nm"]) ? $_POST["nm"] : 0;
 		
 		$price = doubleval( str_replace(',', '.', $_POST["price"]) );
 		
 		$title = $this->deinject(@$_POST["title"]);
 		$codename = utils_translite_url(utils_cp1251($title));
 		$addtext = $this->deinject(@$_POST["addtext"]);
+		
+		if (!$automoderate) {
+			$obj = new StdClass();
+			$obj->addtext = $addtext;
+			$obj = setAutoFlag($obj);
+			$automoderate = isset($obj->nm) ? 1 : $automoderate;
+		}
+		$automoderate = $automoderate ? 0 : 1;
+		
 		$name = $this->deinject(@$_POST["name"]);
 		$image = "/images/gpasy.jpeg";
 		if ($box) {
@@ -113,6 +123,7 @@ class CCabinetEdit extends CAdd {
 			image = '$image',
 			addtext = '$addtext',
 			is_moderate = '$is_moderate',
+			automoderate = {$automoderate},
 			codename = '$codename'
 		WHERE id = {$this->id} AND phone = {$this->phone}";
 		
