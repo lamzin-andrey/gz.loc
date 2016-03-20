@@ -79,7 +79,8 @@ class CCabinetEdit extends CAdd {
 		$far = (int)@$_POST["far"];
 		$near = (int)@$_POST["near"];
 		$piknik = (int)@$_POST["piknik"];
-		$automoderate = (int)isset($_POST["nm"]) ? $_POST["nm"] : 0;
+		$need_moderate = (int)isset($_POST["nm"]) ? (int)$_POST["nm"] : 0;
+		$automoderate = $need_moderate == 1 ? 0 : 1;
 		
 		$price = doubleval( str_replace(',', '.', $_POST["price"]) );
 		
@@ -87,13 +88,20 @@ class CCabinetEdit extends CAdd {
 		$codename = utils_translite_url(utils_cp1251($title));
 		$addtext = $this->deinject(@$_POST["addtext"]);
 		
-		if (!$automoderate) {
+		if ($need_moderate != 1) {
 			$obj = new StdClass();
 			$obj->addtext = $addtext;
 			$obj = setAutoFlag($obj);
+			if (!isset($obj->nm)) {
+				$obj->addtext = $title;
+				$obj = setAutoFlag($obj);
+			}
+			if (!isset($obj->nm)) {
+				$obj->addtext = $name;
+				$obj = setAutoFlag($obj);
+			}
 			$automoderate = isset($obj->nm) ? 0 : 1;
 		}
-		$automoderate = $automoderate ? 0 : 1;
 		
 		$name = $this->deinject(@$_POST["name"]);
 		$image = "/images/gpasy.jpeg";

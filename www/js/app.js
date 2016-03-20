@@ -354,7 +354,7 @@ function up() {
 }
 function initAddForm() {
 	if ($("add")) {
-		$("add").onsubmit = function() {
+		$("add").onsubmit = function() {alert('OK');
 			if (App.sendForm) {
 				return true;
 			}
@@ -377,7 +377,7 @@ function initAddForm() {
 			);
 			data.addtext = $("addtext").value;
 			$("addsubmit").disabled = true;
-			setAutoFlag();
+			setAutoFlag(data);
 			Tool.post(addr, data, onAddAdv);
 			return false;
 		}
@@ -519,6 +519,20 @@ function setAutoFlag(data) {
 	}
 	if (mx > 2 || j > 2) {
 		data.nm = 1;
+	}
+	if (!data.nm && data.title) {
+		var o = {addtext : data.title};
+		setAutoFlag(o);
+		if (o.nm) {
+			data.nm =  1;
+		}
+	}
+	if (!data.nm && data.name) {
+		var o = {addtext : data.name};
+		setAutoFlag(o);
+		if (o.nm) {
+			data.nm =  1;
+		}
 	}
 }
 /**

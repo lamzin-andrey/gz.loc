@@ -234,20 +234,30 @@ class CAdd {
 		$far = (int)@$_POST["far"];
 		$near = (int)@$_POST["near"];
 		$piknik = (int)@$_POST["piknik"];
-		$automoderate = (int)isset($_POST["nm"]) ? $_POST["nm"] : 0;
+		$need_moderate = (int)isset($_POST["nm"]) ? (int)$_POST["nm"] : 0;
+		$automoderate = $need_moderate == 1 ? 0 : 1;
 		
 		$phone = $this->preparePhone($_POST["phone"]);
 		$price = doubleval( str_replace(',', '.', $_POST["price"]) );
 		
 		$title = $this->deinject(@$_POST["title"]);
 		$addtext = $this->deinject(@$_POST["addtext"]);
-		if (!$automoderate) {
+		$name = $this->deinject(@$_POST["name"]);
+		if ($need_moderate != 1) {
 			$obj = new StdClass();
 			$obj->addtext = $addtext;
 			$obj = setAutoFlag($obj);
+			if (!isset($obj->nm)) {
+				$obj->addtext = $title;
+				$obj = setAutoFlag($obj);
+			}
+			if (!isset($obj->nm)) {
+				$obj->addtext = $name;
+				$obj = setAutoFlag($obj);
+			}
 			$automoderate = isset($obj->nm) ? 0 : 1;
 		}
-		$name = $this->deinject(@$_POST["name"]);
+		
 		$rawpass = $pwd = '';
 		$email = @$_POST["email"];
 		if ( trim(@$_POST["pwd"]) ) {
@@ -277,7 +287,7 @@ class CAdd {
 		$insert = "INSERT INTO main (region, city, people, price, box, term, far, near, piknik, title, image, name, 
 		                       addtext, phone, is_moderate, codename, automoderate) 
 		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename', {$automoderate})";
-		die($insert);
+		//die($insert);
 		$id = query($insert);
 		if ($id) {
 			
