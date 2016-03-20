@@ -354,7 +354,7 @@ function up() {
 }
 function initAddForm() {
 	if ($("add")) {
-		$("add").onsubmit = function() {alert('OK');
+		$("add").onsubmit = function() {
 			if (App.sendForm) {
 				return true;
 			}
