@@ -44,11 +44,10 @@ class CRequestPatcher {
 	 * для безопасности редирект делается не чаще чем раз в час для одного ua+ip
 	*/
 	static public function moveToRegion() {
-		if ($_SERVER['REQUEST_URI'] == '/') { //TODO  и не search bot
+		if ($_SERVER['REQUEST_URI'] == '/' && !self::_isSearchBot()) { //TODO  и не search bot
 			CGeoIp::getInfo($sCity, $sCountryCode);
 			if ($sCountryCode == 'RU' && $sCity) {
 				if (self::_needGeoRedirect()) { //если этот ua+ip в течении последнего часа не перенаправлялся
-					
 					if (self::_countAdvertInCity($sCity, $regionName, $cityName) > 0) {
 						if ($regionName == $cityName) {
 							self::_setGeotimestamp();
@@ -74,9 +73,11 @@ class CRequestPatcher {
 	*/
 	static private function _needGeoRedirect() {
 		//clear
-		$time = date('Y-m-d H:i:s', strtotime(now()) - 3600);
+		$time = date('Y-m-d H:i:s', strtotime(now()) - 2*3600);
 		//die("t = $time");
-		query('DELETE  FROM geoip WHERE _time > \'' . $time . '\'');
+		$del = 'DELETE  FROM geoip WHERE _time < \'' . $time . '\'';
+		//die($del);
+		query($del);
 		
 		//search
 		$hash = self::_geoHash();
@@ -166,9 +167,22 @@ class CRequestPatcher {
 	 * @desc Установить время последнего редиректа для данного ip + ua
 	*/
 	static private function _setGeotimestamp() {
-		$now = date('Y-m-d H:i:s', strtotime(now()) - 2*3600);
+		$now = date('Y-m-d H:i:s', strtotime(now()) - 3600);
 		//die("n = $now");
 		$hash = self::_geoHash();
 		query("INSERT INTO geoip (_time, hash) VALUES('{$now}', '{$hash}')");
+	}
+	/**
+	 * @return bool true if user agent containts search bot sign
+	*/
+	static private function _isSearchBot() {
+		$ua = $_SERVER['HTTP_USER_AGENT'];
+		$bots = array('Yandex', 'YaDirectFetcher', 'Googlebot');
+		foreach ($bots as $bot) {
+			if (strpos($ua, $bot) !== false) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
