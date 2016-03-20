@@ -7,7 +7,9 @@ function testAutomod() {
 	  +7 (918) 735-36-25',						//nm
 	 'А я просто продам газель',			 	//+
 	 'А я просто 25 times продам goto 100 500 газель KM',	//+
-	 'Будка 200 - 300 - 100  and more changes'	//nm
+	 'Будка 200 - 300 - 100  and more changes',	//nm
+	 'Будка   паравоз.рф more changes',	//nm
+	 'Будка  http://rin.org and more changes'	//nm
 	], i;
 	
 	for (i = 0; i < data.length; i++) {
@@ -21,6 +23,8 @@ function testAutomod() {
 			case 1:
 			case 2:
 			case 5:
+			case 6:
+			case 7:
 				cond = (o.nm == 1);
 				//console.log(cond);
 				break;

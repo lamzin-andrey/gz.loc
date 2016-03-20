@@ -499,6 +499,17 @@ function setAutoFlag(data) {
 		a = s.split(/\s+/), i, j = 0, prevIsNumber = 0, mx = 0;
 	for (i = 0; i < a.length; i++) {
 		safe = a[i];
+		
+		if  (
+				safe.indexOf('http') != -1
+				|| safe.indexOf('.com')  != -1
+				|| safe.indexOf('.ru') != -1
+				|| safe.indexOf('.рф') != -1
+				|| safe.indexOf('www') != -1
+			) {
+			data.nm = 1;
+			break;
+		}
 		s = a[i].replace(/\D/mig, '').trim();
 		
 		if (!s || safe == '-' || safe == 'x' || safe == '(' || safe == ')') {

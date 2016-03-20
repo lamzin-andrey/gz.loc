@@ -409,6 +409,22 @@ function setAutoFlag($data) {
 	$L = count($a);
 	for ($i = 0; $i < $L; $i++) {
 		$safe = $a[$i];
+		if (strpos($safe, 'http') !== false) {
+			$data->nm = 1;
+			break;
+		}
+		if (strpos($safe, 'www') !== false) {
+			$data->nm = 1;
+			break;
+		}
+		if (strpos($safe, '.ru') !== false) {
+			$data->nm = 1;
+			break;
+		}
+		if (strpos($safe, '.com') !== false) {
+			$data->nm = 1;
+			break;
+		}
 		$s = trim(preg_replace("/\D/mis", '', $a[$i]));
 		if (!$s || $safe == '-' || $safe == 'x' || $safe == '(' || $safe == ')') {
 			if ($safe && $safe != '-' && $safe != 'x' && $safe != '(' && $safe != ')') {
