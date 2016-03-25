@@ -1,12 +1,15 @@
 <?php
 class Validators {
-	static public function is_require($var, $label, &$errors, $post = true) {
+	static public function is_require($var, $label, &$errors, $message = '', $post = true) {
 		$data = $_POST;
 		if (!$post) {
 			$data = $_GET;
 		}
 		if (trim(@$data[$var]) == '') {
-			$errors[$var] = "Поле \"$label\" обязательно для заполнения";
+			if (!$message) {
+				$message = "Поле \"{$label}\" обязательно для заполнения";
+			}
+			$errors[$var] = $message;
 		}
 	}
 }

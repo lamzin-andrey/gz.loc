@@ -88,6 +88,8 @@ class CCabinetEdit extends CAdd {
 		$codename = utils_translite_url(utils_cp1251($title));
 		$addtext = $this->deinject(@$_POST["addtext"]);
 		
+		$name = $this->deinject(@$_POST["name"]);
+		
 		if ($need_moderate != 1) {
 			$obj = new StdClass();
 			$obj->addtext = $addtext;
@@ -103,7 +105,7 @@ class CCabinetEdit extends CAdd {
 			$automoderate = isset($obj->nm) ? 0 : 1;
 		}
 		
-		$name = $this->deinject(@$_POST["name"]);
+		
 		$image = "/images/gpasy.jpeg";
 		if ($box) {
 			$image = "/images/gazel.jpg";

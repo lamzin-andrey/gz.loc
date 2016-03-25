@@ -84,15 +84,20 @@ function addFormPostAction() {
 			
 			<div class="both"></div>
 			
-			<div class="left">
-				<table class="capthtabl">
-						<tr>
-							<td> <img src="/images/random" width="174"id="cpi" /><br><a href="#" class="smbr" id="smbr">Кликните для обновления рисунка</a> </td>
-							<td>
+			<div class="agreearea">
+				<?=FV::checkbox('agreement', '<a href="/agreement" target="_blank">Я прочитал и согласен с Пользовательским соглашением</a>');?>
+			</div>
+			
+			<div>
+				<div class="capthtabl">
+						<div class="left">
+							<img src="/images/random" width="174"id="cpi" /><br><a href="#" class="smbr" id="smbr">Кликните для обновления рисунка</a>
+						</div>
+						<div class="left">
 								<label for="cp">Введите текст <span class="red">*</span></label><br>
 								<?=FV::i("cp", '')?>
-							</td>
-						</tr>
+						</div>
+						<div class="both">&nbsp;</div>
 				</table>
 			</div>
 			

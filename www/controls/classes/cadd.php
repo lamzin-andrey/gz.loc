@@ -65,11 +65,11 @@ class CAdd {
 		if ($this->cpError) {
 			return;
 		}
-		if (count($_FILES) && isset($_FILES["image"]) && $_FILES['image']['size']) {
-			$file =  a($_FILES, "file");
-			if (!$file) {
-				$file =  $_FILES["image"];
-			}
+		$file =  a($_FILES, 'file');
+		if (!$file) {
+			$file =  a($_FILES, 'image');
+		}
+		if ($file) {
 			$ext = utils_getExt($file['name']);
 			$name = md5($file['name'] . now());
 			$subdir = date("Y") . "/" . date("m");
@@ -133,6 +133,7 @@ class CAdd {
 		Validators::is_require("addtext", "Текст объявления", $this->errors);
 		Validators::is_require("name", "Имя или название компании", $this->errors);
 		Validators::is_require("phone", "Телефон", $this->errors);
+		Validators::is_require('agreement', '', $this->errors, 'Необходимо согласиться с условиями использования сайта.');
 		if (count($this->errors)) {
 			return;
 		}
