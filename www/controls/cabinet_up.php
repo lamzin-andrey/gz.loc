@@ -21,6 +21,8 @@ class CUpAction {
 				query("UPDATE main SET delta = {$d} WHERE id = $id", $nR, $aR);
 				if ($aR) {
 					$_SESSION["ok_msg"] = "Ваше объявление поднято в результатах поиска";
+					$date = date('Y-m-d');
+					query("INSERT INTO stat_up (_date, _count) VALUES ('{$date}', 1) ON DUPLICATE KEY UPDATE _count = _count + 1");
 					utils_302("/cabinet?status=0"); //Все ок
 				} else {
 					$_SESSION["ok_msg"] = "Не удалось поднять объявление в результатах поиска. Попробуйте позже";
