@@ -1,5 +1,5 @@
 <?php
-$_SERVER['REMOTE_ADDR'] = '78.109.16.152';//TODO remove me!
+//$_SERVER['REMOTE_ADDR'] = '78.109.16.152';//TODO remove me!
 
 include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 require_once DR . "/lib/main.php";
