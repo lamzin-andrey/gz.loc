@@ -7,13 +7,13 @@ if ($statUp->numRows) {
 	}
 	?></ul><?
 } else {
-	?><div id="mainsfrormsuccess" class="vis">Об этом история умалчивает</div><?php
+	?><div id="mainsfrormsuccess" class="vis" style="margin-bottom:300px;">Об этом история умалчивает</div><?php
 }?>
 <div style="float:left">
-		<a href="private/stat_up?page=<?=$statUp->prev?>">&lt;</a>
+		<a href="/private/stat_up?page=<?=$statUp->prev?>">&lt;</a>
 </div>
-<div style="float:right; width:100px;">&nbsp;</div>
-<div style="float:right">
-		<a href="private/stat_up?page=<?=$statUp->next?>">&gt;</a>
+<div style="float:left; width:100px;">&nbsp;</div>
+<div style="float:left">
+		<a href="/private/stat_up?page=<?=$statUp->next?>">&gt;</a>
 </div>
 <div style="clear:both"></div>
