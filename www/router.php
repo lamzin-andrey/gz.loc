@@ -258,4 +258,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 			$inner = TPLS . "/stat.tpl.php";
 			$showAddAdvBtn = false;
 		}
+		if (strpos($url, "private/stat_up") === 1) {
+			$handler = "stat_up.php";
+			$inner = TPLS . "/stat_up.tpl.php";
+			$showAddAdvBtn = false;
+		}
 	}
