@@ -17,7 +17,7 @@ class LoginAdmin {
 			$uid = dbvalue($cmd);
 			if ($uid) {
 				$_SESSION["role"] = "root";
-				utils_302("/private/newadv");
+				utils_302("/private/autoadv");
 			}
 		}
 	}

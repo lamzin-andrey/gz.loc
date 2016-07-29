@@ -18,6 +18,15 @@
 					<img src="/images/l-w.gif" width="16" class="ldr">
 					<span >Пожалуйста, скажите, что вы звоните по объявлению на сайте GAZel.Me</span>
 					<img src="/images/blank.png" class="result hide"/>
+					
+					<div>
+						<span >Нашли перевозчика? Расскажите о нем и о нас своим друзьям!</span>
+					</div>
+					<div class="slogan socbut">
+							<div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus,twitter,linkedin,viber,whatsapp"></div>
+					</div>
+					
+					
 				</div>
 			</div>
 		</li>

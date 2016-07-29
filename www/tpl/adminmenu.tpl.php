@@ -1,6 +1,9 @@
 <div style="position:fixed; top:100px; left:0px; width:186px;">
 	<ul class="lstnone bgwhite">
 		<li>
+			<a href="/private/autoadv">Автопроверка</a>
+		</li>
+		<li>
 			<a href="/private/newadv">Список объявлений</a>
 		</li>
 		<li>

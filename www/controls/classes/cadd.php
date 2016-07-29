@@ -65,11 +65,11 @@ class CAdd {
 		if ($this->cpError) {
 			return;
 		}
-		if (count($_FILES)) {
-			$file =  a($_FILES, "file");
-			if (!$file) {
-				$file =  $_FILES["image"];
-			}
+		$file =  a($_FILES, 'file');
+		if (!$file) {
+			$file =  a($_FILES, 'image');
+		}
+		if ($file) {
 			$ext = utils_getExt($file['name']);
 			$name = md5($file['name'] . now());
 			$subdir = date("Y") . "/" . date("m");
@@ -98,7 +98,7 @@ class CAdd {
 						utils_jpgResize($dest, $dest, $w, $h, 100);
 				}
 			} else {
-				unlink($dest);
+				@unlink($dest);
 				json_error('msg', 'Ошибка загрузки файла');
 			}
 			if (a($_GET, "ajaxUpload") == 1) {
@@ -133,6 +133,7 @@ class CAdd {
 		Validators::is_require("addtext", "Текст объявления", $this->errors);
 		Validators::is_require("name", "Имя или название компании", $this->errors);
 		Validators::is_require("phone", "Телефон", $this->errors);
+		Validators::is_require('agreement', '', $this->errors, 'Необходимо согласиться с условиями использования сайта.');
 		if (count($this->errors)) {
 			return;
 		}
@@ -234,6 +235,8 @@ class CAdd {
 		$far = (int)@$_POST["far"];
 		$near = (int)@$_POST["near"];
 		$piknik = (int)@$_POST["piknik"];
+		$need_moderate = (int)isset($_POST["nm"]) ? (int)$_POST["nm"] : 0;
+		$automoderate = $need_moderate == 1 ? 0 : 1;
 		
 		$phone = $this->preparePhone($_POST["phone"]);
 		$price = doubleval( str_replace(',', '.', $_POST["price"]) );
@@ -241,6 +244,21 @@ class CAdd {
 		$title = $this->deinject(@$_POST["title"]);
 		$addtext = $this->deinject(@$_POST["addtext"]);
 		$name = $this->deinject(@$_POST["name"]);
+		if ($need_moderate != 1) {
+			$obj = new StdClass();
+			$obj->addtext = $addtext;
+			$obj = setAutoFlag($obj);
+			if (!isset($obj->nm)) {
+				$obj->addtext = $title;
+				$obj = setAutoFlag($obj);
+			}
+			if (!isset($obj->nm)) {
+				$obj->addtext = $name;
+				$obj = setAutoFlag($obj);
+			}
+			$automoderate = isset($obj->nm) ? 0 : 1;
+		}
+		
 		$rawpass = $pwd = '';
 		$email = @$_POST["email"];
 		if ( trim(@$_POST["pwd"]) ) {
@@ -268,8 +286,9 @@ class CAdd {
 		$is_moderate = $this->is_moderate;
 		$codename = utils_translite_url(utils_cp1251($title));
 		$insert = "INSERT INTO main (region, city, people, price, box, term, far, near, piknik, title, image, name, 
-		                       addtext, phone, is_moderate, codename) 
-		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename')";
+		                       addtext, phone, is_moderate, codename, automoderate) 
+		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename', {$automoderate})";
+		//die($insert);
 		$id = query($insert);
 		if ($id) {
 			

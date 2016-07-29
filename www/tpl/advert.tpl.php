@@ -25,6 +25,33 @@
 				<img src="/images/l-w.gif" width="16" class="ldr">
 				<span >Пожалуйста, скажите, что вы звоните по объявлению на сайте GAZel.Me</span>
 				<img src="/images/blank.png" class="result hide"/>
+				<div class="b10">
+					<div>
+						<span >Нашли перевозчика? Расскажите о нем и о нас своим друзьям!</span>
+					</div>
+					<div>&nbsp;</div>
+					<div class="slogan socbut">
+						<div class="left">
+							<script type="text/javascript" src="http://vk.com/js/api/share.js?93" charset="windows-1251"></script>
+							<script type="text/javascript"><!--
+							document.write(VK.Share.button(false,{type: "round", text: "Поделиться"}));
+							--></script>
+						</div>
+						<div class="left">
+							<a href="https://plus.google.com/share?url=<?='http://gazel.me' . $_SERVER['REQUEST_URI']?>" target="_blank"><b id="bl">G</b><b id="r">o</b><b id="ye">o</b><b id="bl">g</b><b id="gr">l</b><b id="r">e+</b></a>
+						</div>
+						<div class="left">
+							<a id="fbook" target="_blank" href="http://www.facebook.com/share.php?u=<?='http://gazel.me' . $_SERVER['REQUEST_URI']?>"><b id="bgf">F</b>acebook</a>
+						</div>
+						<div class="left">
+							<div class="ya-share2" data-services="odnoklassniki,moimir,twitter" data-size="s"></div>
+						</div>
+						
+						<div class="both"></div>
+					</div>
+					
+				</div>
+				
 			</div>
 		</div>
 	</li>	

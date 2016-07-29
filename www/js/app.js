@@ -8,6 +8,7 @@ function initalize() {
 	initUserControls();
 	initAjaxPaging();
 	initActions();
+	worker();
 }
 function getvar(varname, defval) {
 	var _GET  = Tool.parseData();
@@ -376,6 +377,7 @@ function initAddForm() {
 			);
 			data.addtext = $("addtext").value;
 			$("addsubmit").disabled = true;
+			setAutoFlag(data);
 			Tool.post(addr, data, onAddAdv);
 			return false;
 		}
@@ -487,6 +489,66 @@ function onRegionList(data) {
 function onCityList(data) {
 	var id = "city";
 	fillLocSelect(id, data, id + "_name", true, 'Все города');
-}		
-
-	
+}	
+/**
+ * @description Проверяет, нет ли в тексте номера телефона
+ * @param {Object} data
+*/	
+function setAutoFlag(data) {
+	var s = String(data.addtext).toLowerCase(), safe,
+		a = s.split(/\s+/), i, j = 0, prevIsNumber = 0, mx = 0;
+	for (i = 0; i < a.length; i++) {
+		safe = a[i];
+		
+		if  (
+				safe.indexOf('http') != -1
+				|| safe.indexOf('.com')  != -1
+				|| safe.indexOf('.ru') != -1
+				|| safe.indexOf('.рф') != -1
+				|| safe.indexOf('www') != -1
+			) {
+			data.nm = 1;
+			break;
+		}
+		s = a[i].replace(/\D/mig, '').trim();
+		
+		if (!s || safe == '-' || safe == 'x' || safe == '(' || safe == ')') {
+			if (safe && safe != '-' && safe != 'x' && safe != '(' && safe != ')') {
+				prevIsNumber = 0;
+				mx = mx > j ? mx : j;
+				j = 0;
+			}
+			continue;
+		}
+		if (s.length > 4) {
+			data.nm = 1;
+			break;
+		} else if (s.length > 0) {
+			prevIsNumber = 1;
+			j++;
+		}
+	}
+	if (mx > 2 || j > 2) {
+		data.nm = 1;
+	}
+	if (!data.nm && data.title) {
+		var o = {addtext : data.title};
+		setAutoFlag(o);
+		if (o.nm) {
+			data.nm =  1;
+		}
+	}
+	if (!data.nm && data.name) {
+		var o = {addtext : data.name};
+		setAutoFlag(o);
+		if (o.nm) {
+			data.nm =  1;
+		}
+	}
+}
+/**
+ * @description Запускает автомодерацию
+*/	
+function worker() {
+	Tool.post("/worker", {}, function(){});
+}	

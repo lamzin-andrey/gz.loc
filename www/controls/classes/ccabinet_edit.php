@@ -79,13 +79,33 @@ class CCabinetEdit extends CAdd {
 		$far = (int)@$_POST["far"];
 		$near = (int)@$_POST["near"];
 		$piknik = (int)@$_POST["piknik"];
+		$need_moderate = (int)isset($_POST["nm"]) ? (int)$_POST["nm"] : 0;
+		$automoderate = $need_moderate == 1 ? 0 : 1;
 		
 		$price = doubleval( str_replace(',', '.', $_POST["price"]) );
 		
 		$title = $this->deinject(@$_POST["title"]);
 		$codename = utils_translite_url(utils_cp1251($title));
 		$addtext = $this->deinject(@$_POST["addtext"]);
+		
 		$name = $this->deinject(@$_POST["name"]);
+		
+		if ($need_moderate != 1) {
+			$obj = new StdClass();
+			$obj->addtext = $addtext;
+			$obj = setAutoFlag($obj);
+			if (!isset($obj->nm)) {
+				$obj->addtext = $title;
+				$obj = setAutoFlag($obj);
+			}
+			if (!isset($obj->nm)) {
+				$obj->addtext = $name;
+				$obj = setAutoFlag($obj);
+			}
+			$automoderate = isset($obj->nm) ? 0 : 1;
+		}
+		
+		
 		$image = "/images/gpasy.jpeg";
 		if ($box) {
 			$image = "/images/gazel.jpg";
@@ -113,6 +133,7 @@ class CCabinetEdit extends CAdd {
 			image = '$image',
 			addtext = '$addtext',
 			is_moderate = '$is_moderate',
+			automoderate = {$automoderate},
 			codename = '$codename'
 		WHERE id = {$this->id} AND phone = {$this->phone}";
 		

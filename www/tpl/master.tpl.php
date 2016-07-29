@@ -12,8 +12,15 @@
 			var token = '<?=@$_SESSION['utoken']; ?>';
 			var uid   = '<?=@$_SESSION['uid']?>';
 		</script>
+		<script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+							
+		<? if ($_SERVER['HTTP_HOST'] == 'gz.loc'):?>
+			<script type="text/javascript" src="/js/test.js?a=0"></script>
+		<? endif?>
 	</head>
-	<body><img src="/images/gazel.jpg" class="hide"/><img src="/images/gpasy.jpeg" class="hide"/><img src="/images/term.jpg" class="hide"/><img src="/images/up.png" class="upb hide" id="uppb" /><img src="/images/l-w.gif" class="hide" /><img src="/images/lw.gif" class="hide" />
+	<body>
+		<img src="/images/gazel.jpg" class="hide"/><img src="/images/gpasy.jpeg" class="hide"/><img src="/images/term.jpg" class="hide"/><img src="/images/up.png" class="upb hide" id="uppb" /><img src="/images/l-w.gif" class="hide" /><img src="/images/lw.gif" class="hide" />
 	<? if ( isset($regId) ) {?>
 	<input type="hidden" id="selectedregionid" value="<?=@$regId ?>" />
 	<?}?>
@@ -38,14 +45,14 @@
 				</h1>
 			</div>
 		</header>
-		<div id="content"><?php $url = explode('?', $_SERVER["REQUEST_URI"]); $url = $url[0]; 
-		if (strpos($url , 'stavropol') !== false || $url == '/') {?>
+		<div id="content">
+			<?php 
+				if ($_SERVER['REQUEST_URI'] != '/agreement'):
+			?>
 			<div class="seo" style="margin:10px 10px">
-    			<a href="/articles/cena_zakaza_gazeli_v_stavropole.html" target="_blank">Цена заказа газели в Ставрополе</a>
+    			<a href="/agreement" ><span class="red">Важно!</span> Пользовательское соглашение.</a>
 			</div>
-		<?php
-		 
-		}?>
+			<?php endif ?>
 			<div class="maincontent">
 				<? include $GLOBALS['inner'] ?>
 			</div>

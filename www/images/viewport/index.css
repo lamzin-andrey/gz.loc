@@ -1,0 +1,10 @@
+body {
+	padding:0px;
+	margin:0px;
+	background:black;
+	color:white;
+}
+#trace {
+	width:100;
+	text-align:center;
+}
