@@ -285,13 +285,14 @@ class CAdd {
 		}
 		$is_moderate = $this->is_moderate;
 		$codename = utils_translite_url(utils_cp1251($title));
+		$is_deleted = 1;
 		$insert = "INSERT INTO main (region, city, people, price, box, term, far, near, piknik, title, image, name, 
-		                       addtext, phone, is_moderate, codename, automoderate) 
-		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext', '$phone', $is_moderate, '$codename', {$automoderate})";
+		                       addtext, phone, is_moderate, codename, automoderate, is_deleted) 
+		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext',
+			'$phone', $is_moderate, '$codename', {$automoderate}, {$is_deleted})";
 		//die($insert);
 		$id = query($insert);
 		if ($id) {
-			
 			$d = dbvalue("SELECT max(delta) FROM main");
 			$d += 1;
 			query("UPDATE main SET delta = $d WHERE id = $id");
@@ -310,8 +311,11 @@ class CAdd {
 			$d = dbvalue("SELECT max(delta) FROM users");
 			$d += 1;
 			query("UPDATE users SET delta = $d WHERE id = $uid");
-			
 			$this->success = 1;
+			@session_start();
+			$_SESSION['verified_adv_id'] = $id;
+			$_SESSION['verified_adv_phone'] = $phone;
+			utils_302('/smsverify');
 		}
 	}
 	/**

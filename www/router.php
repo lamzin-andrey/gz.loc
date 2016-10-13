@@ -223,6 +223,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		$handler = "agreement.php";
 		$inner = TPLS . "/license.tpl.php";
 	}
+	if ($url == '/smsverify') {
+		$handler = "smsverify.php";
+		$inner = TPLS . "/smsverify.tpl.php";
+	}
 	
 	if (strpos($url, "private") === 1) {
 		if (strpos($url, "private/login") === 1) { 
