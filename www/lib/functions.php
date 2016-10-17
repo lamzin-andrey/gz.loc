@@ -448,3 +448,77 @@ function setAutoFlag($data) {
 	}
 	return $data;
 }
+/**
+ * @desc Работа с сессией
+ * **/
+function sess($key, $value = null, $default_value = null) {
+	if ($value !== null && $value !== 'unset') {
+		$_SESSION[$key] = $value;
+	}
+	if ($value === 'unset') {
+		unset( $_SESSION[$key] );
+	}
+	if (!a($_SESSION, $key) && $default_value) {
+		return $default_value;
+	}
+	return a($_SESSION, $key);
+}
+/**
+ * @desc получить переменную из request
+**/
+function req($v, $varname = 'REQUEST') {
+	$data = $_REQUEST;
+	switch ($varname) {
+		case 'POST':
+		$data = $_POST;
+			break;
+		case 'GET':
+			$data = $_GET;
+			break;
+	}
+	if (isset($data[$v])) {
+		return $data[$v];
+	}
+	return null;
+}
+/**
+ * @desc получить int переменную из request
+**/
+function ireq($v, $varname = 'REQUEST') {
+	return (int)req($v, $varname);
+}
+/**
+ * @desc Добавляет к корню слова окончание в зависимости от величины числа n
+ * @param n - число
+ * @param root корень слова
+ * @param one окончание в ед. числе
+ * @param less4 окончание при величине числа от 1 до 4
+ * @param more19 окончание при величине числа более 19
+ * @returString
+*/
+function pluralize($n, $root, $one, $less4, $more19, $dbg = false) {
+	if ($n == 0) {
+		return $root . $more19;
+	}
+	$m = strval($n);
+	if (strlen($m) > 1) {
+		$m =  intval( $m[ strlen($m) - 2 ] . $m[ strlen($m) - 1 ] );
+	}
+	$lex = $root . $less4;
+	if ($m > 20) {
+		$r = strval($n);
+		$i = intval( $r[ strlen($r) - 1 ] );
+	   if ($i == 1) {
+			$lex = $root . $one;
+		} else {
+			if ($i == 0 || $i > 4) {
+			   $lex = $root . $more19;
+			}
+		}
+	} else if ($m > 4 || $m == '00') {
+		$lex = $root . $more19;
+	} else if ($m == 1) {
+		$lex = $root . $one;
+	}
+	return $lex;
+}

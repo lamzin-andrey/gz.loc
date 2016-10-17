@@ -67,7 +67,7 @@ function addFormPostAction() {
 			</p>
 			
 			<p class="adphone">
-				<?=FV::labinp("phone", "Введите ваш телефон *", @$addform->phone, 0, 0, $authorized);?>
+				<?=FV::labinp("phone", "Введите номер сотового телефона *", @$addform->phone, 0, 0, $authorized);?>
 			</p>
 			<?php if (!$authorized) {?>
 			<div id="grb">

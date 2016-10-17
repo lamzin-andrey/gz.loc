@@ -17,7 +17,7 @@ class CAdd {
 	protected $checkPasswordState = 0;
 	
 	public  $errors = array();
-	public  $successMessage = "Ваше объявление добавлено и будет размещено на сайте после проверки";
+	public  $successMessage = 'Ваше объявление добавлено и будет размещено на сайте после проверки';
 	public  $success = 0;
 	
 	public $title;
