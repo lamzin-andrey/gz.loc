@@ -17,6 +17,8 @@ class CAdd {
 	protected $checkPasswordState = 0;
 	
 	public  $errors = array();
+	public  $tSuccessMessageSms = 'Вам надо подтвердить номер вашего телефона. Сейчас вы будете перенаправлены на страницу подтверждения.';
+	public  $tSuccessMessage = 'Ваше объявление добавлено и будет размещено на сайте после проверки.';
 	public  $successMessage = 'Вам надо подтвердить номер вашего телефона. Сейчас вы будете перенаправлены на страницу подтверждения.';
 	public  $success = 0;
 	
@@ -26,6 +28,7 @@ class CAdd {
 	public $addtext;
 	public $phone;
 	public $email;
+	public $isAuthVerifyUser;
 	
 	public function __construct() {
 		CRequestPatcher::pathPost();
@@ -286,6 +289,21 @@ class CAdd {
 		$is_moderate = $this->is_moderate;
 		$codename = utils_translite_url(utils_cp1251($title));
 		$is_deleted = 1;
+		
+		$isVerify = 0;
+		if (intval( sess('uid') ) > 0) {
+			$uid = intval( sess('uid') );
+			$isVerify = dbvalue("SELECT is_sms_verify FROM users WHERE id = {$uid}");
+		}
+		$this->isAuthVerifyUser = $isAuthVerifyUser = ( intval( sess('uid') ) > 0 &&  $isVerify == 1);
+		
+		if ($isAuthVerifyUser) {
+			$is_deleted = 0;
+			$this->successMessage = $this->tSuccessMessage;
+		} else {
+			$this->successMessage = $this->tSuccessMessageSms;
+		}
+		
 		$insert = "INSERT INTO main (region, city, people, price, box, term, far, near, piknik, title, image, name, 
 		                       addtext, phone, is_moderate, codename, automoderate, is_deleted) 
 		VALUES ($region, $city, $people, $price, $box, $term, $far, $near, $piknik, '$title', '$image', '$name', '$addtext',
@@ -300,7 +318,9 @@ class CAdd {
 			$update = "phone = '$phone'";
 			if ($this->checkPasswordState == 0) {
 				$this->success = 1;
-				$this->_goSmsVerify($id, $phone);
+				if (!$isAuthVerifyUser) {
+					$this->_goSmsVerify($id, $phone);
+				}
 				return;
 			}
 			if ($this->checkPasswordState == 1 || $this->checkPasswordState == 2) {
@@ -313,7 +333,9 @@ class CAdd {
 			$d += 1;
 			query("UPDATE users SET delta = $d WHERE id = $uid");
 			$this->success = 1;
-			$this->_goSmsVerify($id, $phone);
+			if (!$isAuthVerifyUser) {
+				$this->_goSmsVerify($id, $phone);
+			}
 		}
 	}
 	/**
@@ -328,7 +350,7 @@ class CAdd {
 			}
 		}
 		if (@$_POST["xhr"]) {
-			$data = array("success" => 1, "msg" => $this->successMessage);
+			$data = array("success" => 1, "msg" => $this->successMessage, 'm' => ($this->isAuthVerifyUser ? 1 : 0));
 			print json_encode($data);
 			exit;
 		}

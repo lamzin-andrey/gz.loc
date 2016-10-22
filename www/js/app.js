@@ -325,8 +325,11 @@ function onAddAdv(data) {
 				if ($("piknik").checked) {
 					s += "&piknik=1";
 				}
-				//window.location.href = "/?city=" + $("city").value /*+ "&country=" + $("country").value*/ + "&region=" + $("region").value + s;
-				window.location.href = "/smsverify";
+				if (data.m == 1) {
+					window.location.href = "/?city=" + $("city").value /*+ "&country=" + $("country").value*/ + "&region=" + $("region").value + s;
+				} else {
+					window.location.href = "/smsverify";
+				}
 			}, 5*1000);
 		}
 		$("add").getElements("input").each(
