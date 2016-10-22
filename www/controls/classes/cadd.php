@@ -348,5 +348,7 @@ class CAdd {
 		@session_start();
 		sess('verified_adv_id', $id);
 		sess('verified_adv_phone', $phone);
+		sess('add_adv_flag', true);
+		sess('up_adv_flag', 'unset');
 	}
 }

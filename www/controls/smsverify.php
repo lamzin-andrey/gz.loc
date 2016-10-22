@@ -1,6 +1,7 @@
 <?php 
 
 require_once DR . "/lib/shared.php";
+require_once DR . '/controls/classes/cupaction.php';
 
 class SmsVerify {
 	public $isNeedCookue = true;
@@ -58,15 +59,21 @@ class SmsVerify {
 				//если подошел, 
 				$reqCode = ireq('smsCode');
 				if (sess('smscode') == $reqCode) {
-					// и обновляем по id строку в main сделав объявление не удаленным
 					$id = sess('verified_adv_id');
-					query("UPDATE main SET is_deleted = 0 WHERE id = {$id}");
-					// и обновляем по номеру телефона запись в users.is_verify = 1
-					$phone = sess('verified_adv_phone');
-					query("UPDATE users SET is_sms_verify = 1 WHERE phone = {$phone}");
-					$this->resultSuccess = true;
-					//показываем сообщение как на странице подачи объявления сейчас
-					$this->innerTpl = TPLS . '/sms/sendCode.tpl.php';
+					if (sess('up_adv_flag') == true) {
+						query("UPDATE users SET is_sms_verify = 1 WHERE phone = {$phone}");
+						$status = CUpAction::up($id);
+						utils_302("/cabinet?status={$status}");
+					} else {
+						// и обновляем по id строку в main сделав объявление не удаленным
+						query("UPDATE main SET is_deleted = 0 WHERE id = {$id}");
+						// и обновляем по номеру телефона запись в users.is_verify = 1
+						$phone = sess('verified_adv_phone');
+						query("UPDATE users SET is_sms_verify = 1 WHERE phone = {$phone}");
+						$this->resultSuccess = true;
+						//показываем сообщение как на странице подачи объявления сейчас
+						$this->innerTpl = TPLS . '/sms/sendCode.tpl.php';
+					}
 				} else {
 					// иначе пишем что код не совпал и показываем все как в getsms
 					if ($reqCode){
