@@ -95,7 +95,7 @@ function addFormPostAction() {
 						</div>
 						<div class="left">
 								<label for="cp">Введите текст <span class="red">*</span></label><br>
-								<?=FV::i("cp", '')?>
+								<?=FV::i("cp", '', 0, 'autocomplete="off"')?>
 						</div>
 						<div class="both">&nbsp;</div>
 				</table>

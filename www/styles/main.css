@@ -1,3 +1,6 @@
+.tright {
+	text-align:right;
+}
 .region-outer-list{
 	list-style:none;
 	padding:0;
@@ -104,7 +107,7 @@ body {
 	color:#29D4EA
 }
 .slogan {
-	text-align:center
+	text-align:center;
 }
 
 #banner-out {
@@ -125,7 +128,7 @@ header.mainhead {
 #mfwrap {
 	width:100%;
 }
-#mainsfrormadd {
+#mainsfrormadd, .form {
 	width:100% !important;
 	background-color: #f0f0f0;
 	padding: 10px 16px;
@@ -543,7 +546,7 @@ li {
 }
 .agreearea {
 	line-height:32px !important;
-	text-align:center;
+	text-alig7n:center;
 }
 .agreearea input {
 	vertical-align:middle;
@@ -560,3 +563,9 @@ li {
 #r {color:red;}
 #fbook {color:#3B5998;}
 #bgf {color:white; background-color: #3B5998; display:inline-block; padding:0px 4px;}
+.getsmsform {
+	max-width:664px;
+}
+.iblock {
+	display:inline-block;
+}

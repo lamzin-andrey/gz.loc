@@ -17,7 +17,7 @@ class CAdd {
 	protected $checkPasswordState = 0;
 	
 	public  $errors = array();
-	public  $successMessage = 'Ваше объявление добавлено и будет размещено на сайте после проверки';
+	public  $successMessage = 'Вам надо подтвердить номер вашего телефона. Сейчас вы будете перенаправлены на страницу подтверждения.';
 	public  $success = 0;
 	
 	public $title;
@@ -300,6 +300,7 @@ class CAdd {
 			$update = "phone = '$phone'";
 			if ($this->checkPasswordState == 0) {
 				$this->success = 1;
+				$this->_goSmsVerify($id, $phone);
 				return;
 			}
 			if ($this->checkPasswordState == 1 || $this->checkPasswordState == 2) {
@@ -312,10 +313,7 @@ class CAdd {
 			$d += 1;
 			query("UPDATE users SET delta = $d WHERE id = $uid");
 			$this->success = 1;
-			@session_start();
-			$_SESSION['verified_adv_id'] = $id;
-			$_SESSION['verified_adv_phone'] = $phone;
-			utils_302('/smsverify');
+			$this->_goSmsVerify($id, $phone);
 		}
 	}
 	/**
@@ -344,5 +342,11 @@ class CAdd {
 	 * */
 	protected function deinject($s) {
 		return Shared::deinject($s);
+	}
+	
+	protected function _goSmsVerify($id, $phone) {
+		@session_start();
+		sess('verified_adv_id', $id);
+		sess('verified_adv_phone', $phone);
 	}
 }

@@ -2,13 +2,13 @@
 	class FV {
 		static public $obj = null;
 		
-		static public function  i($id, $value = null, $isPassword = 0) {
+		static public function  i($id, $value = null, $isPassword = 0, $sAttributes = '') {
 			$type = "text";
 			if ($isPassword) {
 				$type = "password";
 			}
 			self::checkValue($value, $id);
-			return '<input type="'.$type.'" name="'.$id.'" id="'.$id.'" value="'.$value.'" />';
+			return '<input type="'.$type.'" name="'.$id.'" id="'.$id.'" value="'.$value.'" ' . $sAttributes  . ' />';
 		}
 		static public function  checkbox($id, $label, $space = ' ') {
 			self::checkValue($v, $id);
