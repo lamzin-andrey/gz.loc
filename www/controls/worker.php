@@ -21,7 +21,7 @@ class Worker {
 		$file = __DIR__ . '/smsproc';
 		if (file_exists($file)) {
 			$time = filemtime($file);
-			if (time() - $time < 6) {
+			if (time() - $time < 60) {
 				return;//еще и минуты не прошло, как кто-то запустил воркер
 			}
 		}
