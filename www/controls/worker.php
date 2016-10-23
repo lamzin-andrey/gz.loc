@@ -1,13 +1,57 @@
 <?php
+require_once DR . '/lib/classes/sms/epochta2.php';
 class Worker {
 	public function __construct(){
 		$action = isset($_POST['action']) ? $_POST['action'] : 'automoderate';
 		switch ($action) {
-			case 'automoderate':
+			case 'automoderate': //this legacy - теперь выполняем все действия, в зависимости от включенных констант.
 				$this->_automoderate();
+				$this->_sms();
 				break;
 		}
 	}
+	/**
+	 * @description рассылка сообщений
+    **/
+    private function _sms() {
+		if (!defined('SMS_SERVICE_ON') || SMS_SERVICE_ON !== true) {
+			return;
+		}
+		//чтобы избежать рассылок на одни и те же номера.
+		$file = __DIR__ . '/smsproc';
+		if (file_exists($file)) {
+			$time = filemtime($file);
+			if (time() - $time < 6) {
+				return;//еще и минуты не прошло, как кто-то запустил воркер
+			}
+		}
+		file_put_contents($file, time());
+		
+		//берем из базы 100 записей.
+		$list = query('SELECT * FROM sms_code LIMIT 0, 100', $count);
+		if ($count) {
+			//отправляем смс
+			$results = EPochta2::send($list);//TODO
+			//если успешно, удаляем из базы номер.
+			$numbers = [];
+			$numbersSz = 0;
+			foreach ($results as $smsResult) {
+				if ($smsResult->success == true) {
+					$numbers[] = $smsResult->number;
+					$numbersSz++;
+				}
+			}
+			if ($numbersSz) {
+				$numbers = array_map(function($i){
+					return "'{$i}'";
+				}, $numbers);
+				$sNumbers = join(',', $numbers);
+				query("DELETE FROM sms_code WHERE phone IN({$sNumbers})");
+			}
+		}
+		@unlink($file);
+	}
+    
 	/**
 	 * @description 
 	 * Модерирует объявления
