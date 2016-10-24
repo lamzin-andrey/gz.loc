@@ -62,7 +62,7 @@ function addFormPostAction() {
 				<input type="hidden" id="ipath" name="ipath" value="<?=@$addForm->image ?>"/>
 			</p>
 			<div class="both"></div>
-			<p class="adname">
+			<p class="authorname">
 				<?=FV::labinp("name", "Введите ваше имя или название компании *", @$addform->name, 0, 0, $authorized);?>
 			</p>
 			

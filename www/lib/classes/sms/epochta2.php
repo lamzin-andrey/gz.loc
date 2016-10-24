@@ -14,6 +14,14 @@ class EPochta2 {
 			return $result;
 		}
 		$request = new Request();
+		$messages = [
+			'%1% - Код подтверждения на Gazel.Me ',
+			'Ваш код подтверждения на Gazel.Me %1%',
+			'Gazel.Me: Ваш код подтверждения %1%',
+			'Спасибо, что вы с нами! Код подтверждения: %1%. Gazel.Me',
+			'Спасибоза регистрацию! Код: %1%. Gazel.Me',
+		];
+		$s = $messages[ rand(0, count($messages) - 1)];
 		$data = [
 			'XML' => '<?xml version="1.0" encoding="UTF-8"?><SMS>
 <operations>
@@ -25,7 +33,7 @@ class EPochta2 {
 </authentification>
 <message type="4">
 <sender>GazelMe</sender>
-<text><![CDATA[Ваш код подтверждения на Gazel.Me %1%]]></text>
+<text><![CDATA[' . $s . ']]></text>
 </message>
 <numbers>
 [NUMBERS]

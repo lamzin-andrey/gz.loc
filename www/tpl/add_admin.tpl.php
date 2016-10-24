@@ -55,7 +55,7 @@
 			</p>
 			<div class="both"></div>
 			<div class="both"></div>
-			<p class="adname">
+			<p class="authorname">
 				<?=FV::labinp("name", "Введите ваше имя или название компании *", @$addform->name);?>
 			</p>
 			

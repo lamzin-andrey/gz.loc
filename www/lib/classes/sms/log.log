@@ -26,3 +26,199 @@ result = <?xml version="1.0" encoding="UTF-8"?>
 
 ===================
 
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[Ваш код подтверждения на Gazel.Me %1%]]></text>
+</message>
+<numbers>
+<number variables="9601;">+79187353657</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.6267</credits>
+<amount>0.94</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[Ваш код подтверждения на Gazel.Me %1%]]></text>
+</message>
+<numbers>
+<number variables="2193;">+79187353657</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.6267</credits>
+<amount>0.94</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[Ваш код подтверждения на Gazel.Me %1%]]></text>
+</message>
+<numbers>
+<number variables="4936;">+79187353657</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.6267</credits>
+<amount>0.94</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[Ваш код подтверждения на Gazel.Me %1%]]></text>
+</message>
+<numbers>
+<number variables="1790;">+79637954116</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.9</credits>
+<amount>1.35</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[Ваш код подтверждения на Gazel.Me %1%]]></text>
+</message>
+<numbers>
+<number variables="9214;">+79187353657</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.6267</credits>
+<amount>0.94</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[%1% - Код подтверждения на Gazel.Me ]]></text>
+</message>
+<numbers>
+<number variables="1442;">+79187353657</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.6267</credits>
+<amount>0.94</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[0]]></text>
+</message>
+<numbers>
+<number variables="5861;">+79187353657</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>1</status>
+<credits>0.6267</credits>
+<amount>0.94</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+
