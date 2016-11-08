@@ -222,3 +222,33 @@ result = <?xml version="1.0" encoding="UTF-8"?>
 
 ===================
 
+send = <?xml version="1.0" encoding="UTF-8"?><SMS>
+<operations>
+<operation>SEND</operation>
+</operations>
+<authentification>
+<username>lamzin80@mail.ru</username>
+<password>c1l36</password>
+</authentification>
+<message type="4">
+<sender>GazelMe</sender>
+<text><![CDATA[Gazel.Me: Ваш код подтверждения %1%]]></text>
+</message>
+<numbers>
+<number variables="2067;">+79187353680</number>
+<number variables="4152;">+79187353681</number>
+<number variables="8213;">+79187353683</number>
+</numbers>        
+</SMS> , 
+
+result = <?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+<status>3</status>
+<credits>1.88</credits>
+<amount>2.82</amount>
+<currency>RUR</currency>
+</RESPONSE>
+
+
+===================
+

@@ -64,7 +64,7 @@ class EPochta2 {
 					return $o;
 				}, $result);
 			}
-			self::_log("send = {$data['XML']}, \n\nresult = {$s}");
+			//self::_log("send = {$data['XML']}, \n\nresult = {$s}");
 			return $result;
 		}
 		$result = array_map(function($o){

@@ -1,5 +1,6 @@
 <?php
 require_once DR . '/lib/classes/sms/epochta2.php';
+require_once DR . '/lib/classes/sms/smspilot.php';
 class Worker {
 	public function __construct(){
 		$action = isset($_POST['action']) ? $_POST['action'] : 'automoderate';
@@ -7,6 +8,7 @@ class Worker {
 			case 'automoderate': //this legacy - теперь выполняем все действия, в зависимости от включенных констант.
 				$this->_automoderate();
 				$this->_sms();
+				json_ok();
 				break;
 		}
 	}
@@ -31,7 +33,8 @@ class Worker {
 		$list = query('SELECT * FROM sms_code LIMIT 0, 100', $count);
 		if ($count) {
 			//отправляем смс
-			$results = EPochta2::send($list);//TODO
+			//$results = EPochta2::send($list);//TODO
+			$results = SMSPilot::send($list);
 			//если успешно, удаляем из базы номер.
 			$numbers = [];
 			$numbersSz = 0;
@@ -78,7 +81,6 @@ class Worker {
 				query("UPDATE main SET is_moderate = 1 WHERE id IN ({$ids})");
 			}
 		}
-		json_ok();
 	}
 }
 
