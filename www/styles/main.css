@@ -569,3 +569,4 @@ li {
 .iblock {
 	display:inline-block;
 }
+.countVerify {text-align:right; background-color:green; color:white;padding:10px; border-radius:10px; max-width:500px; float:right;}

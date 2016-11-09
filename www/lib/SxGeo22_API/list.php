@@ -25,8 +25,8 @@ class CGeoIp {
 }
 
 function main() {
-	$a = 152;
-	$b = 228;
+	$a = 164;
+	$b = 98;
 	$c = 0;
 	$d = 0;
 	$map = [];

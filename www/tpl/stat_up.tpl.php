@@ -1,5 +1,12 @@
 <? include DR . "/tpl/usermenu.tpl.php" ?>
-<? include DR . "/tpl/adminmenu.tpl.php" ?><?php
+<? include DR . "/tpl/adminmenu.tpl.php" ?>
+
+<div class="countVerify">
+	Количество подтвердивших номера по смс <?=$statUp->countIsSmsVerify?>
+</div>
+<div class="both"></div>
+
+<?php
 if ($statUp->numRows) {
 	?><ul class="lstnone"><?
 	foreach ($statUp->rows as $r) {

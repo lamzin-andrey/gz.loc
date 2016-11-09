@@ -4,6 +4,7 @@ class CStatUp {
 	public $numRows = 0;
 	public $prev;
 	public $next;
+	public $countIsSmsVerify = 0;
 	public function __construct() {
 		$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 		$page = $page ? $page : 1;
@@ -15,6 +16,7 @@ class CStatUp {
 		$this->prev = $page - 1;
 		$this->prev = $this->prev ? $this->prev : 1;
 		$this->next = $page + 1;
+		$this->countIsSmsVerify = dbvalue("SELECT COUNT(id) FROM `users` WHERE is_sms_verify = 1");
 	}
 }
 
