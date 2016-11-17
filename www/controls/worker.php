@@ -33,8 +33,10 @@ class Worker {
 		$list = query('SELECT * FROM sms_code LIMIT 0, 100', $count);
 		if ($count) {
 			//отправляем смс
+			$className = rand(1111, 9999) % 2 == 0 ? 'EPochta2' : 'SMSPilot';
 			//$results = EPochta2::send($list);//TODO
-			$results = SMSPilot::send($list);
+			//$results = SMSPilot::send($list);
+			$results = $className::send($list);
 			//если успешно, удаляем из базы номер.
 			$numbers = [];
 			$numbersSz = 0;
