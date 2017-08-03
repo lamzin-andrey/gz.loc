@@ -7,7 +7,7 @@
 		<script type="text/javascript" src="/js/mootools1.4.5.js"></script>
 		<?=@$javascript ?>
 		<script type="text/javascript" src="/js/lib.js"></script>
-		<script type="text/javascript" src="/js/app.js?a=15"></script>
+		<script type="text/javascript" src="/js/app.js?a=16"></script>
 		<script type="text/javascript">
 			var token = '<?=@$_SESSION['utoken']; ?>';
 			var uid   = '<?=@$_SESSION['uid']?>';
