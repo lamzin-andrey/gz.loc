@@ -56,7 +56,7 @@
 			<div class="both"></div>
 			<div class="both"></div>
 			<p class="authorname">
-				<?=FV::labinp("name", "Введите ваше имя или название компании *", @$addform->name);?>
+				<?=FV::labinp("person", "Введите ваше имя или название компании *", @$addform->name);?>
 			</p>
 			
 			<p class="adphone">

@@ -54,10 +54,10 @@ class CAdd {
 			$this->phone = @$_SESSION["phone"];
 		}
 		$this->email = @$_POST["email"];
-		$this->name = @$_POST["name"];
+		$this->name = @$_POST["person"];
 		global $authorized;
 		if ($authorized) {
-			$_POST["name"] = $this->name = @$_SESSION["name"];
+			$_POST["person"] = $this->name = @$_SESSION['name'];
 			$_POST["phone"] =$this->phone = @$_SESSION["viewphone"];
 		} 
 	}
@@ -134,7 +134,7 @@ class CAdd {
 		}
 		Validators::is_require("title", "Заголовок объявления", $this->errors);
 		Validators::is_require("addtext", "Текст объявления", $this->errors);
-		Validators::is_require("name", "Имя или название компании", $this->errors);
+		Validators::is_require("person", "Имя или название компании", $this->errors);
 		Validators::is_require("phone", "Телефон", $this->errors);
 		Validators::is_require('agreement', '', $this->errors, 'Необходимо согласиться с условиями использования сайта.');
 		if (count($this->errors)) {
@@ -246,7 +246,7 @@ class CAdd {
 		
 		$title = $this->deinject(@$_POST["title"]);
 		$addtext = $this->deinject(@$_POST["addtext"]);
-		$name = $this->deinject(@$_POST["name"]);
+		$name = $this->deinject(@$_POST["person"]);
 		if ($need_moderate != 1) {
 			$obj = new StdClass();
 			$obj->addtext = $addtext;

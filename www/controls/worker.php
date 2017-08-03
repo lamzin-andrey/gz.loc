@@ -31,9 +31,17 @@ class Worker {
 		
 		//берем из базы 100 записей.
 		$list = query('SELECT * FROM sms_code LIMIT 0, 100', $count);
+		
+		foreach ($list as $k => $i) {
+			if ($i['phone'] == '710637') {
+				unset($list[$k]);
+			}
+		}
+		
 		if ($count) {
 			//отправляем смс
 			$className = rand(1111, 9999) % 2 == 0 ? 'EPochta2' : 'SMSPilot';
+			$className = 'SMSPilot';
 			//$results = EPochta2::send($list);//TODO
 			//$results = SMSPilot::send($list);
 			$results = $className::send($list);

@@ -44,7 +44,7 @@ class CCabinetEdit extends CAdd {
 		$this->term   = $row["term"];
 		$this->addtext   = $row["addtext"];
 		$this->safeEmail = a($row, "email");
-		$this->safeName  = $row["name"];
+		$this->name = $this->safeName  = $row["name"];
 		$this->image  = $row["image"];
 		$this->javascript = '	localStorage.setItem("region", "' . $row["region"] . '");
 	localStorage.setItem("city", "' . $row["city"] . '");
@@ -88,7 +88,7 @@ class CCabinetEdit extends CAdd {
 		$codename = utils_translite_url(utils_cp1251($title));
 		$addtext = $this->deinject(@$_POST["addtext"]);
 		
-		$name = $this->deinject(@$_POST["name"]);
+		$name = $this->deinject(@$_POST["person"]);
 		
 		if ($need_moderate != 1) {
 			$obj = new StdClass();
