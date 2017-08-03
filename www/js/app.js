@@ -115,8 +115,10 @@ function initActions() {
 		function(b) {
 			b.onclick = function() {
 				var id = this.getAttribute("data-id");
-				this.disabled = "disabled";
-				Tool.post("/actions", {id:id, action:'delete'}, onPublic);
+				if (confirm('Вы уверены?')) {
+					this.disabled = "disabled";
+					Tool.post("/actions", {id:id, action:'delete'}, onPublic);
+				}
 			}
 		}
 	);
