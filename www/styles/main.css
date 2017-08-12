@@ -1,4 +1,7 @@
 @media (max-width:640px) {
+	.buttons  {
+		width:58%;
+	}
 	.prmf label {
 		display:inline-block;
 		min-width:85px;
@@ -36,10 +39,23 @@
 		white-space:nowrap;
 	}
 }
+@media (max-width:415px) {
+	.buttons  {
+		width:90%;
+	}
+}
+@media (max-width:480px) {
+	.buttons  {
+		width:76%;
+	}
+}
 @media (max-width:350px) {
 	span.ib {
 		white-space:normal;
-	}	
+	}
+	.buttons  {
+		width:50%;
+	}
 }
 @media (min-width:641px) {
 	.maincontent {
@@ -54,6 +70,12 @@
 	#mainsfrormadd, .form {
 		width:100% !important;
 	}
+	.buttons  {
+		width:440px;
+	}
+}
+.usermenu-mt {
+	margin:2px 2px 0 0;
 }
 .tright {
 	text-align:right;
@@ -283,7 +305,6 @@ li {
 /* #10CF3C, #A0FFAC more light */
 .buttons {
 	margin:0 auto;
-	width:440px; /*360*/
 }
 .buttons table{
 	/*width:100%;*/
