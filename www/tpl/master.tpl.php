@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html manifest="/gazel.manifest">
 	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$GLOBALS["title"]?></title>
 		<link href="/styles/main.css?114700" media="all" rel="stylesheet" type="text/css" />
