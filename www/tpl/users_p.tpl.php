@@ -10,7 +10,7 @@
 } ?>
 <? FV::$obj = $settingForm ?>
 <div id="mainsfrormadd" class="bgwhite">
-	<div id="add_legend">Сменить пароль</div>
+	<div id="add_legend">Получить пароль</div>
 	<hr id="add_hr"/>
 		<form action="/private/users" method="post" name="">
 			<div class="aformwrap upformwrap">
@@ -36,7 +36,7 @@ if ($settingForm->pwd) {
 </div> 
 
 <div id="mainsfrormadd" class="bgwhite">
-	<div id="add_legend">Получить пароль</div>
+	<div id="add_legend">Сменить пароль</div>
 	<hr id="add_hr"/>
 		<form action="/private/users" method="post" name="">
 			<div class="aformwrap upformwrap">
