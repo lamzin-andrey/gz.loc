@@ -2,6 +2,7 @@
 class CUpAction {
 	public $id;
 	public $title;
+	public $upCount = 10000;
 	public function __construct() {
 		//получить id  ипроверить, есть ли право поднимать это объявлени
 		//если есть поднять если нет вывести сообщение об ошибке
@@ -15,6 +16,8 @@ class CUpAction {
 		if ($id && $phone) {
 			$row = dbrow("SELECT id, title FROM main WHERE id = {$id} AND phone = '{$phone}'");
 			$id = (int)@$row["id"];
+			$upCount = dbvalue("SELECT upcount FROM users WHERE phone = '{$phone}' LIMIT 1");
+			$this->upCount = $upCount;
 			$this->title = @$row["title"];
 			if (!$id) {
 				$_SESSION["ok_msg"] = "У вас нет прав на действие с этим объявлением";
@@ -24,9 +27,18 @@ class CUpAction {
 				//Если пользователь не верифицирован, надо показать ему сообщение Чтобы поднять объявление, вам надо подтвердить
 				//свой номер телефона. Сейчас вы будете перенаправлены на страницу подтверждения.
 				//Иначе все как здесь
-				$isVerify = dbvalue("SELECT is_sms_verify FROM users WHERE phone = '{$phone}'");
+				$row = dbrow("SELECT `is_sms_verify`, `upcount`, `id` FROM users WHERE phone = '{$phone}'");
+				$isVerify = $row['is_sms_verify'];
+				$upCount  = $row['upcount'];
+				$uid       = $row['id'];
 				if ($isVerify == 1) {
-					$status = self::up($id);
+					if ($upCount - 1 < 0) {
+						$status = 2;
+						sess('ok_msg', 'В этом месяце вы не можете поднимать объявления.');
+					} else {
+						$status = self::up($id);
+						query("UPDATE users SET `upcount` = `upcount` - 1 WHERE id = {$uid}");
+					}
 					utils_302("/cabinet?status={$status}");
 				} else {
 					sess('verified_adv_id', $id);
@@ -55,5 +67,13 @@ class CUpAction {
 			//utils_302("/cabinet?status=2"); //Не удалось поднять сообщение
 			return 2;
 		}
+	}
+	/**
+	 * @return string возвращает имя месяца в предложном падеже
+	*/
+	public function emonth() {
+		$n = intval(date('m'));
+		$a = [0, 'январе', 'феврале', 'марте', 'апреле', 'мае', 'июне', 'июле', 'августе', 'сентябре', 'октябре', 'ноябре', 'декабре'];
+		return $a[$n];
 	}
 }

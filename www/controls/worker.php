@@ -8,9 +8,23 @@ class Worker {
 			case 'automoderate': //this legacy - теперь выполняем все действия, в зависимости от включенных констант.
 				$this->_automoderate();
 				$this->_sms();
+				$this->_upcountRestore();
 				json_ok();
 				break;
 		}
+	}
+	/**
+	 * @description восстановить всем "баланс" поднятий сообщений в начале месяца
+    */
+    private function _upcountRestore() {
+		$s = date('Ym');
+		$sql = "SELECT c FROM ymup WHERE c = {$s}";
+		$r = dbvalue($sql);
+		if ($r === $s) {
+			return;
+		}
+		query("UPDATE users SET upcount = 100");
+		query("INSERT INTO ymup VALUES ({$s})");
 	}
 	/**
 	 * @description рассылка сообщений

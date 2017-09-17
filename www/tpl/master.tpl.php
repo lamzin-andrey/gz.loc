@@ -4,7 +4,7 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$GLOBALS["title"]?></title>
-		<link href="/styles/main.css?114700" media="all" rel="stylesheet" type="text/css" />
+		<link href="/styles/main.css?3" media="all" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="/js/mootools1.4.5.js"></script>
 		<?=@$javascript ?>
 		<script type="text/javascript" src="/js/lib.js"></script>

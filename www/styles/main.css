@@ -636,6 +636,7 @@ li {
 #r {color:red;}
 #fbook {color:#3B5998;}
 #bgf {color:white; background-color: #3B5998; display:inline-block; padding:0px 4px;}
+.tc {text-align:center;}
 .getsmsform {
 	max-width:664px;
 }

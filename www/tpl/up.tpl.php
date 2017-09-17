@@ -2,6 +2,11 @@
 <div id="mainsfrormadd" class="bgwhite">
 	<div id="add_legend">Поднять объявление</div>
 	<hr id="add_hr"/>
+		<?php if ($upform->upCount > 0): ?>
+			<p class="b please tc">В <?=$upform->emonth()?> вы можете поднять ваши объявления ещё <?=$upform->upCount?> раз</p>
+		<?php else : ?>
+			<p class="b red tc">Вы cможете поднять ваше объявление в октябре!</p>
+		<?php endif?>
 		<form action="/cabinet/up/<?=$upform->id ?>" method="post" name="">
 			<div class="aformwrap upformwrap" id="upform">
 					<div id="uperror" class="both hide">Неверно введен код</div>
