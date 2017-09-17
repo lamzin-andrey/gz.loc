@@ -162,6 +162,25 @@ class CAdd {
 			$this->errors['phone'] = "В номере телефона должно быть от пяти до пятнадцати цифр";
 			return;
 		}
+		//объявление уже подано и с момента его публикации прошло не более 30 суток
+		//регион включить в условие не будем, так как найдутся люди, которые будут публиковать объявления по Москве а писать Кемерово
+		$dateCreated = dbvalue("SELECT `created` FROM main WHERE phone = '{$phone}' AND is_deleted = 0 ORDER BY created DESC LIMIT 1");
+		$dateCreated = strtotime($dateCreated);
+		$advLifeTime = 30*24*3600;
+		$timeLeft = time() - $dateCreated;
+		if ($timeLeft < $advLifeTime) {
+			$availableDate = date('d.m.Y H:i:s', (time() + ($advLifeTime - $timeLeft)));
+			$this->errors['phone'] = "Вы уже подавали объявление о перевозках для этого номера телефона.<br>
+			Если вы указывали пароль, вы можете авторизоваться по номеру телефона и паролю и отредактировать и поднять ваше объявление.<br>
+			Если вы не помните пароль, но указывали при подаче объявления email, вы можете <a href=\"/remind\" target=\"_blank\">восстановить пароль</a><br>
+			В противном случае вы сможете подать новое объявление с этого номера после {$availableDate} по московскому времени.
+			";
+			return;
+		}
+		/*var_dump($dateCreated);
+		var_dump($timeLeft);
+		var_dump($advLifeTime);
+		die(__FILE__ . __LINE__);*/
 		//password
 		if (trim( @$_POST["pwd"] )) {
 			$this->checkPasswordState = 1;

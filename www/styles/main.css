@@ -224,6 +224,7 @@ header.mainhead {
 	font-size:10pt;
 	display:none;
 	color:#aa0000;
+	line-height: 18px;
 }
 #autherror{
 	background-color: #FFB0B9;
