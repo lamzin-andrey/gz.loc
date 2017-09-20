@@ -5,7 +5,7 @@
 		<?php if ($upform->upCount > 0): ?>
 			<p class="b please tc">В <?=$upform->emonth()?> вы можете поднять ваши объявления ещё <?=$upform->upCount?> раз</p>
 		<?php else : ?>
-			<p class="b red tc">Вы cможете поднять ваше объявление в октябре!</p>
+			<?php include $upform->unavialableTpl ; ?>
 		<?php endif?>
 		<form action="/cabinet/up/<?=$upform->id ?>" method="post" name="">
 			<div class="aformwrap upformwrap" id="upform">
@@ -13,21 +13,45 @@
 					<div class="f10">Для того, чтобы поднять в результатах поиска объявление "<?=$upform->title ?>" 
 					введите текст с изображения ниже и нажмите кнопку "Поднять". 
 					</div>
-					<table class="capthtabl">
-								<tbody><tr>
-									<td> <img width="174" id="cpi" src="/images/random"><br><a class="smbr" id="smbr" href="#">Кликните для обновления рисунка</a> </td>
-									<td>
-										<input type="text" value="" id="cp" name="cp">
-										<div class="right upformbtn">
-											<?=FV::sub("sup", "Поднять"); ?>
-										</div>
-									</td>
-								</tr>
-						</tbody></table>
-					
+					<div>
+						<div class="left captwr tc">
+							<img width="174" id="cpi" src="/images/random"><br><a class="smbr" id="smbr" href="#">Кликните для обновления рисунка</a>
+						</div>
+						<div class="left capinputs capiwr">
+							<div class="left capinputs">
+								<div class="capinputs tc cpcodewr">
+									<input type="text" value="" id="cp" name="cp">
+								</div>
+								<div class="right upformbtn">
+									<?=FV::sub("sup", "Поднять"); ?>
+								</div>
+							</div>
+							<div class="both"></div>
+						</div>
+						<div class="both"></div>
+					</div>
 			</div>
 			<input type="hidden" name="token" value="<?=@$_SESSION["utoken"] ?>" />
 		</form>
+		
+		<?php /*form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
+			<input type="hidden" name="receiver" value="410011041419724">
+			<input type="hidden" name="formcomment" value="Проект «Железный человек»: реактор холодного ядерного синтеза">
+			<input type="hidden" name="short-dest" value="Проект «Железный человек»: реактор холодного ядерного синтеза">
+			<input type="hidden" name="label" value="$order_id">
+			<input type="hidden" name="quickpay-form" value="donate">
+			<input type="hidden" name="targets" value="транзакция {order_id}">
+			<input type="number" name="sum" value="100" data-type="number">
+			<input type="hidden" name="comment" value="Хотелось бы получить дистанционное управление.">
+			<input type="hidden" name="need-fio" value="true">
+			<input type="hidden" name="need-email" value="true">
+			<input type="hidden" name="need-phone" value="false">
+			<input type="hidden" name="need-address" value="false">
+			<label><input type="radio" name="paymentType" value="PC">Яндекс.Деньгами</label>
+			<label><input type="radio" name="paymentType" value="AC">Банковской картой</label>
+			<label><input type="radio" name="paymentType" value="MC">Mobile</label>
+			<input type="submit" value="Перевести">
+		</form*/ ?>
 </div> 
 
 

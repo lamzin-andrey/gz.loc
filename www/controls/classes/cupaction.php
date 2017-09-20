@@ -3,6 +3,8 @@ class CUpAction {
 	public $id;
 	public $title;
 	public $upCount = 10000;
+	/***/
+	public $unavialableTpl =  TPLS . '/mothexpiremsg.tpl.php';
 	public function __construct() {
 		//получить id  ипроверить, есть ли право поднимать это объявлени
 		//если есть поднять если нет вывести сообщение об ошибке
@@ -12,6 +14,9 @@ class CUpAction {
 		sess('up_adv_flag', true);
 		sess('add_adv_flag', 'unset');
 
+		if (defined('PAY_ENABLED')) {
+			$this->unavialableTpl =  TPLS . '/payform/form.tpl.php';
+		}
 		
 		if ($id && $phone) {
 			$row = dbrow("SELECT id, title FROM main WHERE id = {$id} AND phone = '{$phone}'");
@@ -32,13 +37,7 @@ class CUpAction {
 				$upCount  = $row['upcount'];
 				$uid       = $row['id'];
 				if ($isVerify == 1) {
-					if ($upCount - 1 < 0) {
-						$status = 2;
-						sess('ok_msg', 'В этом месяце вы не можете поднимать объявления.');
-					} else {
-						$status = self::up($id);
-						query("UPDATE users SET `upcount` = `upcount` - 1 WHERE id = {$uid}");
-					}
+					$status = $this->_upAction($uid, $id, $upCount);
 					utils_302("/cabinet?status={$status}");
 				} else {
 					sess('verified_adv_id', $id);
@@ -75,5 +74,62 @@ class CUpAction {
 		$n = intval(date('m'));
 		$a = [0, 'январе', 'феврале', 'марте', 'апреле', 'мае', 'июне', 'июле', 'августе', 'сентябре', 'октябре', 'ноябре', 'декабре'];
 		return $a[$n];
+	}
+	/**
+	 * @description в зависимости от включенной или выключенной оплаты либо просто не даёт списывать при недоступном числе поднятий,
+	 * 				либо отправляет на форму оплаты
+	 * @param  int $uid идентификатор пользователя
+	 * @param  int $id идентификатор объявления
+	 * @return int статус поднятия объявления
+	*/
+	private function _upAction($uid, $id, $upCount) {
+		if (!defined('PAY_ENABLED')) {
+			$status = 2;
+			if ($upCount - 1 < 0) {
+				sess('ok_msg', 'В этом месяце вы не можете поднимать объявления.');
+			} else {
+				$status = $this->_upAndDecrement($id, $uid);
+			}
+			return $status;
+		}
+		return $this->_upWithPayment($uid, $id, $upCount);
+	}
+	/**
+	 * @description Списание с кол-ва поднятий при включенном балансе пользователя
+	 * @param  int $uid идентификатор пользователя
+	 * @param  int $id идентификатор объявления
+	 * @return int статус поднятия объявления
+	*/
+	private function _upWithPayment($uid, $id, $upCount) {
+		$status = 3;
+		if ($upCount - 1 < 0) {
+			sess('ok_msg', 'Чтобы поднять объявление, оплатите возможность поднятий.');
+		} else {
+			$status = $this->_upAndDecrement($id, $uid);
+		}
+		return $status;
+	}
+	/**
+	 * @description Списание с кол-ва поднятий при включенном балансе пользователя
+	 * @param  int $uid идентификатор пользователя
+	 * @param  int $id идентификатор объявления
+	 * @return int статус поднятия объявления
+	*/
+	private function _upAndDecrement($id, $uid) {
+		$status = self::up($id);
+		$code = CODE_DEC_FOR_UP;
+		$time = now();
+		if ($status == 0) {
+			query("UPDATE users SET `upcount` = `upcount` - 1 WHERE id = {$uid}");
+			query("INSERT INTO operations (`user_id`, `op_code_id`, `upcount`, `main_id`, `created`) 
+					VALUES(
+					{$uid},
+					{$code},
+					-1,
+					{$id},
+					'{$time}'
+			)");
+		}
+		return $status;
 	}
 }
