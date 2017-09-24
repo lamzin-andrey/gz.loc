@@ -16,7 +16,7 @@ class CCabinetEdit extends CAdd {
 		if (count($_POST) == 0) {
 			return;
 		}
-		$this->validateOther();
+		$this->validateOther($this->id);
 		$this->update();
 		$this->_exit();
 	}
