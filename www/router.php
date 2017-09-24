@@ -219,6 +219,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	if ($url == '/worker') {
 		$handler = "worker.php";
 	}
+	if ($url == '/paycheck') {
+		$handler = "paycheck.php";
+	}
 	if ($url == '/agreement') {
 		$handler = "agreement.php";
 		$inner = TPLS . "/license.tpl.php";

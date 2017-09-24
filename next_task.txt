@@ -1,3 +1,32 @@
+Кнопки выбора оплат
+Поднять 1 раз - 60 Р
+Поднять 5 раз - 200 Р
+Поднять 31 раз - 700 Р
+
+Просмотр биллинга по пользователям
+время тел объявление списание, 
+
+Оплата.
+
+Юзерскрипт для оплаты по телефонам
+
+
+SELECT users.phone, users.email, main.id, cities.city_name, regions.region_name, users.upcount FROM `users` 
+INNER JOIN main ON users.phone = main.phone
+LEFT JOIN cities ON main.city = cities.id
+LEFT JOIN regions ON main.region = regions.id
+WHERE upcount < 100 
+AND main.is_deleted != 1  
+GROUP BY users.phone
+ORDER BY upcount  Asc
+
+
+
+
+Пока считаем некритичным.
+Пользователь удаляет объявление, подает новое.
+Практически, поднимает его.
+
 Чёрт с ним, оплата.
 Итак, что мне нужно.
 

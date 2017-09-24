@@ -83,7 +83,7 @@
 	/*.payformmsg.tj {
 		text-align:left;
 	}*/
-	.aformwrap input[type="button"].payvariant{
+	.aformwrap input[type="button"].payvariant,.aformwrap input[type="button"].paysum {
 		font-size:12px!important;
 		padding-left:56px!important;
 		
@@ -137,7 +137,7 @@
 	.payformmsg.tj {
 		text-align:left;
 	}
-	.aformwrap input[type="button"].payvariant{
+	.aformwrap input[type="button"].payvariant,.aformwrap input[type="button"].paysum {
 		font-size:12px!important;
 		padding-left:56px!important;
 		
@@ -189,7 +189,7 @@
 	.payformmsg.tj {
 		text-align:left;
 	}
-	.aformwrap input[type="button"].payvariant{
+	.aformwrap input[type="button"].payvariant, .aformwrap input[type="button"].paysum{
 		font-size:18px!important0;
 		padding-left:56px;
 		
@@ -220,7 +220,7 @@
 	.aformwrap {
 		width:390px;
 	}
-	.aformwrap input[type="button"].payvariant{
+	.aformwrap input[type="button"].payvariant,.aformwrap input[type="button"].paysum {
 		font-size:26px;
 	}
 
@@ -806,7 +806,7 @@ li {
 	display:inline-block;
 }
 .countVerify {text-align:right; background-color:green; color:white;padding:10px; border-radius:10px; max-width:500px; float:right;}
-.payvariant {
+.payvariant, .paysum {
 	width:100%;
 	margin-bottom:4px;
 	min-height:42px;
@@ -814,6 +814,10 @@ li {
 .aformwrap input[type="button"].payvariant{
 	text-align:left;
 	padding-left:69px;
+}
+.aformwrap input[type="button"].paysum{
+	text-align:left;
+	padding-left:56px;
 }
 .inrelative div {
 	position:relative;

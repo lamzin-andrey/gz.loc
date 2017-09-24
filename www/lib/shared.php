@@ -326,4 +326,12 @@ class Shared {
 		$cmd = "SELECT codename FROM regions WHERE id = $id";
 		return dbvalue($cmd);
 	}
+	static public function getEMonth($shift = 0) {
+		$n = intval(date('m')) + $shift;
+		if ($n > 12) {
+			$n = 1;
+		}
+		$a = [0, 'январе', 'феврале', 'марте', 'апреле', 'мае', 'июне', 'июле', 'августе', 'сентябре', 'октябре', 'ноябре', 'декабре'];
+		return $a[$n];
+	}
 }

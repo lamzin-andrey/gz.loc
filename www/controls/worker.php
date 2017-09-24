@@ -17,13 +17,16 @@ class Worker {
 	 * @description восстановить всем "баланс" поднятий сообщений в начале месяца
     */
     private function _upcountRestore() {
+		if (defined('PAY_ENABLED')) {
+			return;
+		}
 		$s = date('Ym');
 		$sql = "SELECT c FROM ymup WHERE c = {$s}";
 		$r = dbvalue($sql);
 		if ($r === $s) {
 			return;
 		}
-		query("UPDATE users SET upcount = 100");
+		query("UPDATE users SET upcount = 100 WHERE upcount < 100");
 		query("INSERT INTO ymup VALUES ({$s})");
 	}
 	/**
