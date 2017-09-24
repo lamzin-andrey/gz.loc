@@ -14,6 +14,11 @@ function pInit() {
 function onPMBtnClick() {
 	var t = this, q = $(t).getElements('input')[0].id, h = {yad:'ps', card: 'bs', mob:'ms'};
 	q = h[q];
+	if (q == 'ms') {
+		if (!confirm('ВНИМАНИЕ! Оплата поднятий возможна ТОЛЬКО с номера телефона ' + $('label').value + '.\nПытаться платить с других номеров не надо!', 'Я понял, заплачу с ' + $('label').value, 'У меня нет доступа к этому номеру, не буду платить')) {
+			return;
+		}
+	}
 	if (q && window.n) {
 		$(q).checked = true;
 		//todo server side
@@ -25,8 +30,9 @@ function onPMBtnClick() {
 function onCheckPayPublic(data) {
 	if (to_i(data.id) > 0) {
 		$('transactionId').value = to_i(data.id);
+		data.sum = 10;
 		$('sum').value = data.sum;
-		$(q).checked = true;
+		$(data.q).checked = true;
 		
 		$('yaform').submit();
 		return;

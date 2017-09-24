@@ -1,16 +1,42 @@
 <?php
 class Paycheck {
 	public function __construct() {
-		//TODO validate it
 		$method = isset($_POST['q']) ? $_POST['q'] : '';
-		//TODO validate it
 		$sum    = isset($_POST['n']) ? intval($_POST['n']) : '';
-		$cache  = isset($_POST['r']) ? intval($_POST['r']) : '';
-		if ($cache == YAM) {
-			//TODO insert order data
-			//insert: sess('phone'), cache, sum, method, datetime, user.id
-			json_ok('id', $insertId, 'sum', $sum, 'q', $q);
+		$isValid = $this->_validatePaysum($sum);
+		$isValid = $isValid && $this->_validatePaytype($method);
+		$cache  = isset($_POST['r']) ? trim($_POST['r']) : '';
+		$userId = sess('uid');
+		if ($userId && $isValid) {
+			if ($cache == YAM) {
+				$now = now();
+				$insertId = query("INSERT INTO pay_transaction
+					(user_id, cache,        sum,       method, created)
+				VALUES
+					({$userId}, '{$cache}', '{$sum}', '{$method}', '{$now}')
+				");
+				json_ok('id', $insertId, 'sum', $sum, 'q', $method);
+			} else {
+				file_put_contents(__DIR__ . '/invalidrec.txt', $cache . "\n", FILE_APPEND);
+			}
 		}
+		/*$yam = ($cache == YAM);
+		$vars = compact('isValid', 'yam', 'userId');
+		json_error_arr($vars);/**/
 		json_error();
 	}
+	
+	private function _validatePaysum($sum) {
+		if ($sum == 60 || $sum == 200 || $sum == 700) {
+			return true;
+		}
+		return false;
+	}
+	private function _validatePaytype($s) {
+		if ($s == 'ps' || $s == 'bs' || $s == 'ms') {
+			return true;
+		}
+		return false;
+	}
 }
+$p = new Paycheck();

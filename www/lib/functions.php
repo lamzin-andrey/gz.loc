@@ -56,7 +56,20 @@ function json_error() {
  	}mysql_close();
 	die(json_encode($data));
 }
-
+/**
+ * Добавляет в массив элемент 'status' => 'ok' и выдает в поток данные в json формате
+*/
+function json_ok_arr($data) {
+	$data['status'] = 'ok';
+	die(json_encode($data));
+}
+/**
+ * Добавляет в массив элемент 'status' => 'ok' и выдает в поток данные в json формате
+*/
+function json_error_arr($data) {
+	$data['status'] = 'error';
+	die(json_encode($data));
+}
 
 /**
 * @desc Конвертирует русские буквы в транслит

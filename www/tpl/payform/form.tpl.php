@@ -14,7 +14,7 @@
 			<input type="button" class="payvariant" id="mob" value="Со счёта мобильного">
 		</div>
 	</div>
-	<?php /** идентификаторы крайне важны, сумма записывается именнно в них и больше нигде. */?>
+	<?php /** идентификаторы крайне важны, сумма */?>
 	<div id="hPaysumGr">
 		<p class="b please tj payformmsg">Время бесплатных поднятий объявлений на Gazel.Me закончилось. <br>Вы можете оплатить поднятия.</p>
 		<div>
@@ -33,12 +33,12 @@
 	
 	<form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml" id="yaform" class="hide">
 		<input type="hidden" name="receiver" id="rec" value="<?php echo YAM ?>">
-		<input type="hidden" name="formcomment" id="comment" value="Оплата возможности {n} поднятий на сайте gazel.me">
-		<input type="hidden" name="label" value="<?=sess('phone')?>">
+		<input type="hidden" name="formcomment" id="comment" value="Оплата возможности {n} поднятий объявления на сайте gazel.me">
+		<input type="hidden" name="label" id="label" value="<?=sess('phone')?>">
 		<input type="hidden" name="quickpay-form" value="shop">
 		<input type="hidden" name="targets" id="transactionId" value="0">
 		<input type="number" id="sum" name="sum" value="0" data-type="number">
-		<input type="hidden" name="comment" id="comment2" value="Оплата возможности {n} поднятий на сайте gazel.me">
+		<input type="hidden" name="comment" id="comment2" value="Оплата возможности {n} поднятий объявления  на сайте gazel.me">
 		<label><input type="radio" name="paymentType" id="ps" value="PC">Яндекс.Деньгами</label>
 		<label><input type="radio" name="paymentType" id="bs" value="AC">Банковской картой</label>
 		<label><input type="radio" name="paymentType" id="ms" value="MC">Mobile</label>
