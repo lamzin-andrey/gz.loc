@@ -21,7 +21,6 @@ function onPMBtnClick() {
 	}
 	if (q && window.n) {
 		$(q).checked = true;
-		//todo server side
 		Tool.post("/paycheck", {q:q, n:n, r: $(rec).value}, onCheckPayPublic, onCheckPayError);
 	} else {
 		alert(fm);
@@ -29,11 +28,10 @@ function onPMBtnClick() {
 }
 function onCheckPayPublic(data) {
 	if (to_i(data.id) > 0) {
-		$('transactionId').value = to_i(data.id);
+		$('label').value = $('transactionId').value = to_i(data.id);
 		data.sum = 10;
 		$('sum').value = data.sum;
 		$(data.q).checked = true;
-		
 		$('yaform').submit();
 		return;
 	}

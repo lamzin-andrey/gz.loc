@@ -34,7 +34,7 @@
 	<form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml" id="yaform" class="hide">
 		<input type="hidden" name="receiver" id="rec" value="<?php echo YAM ?>">
 		<input type="hidden" name="formcomment" id="comment" value="Оплата возможности {n} поднятий объявления на сайте gazel.me">
-		<input type="hidden" name="label" id="label" value="<?=sess('phone')?>">
+		<input type="hidden" name="label" id="label" value="<?=sess('phone') . '|' . date('Y-m-dH:i:s') ?>">
 		<input type="hidden" name="quickpay-form" value="shop">
 		<input type="hidden" name="targets" id="transactionId" value="0">
 		<input type="number" id="sum" name="sum" value="0" data-type="number">
