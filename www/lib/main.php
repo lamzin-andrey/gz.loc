@@ -7,7 +7,7 @@ $token = @$_SESSION["utoken"];
 if (!$token) {
     $token = $_SESSION["utoken"] = md5( strtotime( date("Y-m-d H:i:s") ) );
 }
-if (count($_POST)) {
+if (count($_POST) && $_SERVER['REQUEST_URI'] != '/pcf' ) {
 	if ($token && ($token != @$_REQUEST["utk"] && $token != @$_REQUEST["token"])) {
 		die("Неверный ключ");
 	}

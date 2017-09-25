@@ -219,7 +219,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	if ($url == '/worker') {
 		$handler = "worker.php";
 	}
-	if ($url == '/pfc') {
+	if ($url == '/pcf') {
 		$handler = "reciever.php";
 	}
 	if ($url == '/paycheck') {
