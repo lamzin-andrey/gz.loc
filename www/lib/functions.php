@@ -535,3 +535,42 @@ function pluralize($n, $root, $one, $less4, $more19, $dbg = false) {
 	}
 	return $lex;
 }
+/**
+ * @description Устанавливает переменную в строке link. Заменяет в строке вида base?=a=v1&b=v2&c=v3 значение переменной varName. Если переменной нет, добавляет ее. 
+ *  value может иметь значение CMD_UNSET, тогда переменная будет удалена
+ * @param bool $checkByValue = false если true то наличие в ссылке переменной проверяется не по имени, а по имени и значению
+*/
+function setGetVar($link, $varName, $value, $checkByValue = false) {
+	//die($link);
+	$sep = '&';
+	$arr = explode('?', $link);
+	$base = $arr[0];
+	$tail = isset($arr[1]) ? $arr[1] : null;
+	$cmdUnset = 'CMD_UNSET';
+	
+	if (!$tail) {
+		$sep = '';
+		$tail = '';
+	}
+	$searchStr = $checkByValue ? ($varName . '=' . $value) : ($varName . '=');
+	if (strpos($tail, $searchStr) === false) {
+		if ($value != $cmdUnset) {
+			$tail .= $sep . $varName . '=' . $value;
+		}
+	} else {
+		if ($value != $cmdUnset) {
+			if (!$checkByValue) {
+				$tail = preg_replace("#" . $varName . "=[^&]*#", ($varName . '=' . $value), $tail);
+			}
+		} else {
+			if (!$checkByValue) {
+				$tail = preg_replace("#" . $varName . "=[^&]*#", '', $tail);
+			} else {
+				$tail = preg_replace("#" . $varName . '=' . $value, '', $tail);
+			}
+			$tail = preg_replace("#&&#s", '&', $tail);
+		}
+	}
+	$link = $base . '?' . $tail;
+	return $link;
+}

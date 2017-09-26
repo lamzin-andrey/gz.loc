@@ -1,3 +1,4 @@
+<? include DR . "/tpl/adminmenu.tpl.php" ?>
 <? FV::$obj = $ops ?>
 <div id="mainsfrormadd" class="bgwhite">
 	<div id="add_legend">Операции  пользователя</div>
@@ -49,6 +50,19 @@
 <div class="both"></div>
 </div>
 <?php endforeach?>
+
+<?php if(count($ops->rows)): ?>
+<div class="left">
+		<a href="<?=setGetVar($_SERVER['REQUEST_URI'], 'page', $ops->prev )?>">&lt;</a>
+</div>
+<div style="float:left; width:100px;">&nbsp;</div>
+<div class="left">
+		<a href="<?=setGetVar($_SERVER['REQUEST_URI'], 'page', $ops->next )?>">&gt;</a>
+</div>
+<div style="clear:both"></div>
+<?php endif ?>
+
+
 </div><?php /* end operations */?>
 <?php endif?>
 
