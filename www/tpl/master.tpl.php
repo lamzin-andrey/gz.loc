@@ -4,11 +4,13 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$GLOBALS["title"]?></title>
-		<link href="/styles/main.css?3" media="all" rel="stylesheet" type="text/css" />
+		<?php $assetsVersion = ASSETS_VERSION; ?>
+		<link href="/styles/main.css?<?=$assetsVersion?>" media="all" rel="stylesheet" type="text/css" />
+		<?=(isset($css) ? $css : '') ?>
 		<script type="text/javascript" src="/js/mootools1.4.5.js"></script>
 		<?=@$javascript ?>
-		<script type="text/javascript" src="/js/lib.js"></script>
-		<script type="text/javascript" src="/js/app.js?a=16"></script>
+		<script type="text/javascript" src="/js/lib.js?<?=$assetsVersion?>"></script>
+		<script type="text/javascript" src="/js/app.js?<?=$assetsVersion?>"></script>
 		<script type="text/javascript">
 			var token = '<?=@$_SESSION['utoken']; ?>';
 			var uid   = '<?=@$_SESSION['uid']?>';

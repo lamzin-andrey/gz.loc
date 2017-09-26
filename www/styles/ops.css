@@ -1,0 +1,56 @@
+@media (min-width:280px) {
+	.operation div,.operation_heading div{
+		min-width: 280px;
+		font-size: 10px;
+		max-width: 280px;
+		text-align:right;
+	}
+}
+@media (min-width:320px) {
+	.operation div,.operation_heading div{
+		min-width: 320px;
+		font-size: 10px;
+		max-width: 320px;
+		text-align:right;
+	}
+}
+
+@media (max-width:1263px) {
+	.operation div,.operation_heading div{
+		font-size: 10px;
+		text-align:left;
+		padding:4px;
+	}
+	.operation_heading{display:none}
+}
+@media (min-width:874px) {
+	.operation div,.operation_heading div{
+		min-width: unset;
+		font-size: 12px;
+		max-width: 874px;
+		text-align:left;
+		padding:4px;
+	}
+}
+
+/** выше этого считаем что у нас десктоп*/
+@media (min-width:1264px) {
+	.operation div,.operation_heading div{
+		min-width: 132px;
+		font-size: 12px;
+		max-width: 112px;
+		text-align:center;
+		padding:4px 0px;
+	}
+	.operation strong {display:none}
+}
+.operations {}
+.operation {}
+.operation .phone, .operation_heading .phone{color:#000;}
+.operation,.operation_heading {
+	background-color:#F1E5BE;	
+	margin-bottom:8px;
+}
+.operation_heading .sum, .operation_heading .approved {
+	font-size:10px;
+}
