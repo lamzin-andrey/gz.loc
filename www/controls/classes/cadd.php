@@ -159,7 +159,7 @@ class CAdd {
 		//phone
 		$phone = $this->preparePhone(@$_POST["phone"]);
 		$len = strlen($phone);
-		if ($len  < 5 || $len > 16) {
+		if ($len  < 8 || $len > 16) {
 			$this->errors['phone'] = "В номере телефона должно быть от пяти до пятнадцати цифр";
 			return;
 		}
