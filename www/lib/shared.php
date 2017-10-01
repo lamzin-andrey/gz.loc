@@ -4,7 +4,7 @@ class Shared {
 	static public function preparePhone($phone) {
 		$phone = trim($phone);
 		$plus = 0;
-		if (isset($phone[0]) && $phone[0] == '+') {
+		if ($phone[0] == '+') {
 			$plus = 1;
 		}
 		$s = trim(preg_replace("#[\D]#", "", $phone));

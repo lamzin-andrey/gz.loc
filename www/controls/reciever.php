@@ -23,7 +23,7 @@ class YaReciever {
 		if ($str == $sha1_hash) {
 			json_ok();
 		}
-		/*header("HTTP/1.1 404 Not Found");
+		header("HTTP/1.1 201 Created");
 		exit;/**/
 	}
 }

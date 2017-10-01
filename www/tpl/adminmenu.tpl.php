@@ -16,9 +16,6 @@
 			<a href="/private/stat">Что пытались найти</a>
 		</li>
 		<li>
-			<a href="/private/ops">Операции</a>
-		</li>
-		<li>
 			<a href="/private/stat_up">Russia today</a>
 		</li>
 	</ul>
