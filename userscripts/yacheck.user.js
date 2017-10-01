@@ -9,7 +9,8 @@
 window.addEventListener('load', initYacApp, false);
 window.Yacapp = {
   //КОНФИГ 
-  siteApiURL : 'https://test.gazel.me',
+  //nen закрывающий слеш обязательный.
+  siteApiURL : 'https://***/??/yagate/',
   
   //СВОЙСТВА, ОТНОСЯЩИЕСЯ к процессу обработки истории платежей 
   /** Говорит о том, что подробные данные транзакции ещё не запрашивалисьу Яндекса.  */
