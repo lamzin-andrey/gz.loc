@@ -225,6 +225,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	if ($url == '/paycheck') {
 		$handler = "paycheck.php";
 	}
+	if ($url == '/yagate') {
+		$handler = "yagate.php";
+	}
 	if ($url == '/agreement') {
 		$handler = "agreement.php";
 		$inner = TPLS . "/license.tpl.php";
@@ -271,6 +274,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		if (strpos($url, "private/stat_up") === 1) {
 			$handler = "stat_up.php";
 			$inner = TPLS . "/stat_up.tpl.php";
+			$showAddAdvBtn = false;
+		}
+		if (strpos($url, "private/op") === 1) {
+			$handler = "operations.php";
+			$inner = TPLS . "/a/operations.tpl.php";
 			$showAddAdvBtn = false;
 		}
 	}

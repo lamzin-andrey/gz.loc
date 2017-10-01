@@ -1,7 +1,7 @@
 <?php
 //$_SERVER['REMOTE_ADDR'] = '78.109.16.152';//TODO remove me!
 
-file_put_contents(__DIR__ . '/log.log', 'hello' . print_r($_POST, 1));
+//file_put_contents(__DIR__ . '/log.log', 'hello' . print_r($_POST, 1));
 
 include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 require_once DR . "/lib/main.php";
@@ -19,5 +19,5 @@ include DR . "/router.php";
 include DR . "/lib/view_helpers.php";
 
 include DR . "/controls/$handler";
-include TPLS . "/master.tpl.php";
+include TPLS . (isset($classHandler) && isset($classHandler->master) ? $classHandler->master : '/master.tpl.php');
 

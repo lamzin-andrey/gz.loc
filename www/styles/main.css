@@ -243,6 +243,14 @@
 	.upb {
 		left:90%;
 	}
+	#mainsfrormadd, .form {
+		width:100%;
+	}
+	.aphone input[type=text], .aphone input[type=password] {
+		height:32px;
+		width:330px;
+		font-size:24pt;
+	}
 }
 
 /** выше этого значения большинство объявлений выравниваются слева от фото */
@@ -389,7 +397,6 @@ header.mainhead {
 #mainsfrorm {
 	background-color: #f0f0f0;
 	padding: 10px 16px;
-	width:75%;
 	margin: 0 auto;
 	font-size:10pt;
 }
@@ -559,12 +566,12 @@ li {
 	height:auto !important;
 }
 .aphone input[type=text], .aphone input[type=password] {
-	height:32px;
-	width:330px;
+	/*height:32px;
+	width:330px;/**/
 	display:inline-block;
 	margin-top:3px;
 	vertical-align: top;
-	font-size:24pt;
+	/*font-size:24pt;*/
 }
 .aphone input[type=submit] {
 }

@@ -19,9 +19,9 @@
 			return '<input type="checkbox" name="'.$id.'" id="'.$id.'" value="1" '.$ch.'/>' . $space . '<label for="'.$id.'">'.$label.'</label>';
 		}
 		static public function  radio($id, $name, $label, $value = null) {
-			self::checkValue($value, $id);
+			self::checkValue($cvalue, $name);
 			$ch = '';
-			if ($value) {
+			if ($value == $cvalue) {
 				$ch = 'checked="checked"';
 			}
 			$label = str_replace('*', '<span class="red">*</span>', $label);
