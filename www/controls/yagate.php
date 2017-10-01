@@ -10,6 +10,7 @@ class YaGate {
 		$this->js = "<script type=\"text/javascript\">
 			window.location.href = window.location.href + '#{$method}';
 		</script>";
+		file_put_contents(__DIR__ . '/us.log', print_r() . "\n", FILE_APPEND);
 	}
 }
 $classHandler = $p = new YaGate();
