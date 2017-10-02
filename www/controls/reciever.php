@@ -15,12 +15,18 @@ class YaReciever {
 		$label    = req('label');
 		
 		$secret = YAKEY;
-		$str = "{$notification_type}&{$operation_id}&{$amount}&{$currency}&{$datetime}&{$sender}&{$secret}&{$label}";
+		$str = "{$notification_type}&{$operation_id}&{$amount}&{$currency}&{$datetime}&{$sender}&{$codepro}&{$secret}&{$label}";
 		$hash = sha1($str);
 		
 		file_put_contents(__DIR__ . '/postlog.txt', "\nhash = {$hash}\n\n" , FILE_APPEND);
+		file_put_contents(__DIR__ . '/postlog.txt', "\nstr = '{$str}'\n\n" , FILE_APPEND);
 		
-		if ($str == $sha1_hash) {
+		if ($hash == $sha1_hash) {
+			if (intval($label)) {
+				$label = intval($label);
+				$yaRequestLogId = 1;//TODO вставлять в таблицу
+				query("UPDATE pay_transaction SET is_confirmed = 1, ya_http_notice_id = {$yaRequestLogId} WHERE id = {$label}"); 
+			}
 			json_ok();
 		}
 		header("HTTP/1.1 201 Created");
