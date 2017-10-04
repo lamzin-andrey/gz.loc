@@ -29,7 +29,7 @@ function onPMBtnClick() {
 function onCheckPayPublic(data) {
 	if (to_i(data.id) > 0) {
 		$('label').value = $('transactionId').value = to_i(data.id);
-		//data.sum = 10;
+		data.sum = 10;
 		$('sum').value = data.sum;
 		$(data.q).checked = true;
 		$('yaform').submit();
