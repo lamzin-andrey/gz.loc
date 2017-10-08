@@ -1,3 +1,4 @@
+<?php if (isset($upform->payProxyEnabled) && $upform->payProxyEnabled): ?>
 <div class="aformwrap upformwrap inrelative payformwr">
 	<div id="hPaymethodGr" class="hide">
 		<p class="b please tj payformmsg">Оплатить <span id="nSum">0</span> рублей. Выберите способ оплаты. </p>
@@ -46,3 +47,10 @@
 	</form>
 	
 </div>
+<?php else:?>
+<div class="aformwrap upformwrap inrelative payformwr">
+	<div id="hPaysumGr">
+		<p class="b please tj payformmsg">Извините, оплата поднятий временно недоступна.</p>
+	</div>
+</div>
+<?php endif?>

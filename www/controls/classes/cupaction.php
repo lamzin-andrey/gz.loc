@@ -1,11 +1,15 @@
 <?php
+require_once LIB_ROOT . '/classes/request/Request.php';
+require_once LIB_ROOT . '/classes/mail/SampleMail.php';
 class CUpAction {
 	public $id;
 	public $title;
 	public $upCount = 10000;
+	public $payProxyEnabled = false;
 	/***/
 	public $unavialableTpl =  TPLS . '/mothexpiremsg.tpl.php';
 	public function __construct() {
+		$this->setPayProxyEnabled();
 		//получить id  ипроверить, есть ли право поднимать это объявлени
 		//если есть поднять если нет вывести сообщение об ошибке
 		$this->id = $id = @$_GET["edit_id"];
@@ -129,5 +133,38 @@ class CUpAction {
 			)");
 		}
 		return $status;
+	}
+	/**
+	 * @description Проверяет, доступен ли сервер, через который выполняется проксирование запросов с yandeх money
+	*/
+	public function setPayProxyEnabled() {
+		$proxyUrlCheck = PROXY_YAM_CHECK_URL;
+		$req = new Request();
+		$value = md5(time() . uniqid('tival', true) . rand(11111, 99999));
+		$response = $req->execute($proxyUrlCheck, [
+			'tival'	=> $value
+		]);
+		if ($response->responseStatus == 200) {
+			$check = file_get_contents(LIB_ROOT . '/classes/request/cache/tival');
+			if ($check == $value) {
+				$this->payProxyEnabled = true;
+			} else {
+				$this->_sendYaformUnworkEmail();
+			}
+		} else {
+			$this->_sendYaformUnworkEmail();
+		}
+	}
+	/**
+	 * @description Отправляем письмо на gazelme@mail.ru если не удалось показать форму оплаты
+	*/
+	private function _sendYaformUnworkEmail() {
+		$mailer = new SampleMail();
+		$mailer->setSubject("Не доступна формы оплаты на gazel.me");
+		$mailer->setAddressFrom(array("admin@gazel.me"=>"Админ Админыч"));
+		$mailer->setAddressTo(array("lamzin.ann@yandex.ru"=>"Нет связи с фас"));
+		//sample inline
+		$mailer->setPlainText("Форма оплаты не показывается, потому что не удается связаться с сайтом fastxampp.org", []);
+		$r = $mailer->send();
 	}
 }

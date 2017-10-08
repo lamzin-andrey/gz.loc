@@ -225,6 +225,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	if ($url == '/paycheck') {
 		$handler = "paycheck.php";
 	}
+	if ($url == '/yproxycheck') {
+		$handler = "yproxycheck.php";
+	}
 	if ($url == '/yagate') {
 		$handler = "yagate.php";
 	}
