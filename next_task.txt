@@ -2,54 +2,7 @@
 
 Тестируем метод подтверждения оплаты.
 
-Заносить запрос от яндекса в отдельную таблицу
-
-CREATE TABLE ya_http_notice
-(
-	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT NOT NULL,
-	notification_type_id VARCHAR(24) COMMENT '1 - card-incoming, 2 - wallet, 3 - mobile если понадобится',
-	amount decimal(10,2) COMMENT 'Сумма, поступившая на кошелёк',
-	_datetime datetime COMMENT 'Пришедшая с сервера Я-Денег временная метка',
-	codepro VARCHAR(6) COMMENT 'Был ли защищён кодом протекции',
-	withdraw_amount DECIMAL(10, 2) COMMENT 'Сумма, уплаченная пользователем',
-	sender VARCHAR(512) COMMENT 'Данные отпправителя',
-	unaccepted VARCHAR(6) COMMENT 'Флаг означает, что пользователь не получил перевод',
-	operation_label VARCHAR(64) COMMENT 'см. документацию Яндекс денег https://tech.yandex.ru/money/doc/dg/reference/notification-p2p-incoming-docpage/',
-	operation_id VARCHAR(32) COMMENT 'см. документацию Яндекс денег https://tech.yandex.ru/money/doc/dg/reference/notification-p2p-incoming-docpage/',
-	label VARCHAR(32) COMMENT 'см. документацию Яндекс денег https://tech.yandex.ru/money/doc/dg/reference/notification-p2p-incoming-docpage/'
-) DEFAULT CHARSET=utf8;
-
-CREATE TABLE ya_notification_type (
-	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT NOT NULL,
-	name VARCHAR(24) COMMENT 'Тип платежа, карта  или я-кошелек'
-) DEFAULT CHARSET=utf8;
-
-INSERT INTO ya_notification_type
-(`name`)
-VALUES ('card-incoming');
-
-INSERT INTO ya_notification_type
-(`name`)
-VALUES ('p2p-incoming');
-
-===========2017-10-02 22:55:22===========
-Array
-(
-    [notification_type] => card-incoming
-    [amount] => 9.80
-    [datetime] => 2017-10-02T19:55:16Z
-    [codepro] => false
-    [withdraw_amount] => 10.00
-    [sender] => 
-    [sha1_hash] => 164c717976ffb239b725cad31113a9dd31a5594a
-    [unaccepted] => false
-    [operation_label] => 2164ad2a-0002-5000-8035-89d95925f33a
-    [operation_id] => 560289316350004012
-    [currency] => 643
-    [label] => 16
-)
-
-Начислять на баланс пользователя возможность поднятий при совпадении хеша.
+Начислять на баланс пользователя возможность поднятий при совпадении хеша. *
 
 
 
