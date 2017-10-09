@@ -11,8 +11,8 @@ window.addEventListener('load', initYacApp, false);
 window.Yacapp = {
   //КОНФИГ 
   //nen закрывающий слеш обязательный.
-  siteApiURL : 'https://samsungmobyle.comxa.com/temp/yagate/',
-  siteApiResponseURL : 'https://samsungmobyle.comxa.com/temp/yagate/answ.js',
+  siteApiURL : 'https://******/temp/yagate/',
+  siteApiResponseURL : 'https://*****/temp/yagate/answ.js',
   
   //СВОЙСТВА, ОТНОСЯЩИЕСЯ к процессу обработки истории платежей 
   /** Говорит о том, что подробные данные транзакции ещё не запрашивалисьу Яндекса.  */
