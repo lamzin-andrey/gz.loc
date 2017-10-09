@@ -32,6 +32,10 @@
 		</div>
 	</div>
 	
+	<div id="hRoboplace" class="hide">
+		<p class="b please tj payformmsg">После нажатия на кнопку вы будете перенаправлены на страницу сервиса Робокасса <br>Выбрав там вашего мобильного оператора вы сможете провести оплату.</p>
+	</div>
+	
 	<form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml" id="yaform" class="hide">
 		<input type="hidden" name="receiver" id="rec" value="<?php echo YAM ?>">
 		<input type="hidden" name="formcomment" id="comment" value="Оплата возможности {n} поднятий объявления на сайте gazel.me">

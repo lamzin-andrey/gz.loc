@@ -235,6 +235,22 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		$handler = "agreement.php";
 		$inner = TPLS . "/license.tpl.php";
 	}
+	/*if ($url == '/rkdemo') {
+		$handler = "rkdemo.php";
+		$inner = TPLS . "/rk/demo.tpl.php";
+	}*/
+	if ($url == '/rkps') {
+		$handler = "rkps.php";
+	}
+	if ($url == '/rkresult') {
+		$handler = 'rkresult.php';
+	}
+	if ($url == '/rksuccess') {
+		$handler = 'rksuccess.php';
+	}
+	if ($url == '/rkfail') {
+		$handler = 'rkfail.php';
+	}
 	if (strpos($url, "smsverify") === 1) {
 		$handler = "smsverify.php";
 		$inner = TPLS . "/smsverify.tpl.php";

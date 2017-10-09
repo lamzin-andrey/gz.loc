@@ -1,4 +1,5 @@
 <?php
+require_once DR . '/controls/classes/crkps.php';
 class Paycheck {
 	/**
 	 * @description сумма - кол-во поднятий.
@@ -9,6 +10,8 @@ class Paycheck {
 		700 => 31
 	];
 	
+	/** @property bool $_isMobilePayment */
+	private $_isMobilePayment = 0;
 	public function __construct() {
 		$method = isset($_POST['q']) ? $_POST['q'] : '';
 		$sum    = isset($_POST['n']) ? intval($_POST['n']) : '';
@@ -24,6 +27,11 @@ class Paycheck {
 				VALUES
 					({$userId}, '{$cache}', '{$sum}', '{$method}', '{$now}')
 				");
+				if ($this->_isMobilePayment) {
+					$rkParams = new CRKParams();
+					$rkData = $rkParams->getParams($insertId, $sum);
+					json_ok('id', $insertId, 'sum', $sum, 'q', $method, 'rkData', $rkData);
+				}
 				json_ok('id', $insertId, 'sum', $sum, 'q', $method);
 			} else {
 				file_put_contents(__DIR__ . '/invalidrec.txt', $cache . "\n", FILE_APPEND);
@@ -43,6 +51,9 @@ class Paycheck {
 	}
 	private function _validatePaytype($s) {
 		if ($s == 'ps' || $s == 'bs' || $s == 'ms') {
+			if ($s == 'ms') {
+				$this->_isMobilePayment = true;
+			}
 			return true;
 		}
 		return false;

@@ -14,11 +14,6 @@ function pInit() {
 function onPMBtnClick() {
 	var t = this, q = $(t).getElements('input')[0].id, h = {yad:'ps', card: 'bs', mob:'ms'};
 	q = h[q];
-	if (q == 'ms') {
-		if (!confirm('ВНИМАНИЕ! Оплата поднятий возможна ТОЛЬКО с номера телефона ' + $('label').value + '.\nПытаться платить с других номеров не надо!', 'Я понял, заплачу с ' + $('label').value, 'У меня нет доступа к этому номеру, не буду платить')) {
-			return;
-		}
-	}
 	if (q && window.n) {
 		$(q).checked = true;
 		Tool.post("/paycheck", {q:q, n:n, r: $(rec).value}, onCheckPayPublic, onCheckPayError);
@@ -28,14 +23,26 @@ function onPMBtnClick() {
 }
 function onCheckPayPublic(data) {
 	if (to_i(data.id) > 0) {
-		$('label').value = $('transactionId').value = to_i(data.id);
-		data.sum = 10;
-		$('sum').value = data.sum;
-		$(data.q).checked = true;
-		$('yaform').submit();
-		return;
+		if (!data.rkData) {
+			$('label').value = $('transactionId').value = to_i(data.id);
+			data.sum = 10;
+			$('sum').value = data.sum;
+			$(data.q).checked = true;
+			$('yaform').submit();
+			return;
+		}
+		var url = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?', i, scr;
+		for (i in data.rkData) {
+			url += (i + '=' + data.rkData[i] + '&');
+		}
+		alert(url);
+		scr = document.createElement('script');
+		scr.src = url.replace(/&$/, '');
+		$('hRoboplace').appendChild(scr);
+		$('hPaysumGr').addClass('hide');
+		$('hPaymethodGr').addClass('hide');
+		$('hRoboplace').removeClass('hide');
 	}
-	alert(fm);
 }
 function onCheckPayError() {
 	alert(fm);
