@@ -31,17 +31,27 @@ function onCheckPayPublic(data) {
 			$('yaform').submit();
 			return;
 		}
-		var url = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?', i, scr;
+		var url = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.if?', i, scr, iW = 380, iH = 70;
 		for (i in data.rkData) {
 			url += (i + '=' + data.rkData[i] + '&');
 		}
-		alert(url);
-		scr = document.createElement('script');
+		scr = document.createElement('iframe');
 		scr.src = url.replace(/&$/, '');
+		scr.setAttribute('style', 'border:0;width:' + iW + 'px;height:' + iH + 'px;overflow:hidden;background-color:transparent;');
+		scr.setAttribute('allowTransparency', 'true');
+		scr.setAttribute('width', iW);
+		scr.setAttribute('height', iH);
+		scr.setAttribute('scrolling', 'no');
 		$('hRoboplace').appendChild(scr);
 		$('hPaysumGr').addClass('hide');
 		$('hPaymethodGr').addClass('hide');
 		$('hRoboplace').removeClass('hide');
+		/*
+		document.write("<iframe width=\"450\" height=\"70\" 
+		style=\"\" 
+		allowTransparency=\"true\" 
+		src=\"https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.if?
+		MrchLogin=gazelme&OutSum=700&InvId=26&IncCurrLabel=rur&Desc=%D0%9E%D0%BF%D0%BB%D0%B0%D1%82%D0%B0%20%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%D0%B4%D0%BD%D1%8F%D1%82%D1%8C%20%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BD%D0%B0%20gazel.me&SignatureValue=8ecf1dac8a72464727716c212a49b04b&Shp_item=1&Culture=null&Encoding=null&isTest=1\"></iframe>");*/
 	}
 }
 function onCheckPayError() {
