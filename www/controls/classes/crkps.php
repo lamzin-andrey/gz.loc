@@ -12,6 +12,9 @@ class CRKParams {
 		// registration info (login, password #1)
 		$this-> mrh_login = $mrh_login = RK_ID;
 		$mrh_pass1 = RK_P1;
+		if (defined('RK_TEST_MODE')) {
+			$mrh_pass1 = RK_P1T;
+		}
 
 		// номер заказа
 		// number of order

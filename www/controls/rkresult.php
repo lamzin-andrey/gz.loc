@@ -26,17 +26,17 @@ class RkResultReciever {
 		$my_crc = strtoupper(md5("{$out_summ}:{$inv_id}:{$mrh_pass2}:Shp_item={$shp_item}"));
 		
 		
-		file_put_contents(__DIR__ . '/postlogrk.txt', "\nhash = {$hash}\n\n" , FILE_APPEND);
-		file_put_contents(__DIR__ . '/postlogrk.txt', "\nstr = '{$str}'\n\n" , FILE_APPEND);
+		file_put_contents(__DIR__ . '/postlogrk.txt', "\ncrc = {$crc}\n\n" , FILE_APPEND);
+		file_put_contents(__DIR__ . '/postlogrk.txt', "\nmy = '{$my_crc}'\n\n" , FILE_APPEND);
 		
-		if ($crc == $y_crc) {
+		if ($crc == $my_crc) {
 			if (intval($label)) {
 				$label = intval($label);
 				$rkRequestLogId = $this->_insertRkassaNotificationData($out_summ, $label, $incSumm, $paymentMethod, $incCurrLabel, $shp_item);
 				$nAff = dbvalue("SELECT is_confirmed FROM pay_transaction WHERE id = {$label}");
 				if ($nAff == 0) {
 					query("UPDATE pay_transaction SET is_confirmed = 1, rk_http_notice_id = {$rkRequestLogId} WHERE id = {$label}"); 
-					$this->_incrementUserAppCount($label, $out_summ, $yaRequestLogId);
+					$this->_incrementUserAppCount($label, $out_summ, $rkRequestLogId);
 				}
 			}
 			json_ok();
@@ -48,9 +48,9 @@ class RkResultReciever {
 	/**
 	 * Логирование данных HTTP уаведомления от Рообокассы в базе данных
 	*/
-	private function _insertRkassaNotificationData_insertRkassaNotificationData($out_summ, $label, $incSumm, $paymentMethod, $incCurrLabel, $shp_item) {
-		$cmd = 'INSERT INTO кл_http_notice (
-			`out_summ`,  `inv_id`, `inc_sum`, `payment_method`, `unaccepted`, `inc_curr_label`, `shp_item`)
+	private function _insertRkassaNotificationData($out_summ, $label, $incSumm, $paymentMethod, $incCurrLabel, $shp_item) {
+		$cmd = 'INSERT INTO rk_http_notice (
+			`out_summ`,  `inv_id`, `inc_sum`, `payment_method`, `inc_curr_label`, `shp_item`)
 			VALUES (' . $out_summ . ', ' . $label . ', ' . $incSumm . ', \'' . $paymentMethod . '\', 
 			\'' . $incCurrLabel . '\', ' . $shp_item . ')';
 		$insertId = query($cmd);
