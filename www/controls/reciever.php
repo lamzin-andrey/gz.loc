@@ -65,45 +65,7 @@ class YaReciever {
 	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
 	*/
 	private function _incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId) {
-		$storedSumData = dbrow("SELECT sum, user_id FROM pay_transaction WHERE id = {$payTransactionId}");
-		$storedSum = isset($storedSumData['sum']) ? $storedSumData['sum'] : 0;
-		if (!$storedSum) {
-			file_put_contents('wrong_summ_log.txt', ($yaRequestLogId. "\n"), FILE_APPEND);
-			return;
-		}
-		$upcount = Paycheck::$offers[intval($storedSum)];
-		//если сумма, оплаченная пользователем не входит в перечень заданных в платежной форме,
-		//	находим среди заданных первый, меньший чем внесенная сумма, и считаем кол-во поднятий по этой стоимости.
-		if (intval($storedSum) != intval($nSum)) {
-			$a = array_keys(Paycheck::$offers);
-			$sz = count($a);
-			$sumFound = false;
-			$upPrice = 60;
-			for ($i = $sz - 1; $i > -1; $i--) {
-				if ($a[$i] == $nSum) {
-					$sumFound = true;
-					break;
-				}
-				if ($a[$i] <= $nSum)	{
-					$upPrice = $a[$i] / Paycheck::$offers[ $a[$i] ];
-					$upcount = ceil($nSum / $upPrice);	
-					break;
-				}
-			}
-		} else {
-			$upcount = Paycheck::$offers[intval($nSum)];
-		}
-		//записываем в истории операций
-		$userId = isset($storedSumData['user_id']) ? $storedSumData['user_id'] : 0;
-		$now = now();
-		$sql = "INSERT INTO operations
-			(`user_id`, `op_code_id`, `upcount`, `main_id`, `created`, `sum`, `pay_transaction_id`) VALUES
-			('{$userId}', 2, '{$upcount}', 0, '{$now}', '{$nSum}', '{$payTransactionId}')
-		";
-		query($sql);
-		//Увеличиваем баланс
-		$sql = "UPDATE users SET upcount = '{$upcount}' WHERE id = {$userId}";
-		query($sql);
+		Shared::incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId);
 	}
 }
 

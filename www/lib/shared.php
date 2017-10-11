@@ -334,4 +334,52 @@ class Shared {
 		$a = [0, 'январе', 'феврале', 'марте', 'апреле', 'мае', 'июне', 'июле', 'августе', 'сентябре', 'октябре', 'ноябре', 'декабре'];
 		return $a[$n];
 	}
+	/**
+	 * @description Увелечение возможности поднимать объявления после успешной оплаты
+	 * @param integer $payTransactionId идентификатор из pay_transaction
+	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
+	 * @param integer $requestLogId идентификатор записи в талблице в таблице ya_http_notice, логируется если не удалось найти запись в pay_transaction
+	 * @param string $logFileName имя файла в который логируется идентификатор записи, если не удалось найти запись в pay_transaction
+	*/
+	static public function incrementUserAppCount($payTransactionId, $nSum, $requestLogId, $logFileName = 'wrong_summ_log.txt') {
+		$storedSumData = dbrow("SELECT sum, user_id FROM pay_transaction WHERE id = {$payTransactionId}");
+		$storedSum = isset($storedSumData['sum']) ? $storedSumData['sum'] : 0;
+		if (!$storedSum) {
+			file_put_contents($logFileName, ($requestLogId. "\n"), FILE_APPEND);
+			return;
+		}
+		$upcount = Paycheck::$offers[intval($storedSum)];
+		//если сумма, оплаченная пользователем не входит в перечень заданных в платежной форме,
+		//	находим среди заданных первый, меньший чем внесенная сумма, и считаем кол-во поднятий по этой стоимости.
+		if (intval($storedSum) != intval($nSum)) {
+			$a = array_keys(Paycheck::$offers);
+			$sz = count($a);
+			$sumFound = false;
+			$upPrice = 60;
+			for ($i = $sz - 1; $i > -1; $i--) {
+				if ($a[$i] == $nSum) {
+					$sumFound = true;
+					break;
+				}
+				if ($a[$i] <= $nSum)	{
+					$upPrice = $a[$i] / Paycheck::$offers[ $a[$i] ];
+					$upcount = ceil($nSum / $upPrice);	
+					break;
+				}
+			}
+		} else {
+			$upcount = Paycheck::$offers[intval($nSum)];
+		}
+		//записываем в истории операций
+		$userId = isset($storedSumData['user_id']) ? $storedSumData['user_id'] : 0;
+		$now = now();
+		$sql = "INSERT INTO operations
+			(`user_id`, `op_code_id`, `upcount`, `main_id`, `created`, `sum`, `pay_transaction_id`) VALUES
+			('{$userId}', 2, '{$upcount}', 0, '{$now}', '{$nSum}', '{$payTransactionId}')
+		";
+		query($sql);
+		//Увеличиваем баланс
+		$sql = "UPDATE users SET upcount = '{$upcount}' WHERE id = {$userId}";
+		query($sql);
+	}
 }
