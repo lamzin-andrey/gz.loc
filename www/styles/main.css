@@ -43,12 +43,19 @@
 	.buttons  {
 		width:90%;
 	}
+	.aformwrap {
+		width:90%;
+	}
 }
 @media (max-width:480px) {
 	.buttons  {
 		width:76%;
 	}
+	.aformwrap {
+		width:94%;
+	}
 }
+
 @media (max-width:350px) {
 	span.ib {
 		white-space:normal;
@@ -56,7 +63,11 @@
 	.buttons  {
 		width:50%;
 	}
-	
+}
+@media (max-width:360px) {
+	.aformwrap {
+		width:83%;
+	}
 }
 @media (max-width:240px) {
 	#logo-in img {
@@ -66,44 +77,31 @@
 		font-size:11px;
 		margin-left: 11px;
 	}
-	/*.maincontent {
-		padding:0px!important;
-		margin:0px!important;
-	}
-	.buttons {
-		width:75%;
-	}
-	#mainsfrormadd {
-		margin:0px!important;
-	}*/
 	.aformwrap {
-		width:197px!important;
+		width:57%!important;
 		min-height:270px;
 	}
-	/*.payformmsg.tj {
-		text-align:left;
-	}*/
+	.aformwrap.upformwrap {
+		width:92%!important;
+	}
 	.aformwrap input[type="button"].payvariant,.aformwrap input[type="button"].paysum {
 		font-size:12px!important;
 		padding-left:56px!important;
 		
 	}
+	.aformwrap .aphone input[type=text]{
+		width:74%!important;
+	}
+	.aformwrap  .apwd input[type=password] {
+		width:931;
+	}
+	
 	.payformwr {
 		height:273px!important;
 	}
 	.f10 {
 		text-indent:10px!important;
 	}
-	/*.captwr {
-		width:100%;
-	}
-	.cpcodewr {
-		margin-top:14px;
-	}
-	.capinputs{width:100%;}
-	.upformbtn {
-		margin: 18px 14px 0 0!important;
-	}*/
 	.cpcodewr input[type=text] {
 		min-width:166px;
 	}
@@ -131,9 +129,10 @@
 		margin:0px!important;
 	}
 	.aformwrap {
-		width:197px!important;
+		width:72%;
 		min-height:270px;
 	}
+	
 	.payformmsg.tj {
 		text-align:left;
 	}
@@ -183,7 +182,8 @@
 		margin:0px!important;
 	}
 	.aformwrap {
-		width:314px!important0;
+		/*width:314px!important0;*/
+		/*width:100%;*/
 		min-height:270px;
 	}
 	.payformmsg.tj {
@@ -214,12 +214,26 @@
 		min-width:166px;
 	}
 }
-
-/** выше этого считаем что у нас десктоп*/
-@media (min-width:641px) {
+/** для формы логина выше этого считаем что у нас десктоп */
+@media (min-width:391px) {
 	.aformwrap {
 		width:390px;
 	}
+	.aformwrap .aphone input[type=text], .aphone input[type=password] {
+		width:369px;
+	}
+}
+/** на прочих разрешениях тянем на всю ширину экрана */
+@media (min-width:240px) {
+	.aformwrap .aphone input[type=text]{
+		width:80%;
+	}
+	.aformwrap  .apwd input[type=password] {
+		width:93%;
+	}
+}
+/** выше этого считаем что у нас десктоп*/
+@media (min-width:641px) {
 	.aformwrap input[type="button"].payvariant,.aformwrap input[type="button"].paysum {
 		font-size:26px;
 	}
@@ -553,9 +567,7 @@ li {
 }
 .apwd input[type=password] {
 	display:inline-block;
-	height:34px;
 	margin:4px 0px 0px 4px;
-	width:369px;
 	font-size:24pt;
 }
 .aphone label img{
@@ -565,12 +577,11 @@ li {
 	height:auto !important;
 }
 .aphone input[type=text], .aphone input[type=password] {
-	/*height:32px;
-	width:330px;/**/
 	display:inline-block;
 	margin-top:3px;
 	vertical-align: top;
-	/*font-size:24pt;*/
+	height:34px;
+	font-size:24pt;
 }
 .aphone input[type=submit] {
 }

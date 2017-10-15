@@ -141,6 +141,10 @@ class CUpAction {
 	 * @description Проверяет, доступен ли сервер, через который выполняется проксирование запросов с yandeх money
 	*/
 	public function setPayProxyEnabled() {
+		if (defined('CHECK_PROXY_OFF')) {
+			$this->payProxyEnabled = true;
+			return;
+		}
 		$proxyUrlCheck = PROXY_YAM_CHECK_URL;
 		$req = new Request();
 		$value = md5(time() . uniqid('tival', true) . rand(11111, 99999));

@@ -14,27 +14,28 @@
 		<form action="/remind" method="post" name="">
 			<div class="aformwrap upformwrap" id="upform">
 					<div id="uperror" class="both hide">Неверно введен код</div>
-					<div class="aphone">
+					<div class="aphone" style="margin-bottom:10px;">
 						<label for="login" class="slabel">Номер телефона</label><br/>
 						<label for="login"><img alt="Телефон" title="Телефон" src="/images/phone32.png" /></label> 
-						<?=FV::i("login") ?>
+						<?=FV::i("login", null, 0, 'style="width:70%;"') ?>
 					</div>
-					<table class="capthtabl">
-								<tbody><tr>
-									<td> <img width="174" id="cpi" src="/images/random"><br><a class="smbr" id="smbr" href="#">Кликните для обновления рисунка</a> </td>
-									<td>
-										<input type="text" value="" id="cp" name="cp">
-										<div class="right upformbtn">
-											<?=FV::sub("sup", "Отправить"); ?>
-										</div>
-									</td>
-								</tr>
-						</tbody></table>
-					
+					<div class="left captwr tc">
+						<img width="174" id="cpi" src="/images/random"><br>
+						<a class="smbr" id="smbr" href="#">Кликните для обновления рисунка</a>
+					</div>
+					<div class="left capinputs capiwr">
+						<div class="left capinputs">
+							<div class="capinputs tc cpcodewr">
+								<input type="text" value="" id="cp" name="cp" autocomplete="off">
+							</div>
+							<div class="right upformbtn">
+								<?=FV::sub("sup", "Отправить"); ?>
+							</div>
+						</div>
+						<div class="both"></div>
+					</div>
+				<div class="both"></div>
 			</div>
-			<input type="hidden" name="token" value="<?=@$_SESSION["utoken"] ?>" />
+			<input type="hidden" name="token" value="<?=sess('utoken') ?>" />
 		</form>
 </div> 
-
-
-
