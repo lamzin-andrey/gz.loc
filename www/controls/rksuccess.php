@@ -1,2 +1,11 @@
 <?php
-file_put_contents( __DIR__ . '/rksuc.log', print_r($_POST, 1) . "\n", FILE_APPEND );
+require_once __DIR__ . '/classes/crkrdir.php';
+
+class RkSuccess extends CRkRdir{
+	
+	public function __construct() 
+	{
+		parent::__construct('rksuc.log', 'success');
+	}
+}
+new RkSuccess();

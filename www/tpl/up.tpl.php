@@ -1,6 +1,17 @@
 <? include DR . "/tpl/usermenu.tpl.php" ?>
 <div id="mainsfrormadd" class="bgwhite">
 	<div id="add_legend">Поднять объявление</div>
+	
+	<?php if (sess('successKey') == 'fail'): ?>
+	<div id="mainsfrormerror" style="display:block"><p>Не удалось произвести оплату. Если с вашего счета списались деньги, свяжитесь с нами через <a href="/fb">форму обратной связи</a></p></div>
+	<?php sess('successKey', 'unset'); ?>
+	<?php endif ?>
+	
+	<?php if (sess('successKey') == 'success'): ?>
+	<div id="mainsfrormsuccess" style="display:block"><p>Оплата прошла успешно</p></div>
+	<?php sess('successKey', 'unset'); ?>
+	<?php endif ?>
+	
 	<hr id="add_hr"/>
 		<?php if ($upform->upCount > 0): ?>
 			<p class="b please tc">В <?=$upform->emonth()?> вы можете поднять ваши объявления ещё <?=$upform->upCount?> раз</p>

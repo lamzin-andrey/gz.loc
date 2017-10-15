@@ -13,7 +13,10 @@ class CUpAction {
 		//получить id  ипроверить, есть ли право поднимать это объявлени
 		//если есть поднять если нет вывести сообщение об ошибке
 		$this->id = $id = @$_GET["edit_id"];
+		
+		
 		$phone = @$_SESSION["phone"];
+		sess('upId', $this->id);
 		
 		sess('up_adv_flag', true);
 		sess('add_adv_flag', 'unset');
