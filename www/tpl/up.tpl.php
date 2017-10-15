@@ -14,7 +14,11 @@
 	
 	<hr id="add_hr"/>
 		<?php if ($upform->upCount > 0): ?>
-			<p class="b please tc">В <?=$upform->emonth()?> вы можете поднять ваши объявления ещё <?=$upform->upCount?> раз</p>
+			<?php if (!defined('PAY_ENABLED')):?>
+			<p class="b please tc">В <?=$upform->emonth()?> вы можете поднять ваши объявления ещё <?=$upform->upCount?> <?php echo pluralize($upform->upCount, '', 'раз', 'раза', 'раз') ?></p>
+			<?php else: ?>
+			<p class="b please tc">Вы можете поднять ваше объявление <?=$upform->upCount?> <?php echo pluralize($upform->upCount, '', 'раз', 'раза', 'раз') ?></p>
+			<?php endif ?>
 		<?php else : ?>
 			<?php include $upform->unavialableTpl ; ?>
 		<?php endif?>
