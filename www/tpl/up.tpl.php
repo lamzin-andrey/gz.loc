@@ -8,7 +8,11 @@
 	<?php endif ?>
 	
 	<?php if (sess('successKey') == 'success'): ?>
-	<div id="mainsfrormsuccess" style="display:block"><p>Оплата прошла успешно</p></div>
+	<div id="mainsfrormsuccess" style="display:block"><p>Оплата прошла успешно. В течении нескольких минут вам станут доступны поднятия объявлений.</p>
+	<script>
+		setTimeout(function(){window.location.href = window.location.href;}, 30*1000)
+	</script>
+	</div>
 	<?php sess('successKey', 'unset'); ?>
 	<?php endif ?>
 	

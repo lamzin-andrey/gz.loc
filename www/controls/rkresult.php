@@ -15,7 +15,7 @@ class RkResultReciever {
 
 		// чтение параметров
 		// read parameters
-		$out_summ = floatval(req('OutSum'));
+		$out_summ = req('OutSum');
 		$label = $inv_id = ireq('InvId');
 		$crc    = req('SignatureValue');
 		$shp_item = req('Shp_item');
@@ -40,6 +40,9 @@ class RkResultReciever {
 				}
 			}
 			json_ok();
+		} else {
+			/*echo "$crc == $my_crc";
+			die(__FILE__ .__LINE__);*/
 		}
 		header("HTTP/1.1 201 Created");
 		exit;/**/
