@@ -5,9 +5,9 @@
 	<hr id="add_hr"/>
 		<form action="/private/ops">
 			<div class="aformwrap upformwrap">
-					<div class="aphone">
+					<div class="aphone oplist">
 						<label for="phone" class="slabel">Телефон</label><br/>
-						<?=FV::i("phone") ?>
+						<?=FV::i('phone', null, 0, 'class="opsphone"') ?>
 					</div>
 					<div>
 						<?=FV::radio('3', 'otype', 'Расход', '3') ?>
@@ -26,6 +26,14 @@
 		</form>
 </div>
 
+<div class="operations">
+	<div class="right">Сумма списаний и зачислений:</div>
+	<div class="both"></div>
+	<div class="right"><?=$ops->countedSumm ?></div>
+	<div class="both"></div>
+	<div class="right">Баланс: <?=$ops->balance ?></div>
+	<div class="both"></div>
+</div>
 <?php if (is_array($ops->rows)): ?>
 <div class="operations">
 <div class="operation_heading">

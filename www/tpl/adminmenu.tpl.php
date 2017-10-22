@@ -1,6 +1,6 @@
 <div class="adminmenu" id="hAmenu">
 	<ul class="lstnone bgwhite">
-		<li>
+		<li id="bLi">
 			<a href="/private/autoadv">Автопроверка</a>
 			<img src="/images/e.png" id="bAmenu">
 		</li>
@@ -24,3 +24,4 @@
 		</li>
 	</ul>
 </div>
+<img src="/images/e.png" id="bAmenuOff">

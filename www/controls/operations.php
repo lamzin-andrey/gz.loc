@@ -7,6 +7,9 @@ class Operations {
 	public $next;
 	public $phone;
 	public $otype;
+	
+	public $countedSumm = 'pNaN';
+	public $balance = 'pNaN';
 	public function __construct() {
 		$this->phone = $phone = Shared::preparePhone(req('phone'));
 		if ($phone) {
@@ -36,6 +39,15 @@ class Operations {
 		$this->prev = $this->prev ? $this->prev : 1;
 		$this->next = $page + 1;
 		
+		//Посчитать сумму баланса за период
+		$cmd = "SELECT SUM(o.upcount) AS sum
+		FROM operations AS o
+		LEFT JOIN users AS u ON u.id = o.user_id
+		WHERE u.phone = '{$this->phone}'
+		{$interval}
+		";
+		$this->countedSumm = dbvalue($cmd);
+		$this->balance = dbvalue("SELECT upcount FROM users WHERE phone = '{$this->phone}'");
 	}
 	
 	/**

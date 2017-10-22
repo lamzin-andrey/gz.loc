@@ -1,3 +1,6 @@
+@media (min-width:240px) {
+	.opsphone {font-size:14px!important;}
+}	
 @media (min-width:280px) {
 	.operation div,.operation_heading div{
 		min-width: 280px;
@@ -5,6 +8,7 @@
 		max-width: 280px;
 		text-align:right;
 	}
+	.opsphone {	font-size:14px;}
 }
 @media (min-width:320px) {
 	.operation div,.operation_heading div{
