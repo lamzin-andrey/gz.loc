@@ -1,7 +1,7 @@
 <?php
 // v1.9.10
 if (!defined('SMSPILOT_API')) define('SMSPILOT_API', 'http://smspilot.ru/api.php');
-if (!defined('SMSPILOT_APIKEY')) define('SMSPILOT_APIKEY', '7GE907U6YRJB04JT3NQ767G50L74Q5N13LB6QCT08DAJ36283M41499A5K7E6AP4');
+if (!defined('SMSPILOT_APIKEY')) define('SMSPILOT_APIKEY', SMS_PILOT_API_KEY);
 if (!defined('SMSPILOT_CHARSET')) define('SMSPILOT_CHARSET', 'UTF-8');
 if (!defined('SMSPILOT_FROM')) define('SMSPILOT_FROM', 'GazelMe'); // new in 1.8.1
 
