@@ -81,3 +81,5 @@ function onPSumBtnClick(evt) {
 		alert('Некорректная сумма!');
 	}
 }
+//admin menu toggler
+

@@ -1,7 +1,8 @@
-<div class="adminmenu">
+<div class="adminmenu" id="hAmenu">
 	<ul class="lstnone bgwhite">
 		<li>
 			<a href="/private/autoadv">Автопроверка</a>
+			<img src="/images/e.png" id="bAmenu">
 		</li>
 		<li>
 			<a href="/private/newadv">Список объявлений</a>
