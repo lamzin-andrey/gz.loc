@@ -53,7 +53,7 @@ class EPochta2 {
 			$result[] = $o;
 		}
 		$data['XML'] = str_replace('[NUMBERS]', join("\n", $numbers), $data['XML']);
-		$response = $request->execute('http://api.myatompark.com/members/sms/xml.php', $data);
+		$response = $request->execute('http://api.atompark.com/members/sms/xml.php', $data);
 		if ($response->responseStatus == 200) {
 			$s = $response->responseText;
 			//TODO здесь, если status < 1 всем поставить success = false
