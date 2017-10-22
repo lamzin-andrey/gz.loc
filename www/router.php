@@ -257,6 +257,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	}
 	
 	if (strpos($url, "private") === 1) {
+		$css = isset($css) ? $css : '';
+		$css .= '<link href="/styles/admin.css?' . ASSETS_VERSION . '" media="all" rel="stylesheet" type="text/css" />';
 		if (strpos($url, "private/login") === 1) { 
 			$handler = "loadmin.php";
 			$inner = TPLS . "/loadmin.tpl.php";

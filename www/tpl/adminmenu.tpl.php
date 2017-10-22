@@ -1,4 +1,4 @@
-<div style="position:fixed; top:100px; left:0px; width:186px;">
+<div class="adminmenu">
 	<ul class="lstnone bgwhite">
 		<li>
 			<a href="/private/autoadv">Автопроверка</a>
