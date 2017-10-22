@@ -15,7 +15,7 @@
 						<?=FV::radio('1', 'otype', 'Подарок', '1') ?>
 					</div>
 					<div class="dateinputs">
-						<?=FV::labinp('from', 'С') ?> <?=FV::labinp('to', 'по') ?> 
+						<?=FV::labinp('from', 'С') ?><br><?=FV::labinp('to', 'по') ?> 
 					</div>
 					<div class="right upformbtn">
 						<?=FV::sub("sup", "Отправить"); ?>

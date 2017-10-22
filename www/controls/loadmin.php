@@ -20,6 +20,9 @@ class LoginAdmin {
 				utils_302("/private/autoadv");
 			}
 		}
+		if( sess('role') == 'root') {
+			utils_302('/private/autoadv');
+		}
 	}
 	
 }

@@ -12,24 +12,38 @@ class Operations {
 	public $balance = 'pNaN';
 	public function __construct() {
 		$this->phone = $phone = Shared::preparePhone(req('phone'));
-		if ($phone) {
+		//if ($phone) {
 			$this->_getRows();
-		}
+		//}
 	}
 	private function _getRows() {
+		if (!req('from', 'GET')) {
+			$_GET['from'] = date('Y-m-01');
+		}
+		if (!req('to', 'GET')) {
+			$_GET['to'] = date('Y-m-d');
+		}
+		$this->from = req('from', 'GET');
+		/*var_dump($this->from);
+		die;/**/
+		$this->to = req('to', 'GET');
 		$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 		$page = $page ? $page : 1;
 		$limit = 31;
 		$offset = ($page - 1) * 10;
 		
 		$typeCondition = $this->_readTypeCond();
+		$phoneCondition = "u.phone = '{$this->phone}'";
+		if (!$this->phone) {
+			$phoneCondition = "u.phone != 'NANT'";
+		}
 		$interval = $this->_readDateInterval();
 		
 		$cmd = "SELECT o.created, u.phone, oc.name, o.main_id, o.upcount, o.sum, o.pay_transaction_id 
 		FROM operations AS o
 		LEFT JOIN op_codes AS oc ON oc.id = o.op_code_id
 		LEFT JOIN users AS u ON u.id = o.user_id
-		WHERE u.phone = '{$this->phone}'
+		WHERE {$phoneCondition}
 		{$typeCondition}
 		{$interval}
 		ORDER BY created DESC LIMIT {$offset}, {$limit}
@@ -86,7 +100,5 @@ class Operations {
 }
 
 $ops = new Operations();
-$javascript = isset($javascript) ? $javascript : '';
 $css = isset($css) ? $css : '';
-$javascript .= '<script type="text/javascript" src="/js/ops.js?' . ASSETS_VERSION . '"></script>';
 $css .= '<link href="/styles/ops.css?' . ASSETS_VERSION . '" media="all" rel="stylesheet" type="text/css" />';

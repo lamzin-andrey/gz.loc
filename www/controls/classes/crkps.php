@@ -39,11 +39,11 @@ class CRKParams {
 
 		// язык
 		// language
-		$this->culture = "ru";
+		$culture = $this->culture = "ru";
 
 		// кодировка
 		// encoding
-		$this->encoding = "utf-8";
+		$encoding = $this->encoding = "utf-8";
 
 		// формирование подписи
 		// generate signature
