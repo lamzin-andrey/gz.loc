@@ -9,7 +9,7 @@ class CMainList {
 	public $maxpage = 0;
 	public $page = 1;
 	
-	protected $filter = " WHERE m.is_deleted != 1 AND m.is_moderate = 1";
+	protected $filter = " WHERE m.is_deleted != 1 AND m.is_moderate = 1 AND m.is_hide != 1";
 	protected $stopSql = false;
 	protected $offset = 0;
 	protected $limit = 10;

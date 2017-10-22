@@ -103,7 +103,7 @@
  			$t = join(" OR ", $distance);
  			$f .= " AND ($t)";
  		}
- 		$f .= " AND m.is_deleted != 1 AND m.is_moderate = 1";
+ 		$f .= " AND m.is_deleted != 1 AND m.is_moderate = 1 AND m.is_hide != 1";
  		$this->filter = $f;
  	}
  }
