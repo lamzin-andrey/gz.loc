@@ -1,0 +1,23 @@
+@media(max-width:785px) {
+	.adminmenu {
+		top:0px;
+	}
+}
+@media(min-width:786px) {
+	.adminmenu {
+		top:100px;
+	}
+}
+.adminmenu {
+	position:fixed; left:0px; width:186px;
+}
+#bAmenu {
+	max-width:16px;
+	margin-left:18px;
+}
+#bAmenuOff {
+	position:fixed;
+	max-width:16px;
+	top:0px;
+	left:-20px;
+}
