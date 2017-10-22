@@ -26,7 +26,7 @@ class Worker {
 		if ($r === $s) {
 			return;
 		}
-		query("UPDATE users SET upcount = 100 WHERE upcount < 100");
+		query("UPDATE users SET upcount = 200 WHERE upcount < 200");
 		query("INSERT INTO ymup VALUES ({$s})");
 	}
 	/**
