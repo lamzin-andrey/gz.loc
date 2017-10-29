@@ -498,6 +498,7 @@ li {
 	background: linear-gradient(to top, #0ECD3A, #80EE9A);
 	min-height:19px;
 	margin:0 auto;
+	cursor:pointer;
 }
 /* background: linear-gradient(to top, #0ECD3A, #80EE9A); more dark */
 /* #10CF3C, #A0FFAC more light */
@@ -855,6 +856,7 @@ li {
 }
 .w100 {width:100%;}
 .tj{text-align:justify;}
+.tdn{text-decoration:none;}
 
 #smsCode {
 	margin: 0 0 15px 0;

@@ -25,6 +25,16 @@
 			<input type="hidden" name="action" value="gpwd" />
 		</form>
 </div>
+<a href="/private/cq" class="tdn">
+	<div class="button" id="bClearSms">Очистить очередь sms с кодами</div>
+</a>
+
+<?php if (sess('clearcodescomplete')) : ?>
+	<div id="mainsfrormsuccess" style="display:block" class="clearqueuemsg">
+		<p><?php echo sess('clearcodescomplete')?></p>
+	</div>
+<?php sess('clearcodescomplete', 'unset'); ?>
+<?php endif ?>
 
 <div class="operations">
 	<div class="right">Сумма списаний и зачислений:</div>

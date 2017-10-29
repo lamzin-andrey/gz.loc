@@ -58,3 +58,10 @@
 .operation_heading .sum, .operation_heading .approved {
 	font-size:10px;
 }
+#bClearSms {
+	max-width:275px;
+	width:100%;
+}
+.clearqueuemsg {
+	text-align:center;
+}

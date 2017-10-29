@@ -267,7 +267,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		if (strpos($url, "private/login") === 1) { 
 			$handler = "loadmin.php";
 			$inner = TPLS . "/loadmin.tpl.php";
-		} else if (@$_SESSION["role"] != "root") {
+		} else if (sess('role') != 'root') {
 			utils_302();
 		}
 		//$handler = "setting.php";
@@ -306,5 +306,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 			$handler = "operations.php";
 			$inner = TPLS . "/a/operations.tpl.php";
 			$showAddAdvBtn = false;
+		}
+		if (strpos($url, "private/cq") === 1) {
+			$handler = "cq.php";
+			sess('clearcodescomplete', 'Очередь сообщений очищена');
+			utils_302('/private/ops');
+			exit;
 		}
 	}
