@@ -8,7 +8,7 @@
 	<!-- //показываем надпись Вам отправлено смс с кодом, введите код в это поле -->
 	<div class="form getsmsform">
 		<form action="/smsverify/verify" method="POST">
-		<span>Вам отправлено смс с кодом, введите код в это поле </span><input type="text" value="" id="smsCode" name="smsCode">
+		<span>Вам отправлено смс с кодом, введите код в это поле </span><input type="number" value="" id="smsCode" name="smsCode">
 		<div class="iblock">
 			<span class="red"><?=$smsVerify->invalidCodeMessage?></span>
 		</div>

@@ -141,7 +141,7 @@ class CUpAction {
 	 * @description Проверяет, доступен ли сервер, через который выполняется проксирование запросов с yandeх money
 	*/
 	public function setPayProxyEnabled() {
-		if (defined('CHECK_PROXY_OFF')) {
+		if (defined('CHECK_PROXY_OFF') || !defined('PAY_ENABLED')) {
 			$this->payProxyEnabled = true;
 			return;
 		}

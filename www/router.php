@@ -219,6 +219,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	if ($url == '/worker') {
 		$handler = "worker.php";
 	}
+	if ($url == '/egate') {
+		$handler = "egate.php";
+	}
 	if ($url == '/pcf') {
 		$handler = "reciever.php";
 	}
