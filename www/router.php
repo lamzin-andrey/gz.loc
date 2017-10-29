@@ -309,8 +309,5 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		}
 		if (strpos($url, "private/cq") === 1) {
 			$handler = "cq.php";
-			sess('clearcodescomplete', 'Очередь сообщений очищена');
-			utils_302('/private/ops');
-			exit;
 		}
 	}
