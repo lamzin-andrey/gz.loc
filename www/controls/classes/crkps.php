@@ -4,7 +4,7 @@ class CRKParams {
 	 * @description вернуть параметры для формы робокассы
 	*/
 	public function getParams($payId, $sum) {
-		$sum = 10;
+		//$sum = 20;
 		// 1.
 		// Оплата заданной суммы с выбором валюты на сайте мерчанта
 		// Payment of the set sum with a choice of currency on merchant site 
