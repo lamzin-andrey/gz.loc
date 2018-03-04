@@ -226,7 +226,7 @@
 /** на прочих разрешениях тянем на всю ширину экрана */
 @media (min-width:240px) {
 	.aformwrap .aphone input[type=text]{
-		width:83%;
+		width:80%;
 	}
 	.aformwrap  .apwd input[type=password] {
 		width:93%;
