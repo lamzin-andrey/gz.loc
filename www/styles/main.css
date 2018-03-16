@@ -391,8 +391,9 @@ body {
 	vertical-align:middle;
 }
 #banner-in {
-	color:#6274E4;
-	font-weight:normal;
+	color: #424558;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 header.mainhead {
 	border-bottom:green 5px solid;
