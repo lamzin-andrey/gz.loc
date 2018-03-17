@@ -165,7 +165,7 @@ class CAdd {
 		}
 		//объявление уже подано и с момента его публикации прошло не более 30 суток
 		//регион включить в условие не будем, так как найдутся люди, которые будут публиковать объявления по Москве а писать Кемерово
-		if ($advId == 0) {
+		if ($advId == 0 && (sess('role') != 'root')) {
 			$dateCreated = dbvalue("SELECT `created` FROM main WHERE phone = '{$phone}' AND is_deleted = 0 ORDER BY created DESC LIMIT 1");
 			$dateCreated = strtotime($dateCreated);
 			$advLifeTime = 30*24*3600;
@@ -307,6 +307,10 @@ class CAdd {
 		$is_moderate = $this->is_moderate;
 		$codename = utils_translite_url(utils_cp1251($title));
 		$is_deleted = 1;
+		
+		if (sess('role') == 'root') {
+			$is_deleted = 0;
+		}
 		
 		$isVerify = 0;
 		if (intval( sess('uid') ) > 0) {

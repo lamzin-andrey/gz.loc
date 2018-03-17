@@ -45,6 +45,7 @@
 					<tr>
 						<td>
 							<input type="file" id="image" name="image" style="width:173px"/>
+							<div class="red" id="imerr"></div>
 						</td>
 						<td>
 							<img src="/images/l-w.gif" id="upLdr" class="hide"/>
@@ -67,6 +68,7 @@
 			<div class="right prmf">
 				<input type="submit" value="Подать объявление" id="addsubmit" />
 				<input type="hidden" name="token" value="<?=$_SESSION["utoken"] ?>"/>
+				<input class="hide" type="checkbox" name="agreement" id="agreement" value="1" checked="checked"/>
 			</div>
 			<div class="both"></div>
 		</form>
