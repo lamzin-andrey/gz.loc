@@ -66,10 +66,10 @@ class Worker {
 			$numbers = [];
 			$numbersSz = 0;
 			foreach ($results as $smsResult) {
-				if ($smsResult->success == true) {
+				//if ($smsResult->success == true) {
 					$numbers[] = $smsResult->number;
 					$numbersSz++;
-				}
+				//}
 			}
 			if ($numbersSz) {
 				$numbers = array_map(function($i){
