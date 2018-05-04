@@ -872,3 +872,10 @@ li {
 #smsCode {
 	margin: 0 0 15px 0;
 }
+.fcomment{
+	font-size:11px;
+	margin-top:-9px;
+}
+.green{
+	color:#00AA00;
+}

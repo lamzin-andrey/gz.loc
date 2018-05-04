@@ -77,6 +77,9 @@ function addFormPostAction() {
 			<p class="adphone">
 				<?=FV::labinp("phone", "Введите номер сотового телефона *", @$addForm->phone, 0, 0, $authorized);?>
 			</p>
+			<p class="fcomment green">
+				Например, 8 917 000 11 22 или +7 917 000 11 22, + перед семеркой обязателен! (пробелы и скобки по желанию)
+			</p>
 			<?php if (!$authorized) {?>
 			<div id="grb">
 				<p class="register">Если хотите обновлять и редактировать объявление, введите пароль
