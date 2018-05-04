@@ -424,6 +424,16 @@ header.mainhead {
 	color:#aa0000;
 	line-height: 18px;
 }
+#mainsformwarnings {
+	background-color: #FFEFB0;
+	padding: 10px 16px;
+	width:100%;
+	margin: 0 auto;
+	font-size:10pt;
+	display:none;
+	color:#AA7300;
+	line-height: 18px;
+}
 #autherror{
 	background-color: #FFB0B9;
 	padding: 10px 16px;

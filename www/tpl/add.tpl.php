@@ -20,6 +20,14 @@ function addFormPostAction() {
 	$("mainsfrormsuccess").setStyle("display", "block");
 </script>
 <?}?>
+<div id="mainsformwarnings"><?php if (count($addForm->warnings)) {
+?><? foreach($addForm->warnings as $e) print "<p>{$e}</p>\n";?><?php } ?></div>
+<?php if (count($addForm->warnings)) {
+?><script type="text/javascript">
+	$("mainsformwarnings").setStyle("display", "block");
+</script>
+<?}?>
+
 <div id="mainsfrormadd">
 	<div id="add_legend">Добавить свое объявление</div>
 	<hr id="add_hr"/>

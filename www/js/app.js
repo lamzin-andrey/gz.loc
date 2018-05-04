@@ -305,6 +305,12 @@ function onAddAdv(data) {
 	} else if (data.success == 1) {
 		$("mainsfrormsuccess").set("html", '<p>' + data.msg + '</p>').setStyle("display", "block");
 		$("mainsfrormerror").set("html", '').setStyle("display", "none");
+		
+		if (data.wrns && data.wrns.length) {
+			s = data.wrns.join("<p>");
+			$("mainsformwarnings").set("html", s).setStyle("display", "block");
+		}
+		
 		scrollUp();
 		if (!window.noredir) {
 			setTimeout( function() {

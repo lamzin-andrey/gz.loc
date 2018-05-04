@@ -178,6 +178,9 @@ function now() {
     $d = date("Y-m-d H:i:s");
     return date("Y-m-d H:i:s", strtotime($d) + SUMMER_TIME);
 }
+function nowtime() {
+    return (time() + SUMMER_TIME);
+}
 /**
  * @desc Функция ресайза png c сохранением прозрачности
  * @param string $srcFilename   - путь к файлу изображения в формате png

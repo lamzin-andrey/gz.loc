@@ -17,6 +17,7 @@ class CAdd {
 	protected $checkPasswordState = 0;
 	
 	public  $errors = array();
+	public  $warnings = [];
 	public  $tSuccessMessageSms = 'Вам надо подтвердить номер вашего телефона. Сейчас вы будете перенаправлены на страницу подтверждения.';
 	public  $tSuccessMessage = 'Ваше объявление добавлено и будет размещено на сайте после проверки.';
 	public  $successMessage = 'Вам надо подтвердить номер вашего телефона. Сейчас вы будете перенаправлены на страницу подтверждения.';
@@ -333,8 +334,7 @@ class CAdd {
 		//die($insert);
 		$id = query($insert);
 		if ($id) {
-			$d = dbvalue("SELECT max(delta) FROM main");
-			$d += 1;
+			$d = $this->_getDelta($phone, $id);
 			query("UPDATE main SET delta = $d WHERE id = $id");
 			
 			$update = "phone = '$phone'";
@@ -353,7 +353,8 @@ class CAdd {
 			
 			$d = dbvalue("SELECT max(delta) FROM users");
 			$d += 1;
-			query("UPDATE users SET delta = $d WHERE id = $uid");
+			query("UPDATE users SET delta = {$d} WHERE id = {$uid}");
+			
 			$this->success = 1;
 			if (!$isAuthVerifyUser) {
 				$this->_goSmsVerify($id, $phone);
@@ -372,7 +373,12 @@ class CAdd {
 			}
 		}
 		if (@$_POST["xhr"]) {
-			$data = array("success" => 1, "msg" => $this->successMessage, 'm' => ($this->isAuthVerifyUser ? 1 : 0));
+			$data = [
+				'success' => 1,
+				'msg' => $this->successMessage,
+				'wrns' => $this->warnings,
+				'm' => ($this->isAuthVerifyUser ? 1 : 0)
+			];
 			print json_encode($data);
 			exit;
 		}
@@ -394,5 +400,26 @@ class CAdd {
 		sess('verified_adv_phone', $phone);
 		sess('add_adv_flag', true);
 		sess('up_adv_flag', 'unset');
+	}
+	
+	/**
+	 * @description Если для данного номера телефона существует любое объявление с момента created которог прошло не более месяца, delta будет скопирована с него
+	 * @param String phone телефон пользователя
+	 * @param int идентификатор вставленного объявления
+	 * @return новое значение delta для таблицы main 
+	*/
+	protected function _getDelta($phone, $advId) {
+		$row = dbrow("SELECT created, delta FROM main WHERE phone = '{$phone}' AND id != {$advId} ORDER BY created DESC LIMIT 1", $n);
+		if ($n) {
+			$time = nowtime();
+			$lastTime = strtotime($row['created']);
+			if ($time - $lastTime <= MONTH_IN_SEC) {
+				$this->warnings[] = 'С момента публикации вами последнего объявления прошло менее месяца. Ваше новое объявление не будет поднято вверх, оно займет ту же позицию в результатах поиска, которую могло бы занимать старое.';
+				return intval($row['delta']);
+			}
+		} 
+		$d = intval(dbvalue('SELECT max(delta) FROM main'));
+		$d += 1;
+		return $d;
 	}
 }
