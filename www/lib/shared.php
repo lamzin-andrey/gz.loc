@@ -301,9 +301,11 @@ class Shared {
 		return $id;
 	}
 	
-	static public function getCity($cname) {
-		//normalize($cname);
+	static public function getCity($cname, $regId = 0) {
 		$cmd = "SELECT id FROM cities WHERE codename = '$cname'";
+		if ($regId) {
+			$cmd = "SELECT id FROM cities WHERE codename = '{$cname}' AND region = {$regId}";
+		}
 		$id = (int)dbvalue($cmd);
 		return $id;
 	}

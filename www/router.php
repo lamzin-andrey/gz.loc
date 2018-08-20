@@ -56,7 +56,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 			$advTitle = '';
 			if ($regId) {
 				$sh = 0;
-				$cityId = Shared::getCity(@$aUrl[2]);
+				$cityId = Shared::getCity(a($aUrl, 2), $regId);
 				$advId = (int)@$aUrl[4];
 				if (!$advId) {
 					$advId = (int)@$aUrl[3];
