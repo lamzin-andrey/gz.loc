@@ -7,7 +7,7 @@ $token = @$_SESSION["utoken"];
 if (!$token) {
     $token = $_SESSION["utoken"] = md5( strtotime( date("Y-m-d H:i:s") ) );
 }
-if (count($_POST) && $_SERVER['REQUEST_URI'] != '/egate' &&$_SERVER['REQUEST_URI'] != '/pcf' && $_SERVER['REQUEST_URI'] != '/yagate' && $_SERVER['REQUEST_URI'] != '/rksuccess' && $_SERVER['REQUEST_URI'] != '/rkresult' && $_SERVER['REQUEST_URI'] != '/rkfail'&& $_SERVER['REQUEST_URI'] != '/yproxycheck' ) {
+if (count($_POST) && $_SERVER['REQUEST_URI'] != '/egate' &&$_SERVER['REQUEST_URI'] != '/pcf' && $_SERVER['REQUEST_URI'] != '/yagate' && $_SERVER['REQUEST_URI'] != '/rksuccess' && $_SERVER['REQUEST_URI'] != '/rkresult' && $_SERVER['REQUEST_URI'] != '/rkfail'&& $_SERVER['REQUEST_URI'] != '/yproxycheck' && $_SERVER['REQUEST_URI'] != '/gate' ) {
 	if ($token && ($token != @$_REQUEST["utk"] && $token != @$_REQUEST["token"])) {
 		die("Неверный ключ");
 	}
