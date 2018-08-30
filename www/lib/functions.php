@@ -498,6 +498,18 @@ function req($v, $varname = 'REQUEST') {
 	return null;
 }
 /**
+ * @desc получить переменную из requestи сделать ей trim
+**/
+function treq($v, $varname = 'REQUEST') {
+	return trim(req($v, $varname));
+}
+/**
+ * @desc получить переменную из request и привести её к float
+**/
+function freq($v, $varname = 'REQUEST') {
+	return floatval(req($v, $varname));
+}
+/**
  * @desc получить int переменную из request
 **/
 function ireq($v, $varname = 'REQUEST') {
