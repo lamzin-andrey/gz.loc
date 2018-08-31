@@ -65,7 +65,8 @@ class CAdd {
 	/**
 	 * @desc Сохранить файл
 	 * */
-	protected function uploadHandler() {
+	protected function uploadHandler()
+	{
 		if ($this->cpError) {
 			return;
 		}
@@ -74,43 +75,16 @@ class CAdd {
 			$file =  a($_FILES, 'image');
 		}
 		if ($file) {
-			$ext = utils_getExt($file['name']);
-			$name = md5($file['name'] . now());
-			$subdir = date("Y") . "/" . date("m");
-			$dest = DR . "/images/$subdir/$name.$ext";
-			move_uploaded_file($file["tmp_name"], $dest);
-			$mime = utils_getImageMime($dest, $w, $h);
-			if ($mime) {
-				if($w >= $h) {
-		        	$new_size_w = MAX_WIDTH;
-		        	$h = $h*MAX_WIDTH/$w;
-		        	$w = $new_size_w;
-				}
-				else{
-					$new_size_h = MAX_HEIGHT;
-		        	$w = $w*MAX_HEIGHT/$h;
-		        	$h = $new_size_h;
-				}
-				switch ($mime) {
-					case "image/png":
-						utils_pngResize($dest, $dest, $w, $h);
-						break;
-					case "image/gif":
-						utils_gifResize($dest, $dest, $w, $h);
-						break;
-					case "image/jpeg":
-						utils_jpgResize($dest, $dest, $w, $h, 100);
-				}
-			} else {
-				@unlink($dest);
-				json_error('msg', 'Ошибка загрузки файла');
+			$uploadInfo = Shared::savePhoto($file);
+			if ($uploadInfo->error) {
+				json_error('msg', $uploadInfo->error);
 			}
-			if (a($_GET, "ajaxUpload") == 1) {
-				$dest = str_replace(DR, '', $dest);
-				die(trim($dest));
+			if (a($_GET, 'ajaxUpload') == 1) {
+				$dest = $uploadInfo->htmlPath;
+				echo (trim($dest));
+				exit;
 			}
-			$this->imagePath = str_replace(DR, '', $dest);
-			// '/images/gpasy.jpeg'
+			$this->imagePath = $uploadInfo->path;
 		}
 	}
 	/**

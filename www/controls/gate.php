@@ -21,10 +21,6 @@ class CGateAdv {
 	}
 	
 	private function saveAdv() {
-		//get city id!!
-		//check type and far away
-		//check price
-		//save data
 		if ($this->_validate()) {
 			$people = ireq('people');
 			$box = ireq('box');
@@ -33,6 +29,8 @@ class CGateAdv {
 			$near = ireq('near');
 			$piknik = ireq('piknik');
 			//TODO закончить вставку
+			$image = $this->_saveImage();
+			$codename = utils_translite_url($this->name);
 			query("INSERT INTO main 
 			(`region`, `city`, `people`, `price`, `box`, `term`, `far`, `near`, `piknik`, `title`, `image`, `name`, `addtext`, `phone`, `is_moderate`, `codename`) VALUES 
 			('{$this->regId}', 
@@ -44,8 +42,10 @@ class CGateAdv {
 																{$far},
 																		{$near},
 																			{$piknik},
-																				'{$this->title}'
-																					'{$image}'
+																				'{$this->title}',
+																					'{$image}'," . 
+			//`name`, `addtext`, `phone`, `is_moderate`, `codename`
+			"'{$this->name}', '{$this->body}', '{$this->phone}', 1, '{$codename}'
 					   )");//TODO safe image
 		} else {
 			$this->_echoErrors();
@@ -100,6 +100,7 @@ class CGateAdv {
 		$isDistanceDefined = ireq('far') || ireq('near') || ireq('piknik');
 		$this->price = $price = freq('iPrice');
 		$this->name = $name = treq('iName');
+		$this->body = $body = treq('iBody');
 		$this->title = $title = ireq('iTitle');
 		if (!$isTypeDefined) {
 			$this->_errors[] = 'Не определен тип машины'; 
@@ -113,6 +114,9 @@ class CGateAdv {
 		if (!$name) {
 			$this->_errors[] = 'Не указано имя'; 
 		}
+		if (!$body) {
+			$this->_errors[] = 'Не указан текст объявления'; 
+		}
 		return (count($this->_errors) == 0);
 	}
 	private function _echoErrors()
@@ -120,6 +124,12 @@ class CGateAdv {
 		foreach ($this->_errors as $s) {
 			echo '<p>' . $s . '</p>';
 		}
+		
+	}
+	private function _saveImage()
+	{
+		//TODO default
+		//TODO Shared::savePhoto();
 		
 	}
 }

@@ -384,4 +384,57 @@ class Shared {
 		$sql = "UPDATE users SET upcount = '{$upcount}' WHERE id = {$userId}";
 		query($sql);
 	}
+	/**
+	 * @return StdClass {path:абсолютный путь к файлу, htmlPath:путь файлу для html, error:сообщение об ошибке}
+	*/
+	public static function savePhoto($file)
+	{
+		$r =  new StdClass();
+		$r->path     = '';
+		$r->htmlPath = '';
+		$r->error    = '';
+		if ($file) {
+			$ext = utils_getExt($file['name']);
+			$name = md5($file['name'] . now());
+			$subdir = date('Y') . '/' . date('m');
+			$dest = DR . '/images/' . $subdir . '/' . $name . $ext;
+			move_uploaded_file($file['tmp_name'], $dest);
+			$mime = utils_getImageMime($dest, $w, $h);
+			if ($mime) {
+				if($w >= $h) {
+		        	$new_size_w = MAX_WIDTH;
+		        	$h = $h * MAX_WIDTH/$w;
+		        	$w = $new_size_w;
+				}
+				else{
+					$new_size_h = MAX_HEIGHT;
+		        	$w = $w * MAX_HEIGHT/$h;
+		        	$h = $new_size_h;
+				}
+				switch ($mime) {
+					case 'image/png':
+						utils_pngResize($dest, $dest, $w, $h);
+						break;
+					case 'image/gif':
+						utils_gifResize($dest, $dest, $w, $h);
+						break;
+					case 'image/jpeg':
+						utils_jpgResize($dest, $dest, $w, $h, 100);
+				}
+			} else {
+				@unlink($dest);
+				//json_error('msg', 'Ошибка загрузки файла');
+				$r->error = 'Ошибка загрузки файла';
+				return $r;
+			}
+			if (a($_GET, 'ajaxUpload') == 1) {
+				$r->path = $dest;
+				$dest = str_replace(DR, '', $dest);
+				$r->htmlPath = $dest;
+				//die(trim($dest));
+				return $r;
+			}
+			//$this->imagePath = str_replace(DR, '', $dest);
+		}
+	}
 }
