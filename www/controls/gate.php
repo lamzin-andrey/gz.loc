@@ -17,10 +17,16 @@ class CGateAdv {
 		}
 		if (req('bSend')) {
 			$this->_saveAdv();
+			echo 'Type here!';
+			exit;
 		}
 	}
 	
-	private function saveAdv() {
+	private function _saveAdv() {
+		if (req('pwd') != ADV_GATE_PWD) {
+			echo 'Invalid password';
+			exit;
+		}
 		if ($this->_validate()) {
 			$people = ireq('people');
 			$box = ireq('box');
@@ -29,9 +35,9 @@ class CGateAdv {
 			$near = ireq('near');
 			$piknik = ireq('piknik');
 			//TODO закончить вставку
-			$image = $this->_saveImage();
-			$codename = utils_translite_url($this->name);
-			query("INSERT INTO main 
+			$image = $this->_saveImage($people, $box, $term);
+			$codename = utils_translite_url(utils_cp1251($this->title));
+			$id = query("INSERT INTO main 
 			(`region`, `city`, `people`, `price`, `box`, `term`, `far`, `near`, `piknik`, `title`, `image`, `name`, `addtext`, `phone`, `is_moderate`, `codename`) VALUES 
 			('{$this->regId}', 
 					   '{$this->cityId}',
@@ -46,7 +52,10 @@ class CGateAdv {
 																					'{$image}'," . 
 			//`name`, `addtext`, `phone`, `is_moderate`, `codename`
 			"'{$this->name}', '{$this->body}', '{$this->phone}', 1, '{$codename}'
-					   )");//TODO safe image
+					   )");
+			$max = dbvalue('SELECT MAX(delta) FROM main');
+			$max++;
+			query('UPDATE main SET delta = ' . $max . ' WHERE id = ' . $id);
 		} else {
 			$this->_echoErrors();
 			exit;
@@ -101,7 +110,7 @@ class CGateAdv {
 		$this->price = $price = freq('iPrice');
 		$this->name = $name = treq('iName');
 		$this->body = $body = treq('iBody');
-		$this->title = $title = ireq('iTitle');
+		$this->title = $title = treq('iTitle');
 		if (!$isTypeDefined) {
 			$this->_errors[] = 'Не определен тип машины'; 
 		}
@@ -126,11 +135,24 @@ class CGateAdv {
 		}
 		
 	}
-	private function _saveImage()
+	private function _saveImage($people, $box, $term)
 	{
-		//TODO default
-		//TODO Shared::savePhoto();
-		
+		$image = '/images/gazel.jpg';
+		if (isset($_FILES['iPhoto'])) {
+			$o = Shared::savePhoto($_FILES['iPhoto']);
+			$image = $o->htmlPath ? $o->htmlPath : $image;
+		} else {
+			if ($people) {
+				$image = '/images/gpasy.jpeg';
+			}
+			if ($term) {
+				$image = '/images/trem.jpg';
+			}
+			if ($box) {
+				$image = '/images/gazel.jpg';
+			}
+		}
+		return $image;
 	}
 }
 

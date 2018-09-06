@@ -434,7 +434,10 @@ class Shared {
 				//die(trim($dest));
 				return $r;
 			}
+			$dest = str_replace(DR, '', $dest);
+			$r->htmlPath = $dest;
 			//$this->imagePath = str_replace(DR, '', $dest);
 		}
+		return $r;
 	}
 }
