@@ -311,7 +311,8 @@ class CAdd {
 		$id = query($insert);
 		if ($id) {
 			$d = $this->_getDelta($phone, $id);
-			query("UPDATE main SET delta = $d WHERE id = $id");
+			$now = now();
+			query("UPDATE main SET delta = $d, date_update = '{$now}' WHERE id = $id");
 			
 			$update = "phone = '$phone'";
 			if ($this->checkPasswordState == 0) {

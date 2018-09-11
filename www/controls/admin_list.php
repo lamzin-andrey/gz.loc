@@ -96,7 +96,8 @@
  			if (isset($_POST['id']) && $id = intval($_POST['id'])) {
  				$cmd = "SELECT max(delta) + 2 FROM main";
  				$d = dbvalue($cmd);
- 				query("UPDATE main SET delta = {$d} WHERE id = $id", $nR, $aR);
+ 				$now = now();
+ 				query("UPDATE main SET delta = {$d}, date_update='{$now}' WHERE id = {$id}", $nR, $aR);
  				json_ok('publicId', $id);
  			}
  		}

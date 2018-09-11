@@ -119,6 +119,7 @@ class CCabinetEdit extends CAdd {
 		}
 		$is_moderate = $this->is_moderate;
 		
+		$now = now();
 		$update = "UPDATE main SET
 			region = $region,
 			city =  $city,
@@ -134,6 +135,7 @@ class CCabinetEdit extends CAdd {
 			addtext = '$addtext',
 			is_moderate = '$is_moderate',
 			automoderate = {$automoderate},
+			date_update = '{$now}',
 			codename = '$codename'
 		WHERE id = {$this->id} AND phone = {$this->phone}";
 		

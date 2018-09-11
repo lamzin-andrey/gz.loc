@@ -61,7 +61,8 @@ class CUpAction {
 		$id = $iAdvId;
 		$cmd = "SELECT max(delta) + 2 FROM main";
 		$d = dbvalue($cmd);
-		query("UPDATE main SET delta = {$d} WHERE id = {$id}", $nR, $aR);
+		$now = now();
+		query("UPDATE main SET delta = {$d}, date_update='{$now}' WHERE id = {$id}", $nR, $aR);
 		if ($aR) {
 			$_SESSION["ok_msg"] = "Ваше объявление поднято в результатах поиска";
 			$date = date('Y-m-d');

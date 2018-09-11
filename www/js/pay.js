@@ -2,7 +2,11 @@ window.n = 0;
 window.fm = 'Сбой при определении параметров оплаты, обновите страницу и попробуйте ещё раз';
 $(document).addEvent('domready', pInit); 
 function pInit() {
-	$("hPaysumGr").getElements("div").each(function(i){
+	var o = $("hPaysumGr");
+	if (!o) {
+		return;
+	}
+	o.getElements("div").each(function(i){
 			i.onclick = onPSumBtnClick;
 		}
 	);
