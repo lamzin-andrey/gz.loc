@@ -17,11 +17,37 @@ class CGateAdv {
 		}
 		if (req('bSend')) {
 			$this->_saveAdv();
-			echo 'Type here!';
+			$this->shuffleAction();
+			echo '<a href="/">Type here!</a>';
 			exit;
 		}
 	}
-	
+	/**
+	 * @description потому что мало ли где ещё буду использовать
+	*/
+	public function shuffleAction()
+	{
+		$N = rand(40, 50);
+		//Пока количество менее N выбираем N последних объявлений, 
+		//	отсортированных по убыванию id и возрастанию даты последнего поднятия, 
+		// таких, чтобы user_id IS NULL
+		$rows = query('SELECT main.id FROM main LEFT JOIN users ON main.phone = users.phone WHERE users.id IS NULL ORDER BY id DESC, date_update ASC LIMIT ' . $N, $cnt);
+		//В выборке берем первую половину
+		$rows = array_chunk($rows, floor($N/2))[0];
+		//Перемешиваем её и поднимаем, при этом увеличиваем date_update
+		$now = now();
+		$a = [];
+		$n = dbvalue('SELECT delta FROM main ORDER BY id DESC LIMIT 1') + 1;
+		shuffle($rows);
+		$N = rand(10, 20);
+		for ($i = 0; $i < $N; $i++) {
+			shuffle($rows);
+		}
+		for ($i = 0; $i < $cnt; $i++) {
+			query('UPDATE main SET delta = ' . $n . ', date_update = \'' . $now . '\' WHERE id = ' . $rows[$i]['id']);
+			$n++;
+		}
+	}
 	private function _saveAdv() {
 		if (req('pwd') != ADV_GATE_PWD) {
 			echo 'Invalid password';
