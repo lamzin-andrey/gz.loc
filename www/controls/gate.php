@@ -16,8 +16,8 @@ class CGateAdv {
 			$this->_checkPhone();
 		}
 		if (req('bSend')) {
-			$this->_saveAdv();
 			$this->shuffleAction();
+			$this->_saveAdv();
 			echo '<a href="/">Type here!</a>';
 			exit;
 		}
@@ -33,7 +33,9 @@ class CGateAdv {
 		// таких, чтобы user_id IS NULL
 		$rows = query('SELECT main.id FROM main LEFT JOIN users ON main.phone = users.phone WHERE users.id IS NULL ORDER BY id DESC, date_update ASC LIMIT ' . $N, $cnt);
 		//В выборке берем первую половину
-		$rows = array_chunk($rows, floor($N/2))[0];
+		$cnt = floor($N/2);
+		$rows = array_chunk($rows, $cnt)[0];
+		
 		//Перемешиваем её и поднимаем, при этом увеличиваем date_update
 		$now = now();
 		$a = [];
@@ -43,8 +45,10 @@ class CGateAdv {
 		for ($i = 0; $i < $N; $i++) {
 			shuffle($rows);
 		}
+		
 		for ($i = 0; $i < $cnt; $i++) {
-			query('UPDATE main SET delta = ' . $n . ', date_update = \'' . $now . '\' WHERE id = ' . $rows[$i]['id']);
+			$id = $rows[$i]['id'];
+			query('UPDATE main SET delta = ' . $n . ', date_update = \'' . $now . '\' WHERE id = ' . $id);
 			$n++;
 		}
 	}
