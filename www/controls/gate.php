@@ -16,7 +16,11 @@ class CGateAdv {
 			$this->_checkPhone();
 		}
 		if (req('bSend')) {
-			$this->shuffleAction();
+			$doShuffle = ireq('nosh', 0);
+			$doShuffle = ($doShuffle == 1 ? 0 : 1);
+			if ($doShuffle) {
+				$this->shuffleAction();
+			}
 			$this->_saveAdv();
 			echo '<a href="/">Type here!</a>';
 			exit;
