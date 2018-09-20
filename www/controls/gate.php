@@ -106,7 +106,7 @@ class CGateAdv {
 		var_dump($_POST);
 		var_dump($_FILES);
 		if (count($rows)) {
-			die('Существует объявление с таким телефоном');
+			die('<p style="color:red;">Существует объявление с таким телефоном</p>');
 		} else if ($phone){
 			echo('<p>Телефон свободен</p>');
 		}
@@ -121,23 +121,36 @@ class CGateAdv {
 			die;
 		}
 	}
-	
+	//TODO тут всё продумать
 	private function _validate()
 	{
 		//validate region
 		$sRegion = treq('iRegion');
 		$this->regId = $regId = dbvalue("SELECT id FROM regions WHERE region_name = '{$sRegion}'");
 		$cityId = 0;
-		if ($regId) {
-			$sCity = treq('iCity');
-			$this->cityId = $cityId = dbvalue("SELECT id FROM cities WHERE city_name = '{$sCity}' AND region = {$regId}");
+		//город-регион
+		$sCity = treq('iCity');
+		$megapolisId = dbvalue("SELECT id FROM regions WHERE region_name = '{$sCity}'");
+		
+		if (!$megapolisId) {
+			if ($regId) {
+				//город в регионе
+				$sCity = treq('iCity');
+				$this->cityId = $cityId = dbvalue("SELECT id FROM cities WHERE city_name = '{$sCity}' AND region = {$regId}");
+			}
+			if (!$regId) {
+				$this->_errors[] = 'Не определен регион'; 
+			}
+			if (!$cityId) {
+				$this->_errors[] = 'Не определен город'; 
+			}
+		} else {
+			//город-регион
+			$this->regId = $regId = $megapolisId;
+			$this->cityId = $cityId = 0;
 		}
-		if (!$regId) {
-			$this->_errors[] = 'Не определен регион'; 
-		}
-		if (!$cityId) {
-			$this->_errors[] = 'Не определен город'; 
-		}
+		
+		
 		$this->phone = Shared::preparePhone(req('iPhone'));
 		$isTypeDefined = ireq('term') || ireq('box') || ireq('people');
 		$isDistanceDefined = ireq('far') || ireq('near') || ireq('piknik');
