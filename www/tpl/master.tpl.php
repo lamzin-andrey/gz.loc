@@ -76,6 +76,30 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 //--></script><!--/LiveInternet-->
 					</div>
 				</div>
+				
+				<div style="color: #b8b8b8;font-size: 10px;position: relative;">
+					<div style="position: absolute;bottom: -22px;right: 115px;" id="hRand">45 16</div>
+					<script>
+						function rand(min, max) {
+							var n = 0, k;
+							while (n == 0) n = Math.round(Math.random()*(max-min))+min;
+							k = Math.random();
+							if (k > 0.5) {
+								if (k > 0.75 && n == max - 1) {
+									n++;
+								} else if( n == min + 1){
+									n--;
+								}
+							}
+							return n;
+						}
+						$('hRand').innerHTML = rand(10, 99) + ' ' + rand(10, 99);
+						$('hRand').onclick = function() {
+							alert('Если вам 40+ перемножьте эти два числа (' + $('hRand').innerHTML +') в уме. Отличная зарядка для мозга!');
+						}
+					</script>
+				</div>
+				
 		</div>
 	</body>
 </html>
