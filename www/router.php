@@ -225,6 +225,15 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 	if ($url == '/gate') {
 		$handler = "gate.php";
 	}
+	if ($url == '/gatends') {
+		$handler = "gatends.php";
+	}
+	if ($url == '/gatendselbagetter') {
+		$handler = "gatendselbagetter.php";
+	}
+	if ($url == '/gatendselbasetter') {
+		$handler = "gatendselbasetter.php";
+	}
 	if ($url == '/pcf') {
 		$handler = "reciever.php";
 	}

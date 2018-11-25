@@ -1,0 +1,4 @@
+https://adwords.google.com/express/plus/Plus?pli=1&__u=9485929389&__c=1612322055&__b=2514043880#billing..bsm
+
+Раскрываю все свернутые и сохраняю страницу их хрома.
+Затем в папке беру файл saved_resource.html и подключаю к нему ../js/gprs.js

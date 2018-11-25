@@ -3,6 +3,7 @@
 
 //file_put_contents(__DIR__ . '/log.log', 'hello' . print_r($_POST, 1));
 
+
 include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 require_once DR . "/lib/main.php";
 $handler = "404.php";

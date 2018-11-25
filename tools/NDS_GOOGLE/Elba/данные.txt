@@ -1,0 +1,129 @@
+При реальном сохранении, отправляем на
+https://elba.kontur.ru/Business/Documents/DocumentEditing/EditDocument/Save?scope=jjwozy8qe2w3kbr5y0tskq
+https://elba.kontur.ru/Business/Documents/DocumentEditing/EditDocument/Save?scope=jjwozy8qe2w3kbr5y0tskq
+https://elba.kontur.ru/Business/Documents/DocumentEditing/EditDocument/Save?scope=jjwozy8qe2w3kbr5y0tskq
+https://elba.kontur.ru/Business/Documents/DocumentEditing/EditDocument/Save?scope=jjwozy8qe2w3kbr5y0tskq
+
+ - совпали, это хорошо!
+ 
+ 
+Значит, перед массовой заливкой смотрим, кто у нас смелый.
+ТО есть смотрим scope=jjwozy8qe2w3kbr5y0tskq 
+(значение может поменяться)
+и в объекте смотрим FromContractor.
+
+ 
+параметры
+{"Scheduler":
+{
+"MonthDay":25,
+"IsLastWorkingDay":false,
+"StartDate":null,
+"IsScheduleTemplate":false,
+"NextCreationDate":new Date(2018,11,25,0,0,0,0), //TODO вписать текущую
+"CreateTemplate":false,
+"AdjustMonth":false},
+"Document":
+{"Number":"9", //TODO get from input
+"Title":null, 
+
+"Date":new Date(2018,10,25,0,0,0,0), //TODO вписать текущую
+
+"Comment":null, "Employee":null, "EmployeeId":null, "Type":3, "WriteOffType":null,
+
+"DealId":"6dc54107-2afe-4837-9dcd-0b0b57120bb7", //TODO сравнить, так ли это кажждый раз (сравнил, формы отправленные с интервалом римерно 15 минут, во второй раз был null так и буду делать скорее всего)
+
+"BankAccountId":null, 
+"ContractorId":"00000000-0000-0000-0000-000000000000", 
+"ContractorBankAccountId":null, 
+"Status":null, "WithDiscount":false, "WithNds":true, 
+"IsSumWithNdsView":true, "ConsigneeId":null, 
+"ConsigneeBankAccountId":null, "ContentTemplate":null, "PaymentDocumentDate":undefined, 
+"PaymentDocumentNumber":undefined, 
+
+"FromContractor":"d857d97d-7f6a-40ac-9c70-081515b8b6dd", //TODO сравнить, так ли это кажждый раз (сравнил, формы отправленные с интервалом римерно 15 минут, совпало!)
+
+"PrincipalId":null, "NdsOperationType":7, "SellerInvoiceNumber":null, 
+"DocumentImages":[], "CustomTemplateId":null, "IsTemplate":false, "AssetId":null, "CorrespondingAccountKey":null,
+"AcceptanceType":null, 
+"CustomPlaceholders":[], "StateContractIdentifier":null, "FromOurOrganization":true,
+"ContractorIsOurOrganization":false,
+ "OrganizationId":"00000000-0000-0000-0000-000000000000", 
+ "TimestampOnSave":true, "Id":"00000000-0000-0000-0000-000000000000", "Revision":0, "Deleted":false,
+  "Updated":0, "Created":null, "Tags":null, "IsTopRevision":null}, 
+  
+  "Items":[{"Id":null, 
+  
+  "Name":"Рекламные услуги Google AdWords\nПредоплата 100%. \t250,00\nНДС 18/118 38,14 (07 11 2018)", 
+  "Quantity":1, 
+  "Unit":"услуга", 
+  "Price":250, 
+  "Discount":0, 
+  "SumWithNds":250,
+  "NdsRate":3
+  }]}
+  
+------------------------------------------------------------------------
+{"Scheduler":{"MonthDay":25, "IsLastWorkingDay":false, "StartDate":null, "IsScheduleTemplate":false, 
+
+"NextCreationDate":new Date(2018,11,25,0,0,0,0), //TODO несмотря на то, что выбрал в инпуте 11 11 2018 и это сохранилось даже при редактировании, значит сюда именно текущую
+
+"CreateTemplate":false, "AdjustMonth":false}, "Document":{"Number":"11", "Title":null, 
+
+"Date":new Date(2018,10,11,0,0,0,0), //Вот тут странно, почему 10??
+
+ "Comment":null, "Employee":null, "EmployeeId":null, "Type":3, "WriteOffType":null, 
+"DealId":null,
+"BankAccountId":null, "ContractorId":"00000000-0000-0000-0000-000000000000",
+"ContractorBankAccountId":null, "Status":null, "WithDiscount":false, "WithNds":true, "IsSumWithNdsView":true,
+"ConsigneeId":null, "ConsigneeBankAccountId":null, "ContentTemplate":null,
+"PaymentDocumentDate":undefined, "PaymentDocumentNumber":undefined, 
+
+"FromContractor":"d857d97d-7f6a-40ac-9c70-081515b8b6dd",
+//а предыдущий    d857d97d-7f6a-40ac-9c70-081515b8b6dd - бинго!!!!!
+"PrincipalId":null, "NdsOperationType":7, "SellerInvoiceNumber":null, "DocumentImages":[],
+"CustomTemplateId":null, "IsTemplate":false, "AssetId":null, "CorrespondingAccountKey":null, "AcceptanceType":null,
+"CustomPlaceholders":[],
+"StateContractIdentifier":null,
+"FromOurOrganization":true,
+"ContractorIsOurOrganization":false,
+"OrganizationId":"00000000-0000-0000-0000-000000000000",
+"TimestampOnSave":true,
+"Id":"00000000-0000-0000-0000-000000000000",
+"Revision":0, "Deleted":false,
+"Updated":0,
+"Created":null,
+"Tags":null,
+"IsTopRevision":null},
+"Items":[{"Id":null, 
+"Name":"Рекламные услуги Google AdWords от 11 ноября 2018\nПредоплата 100%. \t150,00\nНДС 18/118 22,88",
+"Quantity":1, "Unit":"услуга", "Price":150, "Discount":0, 
+"SumWithNds":150, "NdsRate":3}]
+}
+-------------------------------.
+
+{"Scheduler":
+{"MonthDay":25, 
+"IsLastWorkingDay":false, 
+"StartDate":null, "IsScheduleTemplate":false, "NextCreationDate":new Date(2018,11,25,0,0,0,0),
+ "CreateTemplate":false, "AdjustMonth":false}, 
+ 
+ "Document":{"Number":"13", "Title":null, 
+ "Date":new Date(2018,10,13,0,0,0,0),
+  "Comment":null, "Employee":null, "EmployeeId":null, "Type":3, "WriteOffType":null, 
+  "DealId":"6dc54107-2afe-4837-9dcd-0b0b57120bb7", 
+  "BankAccountId":null, "ContractorId":"00000000-0000-0000-0000-000000000000", 
+  "ContractorBankAccountId":null, "Status":null, "WithDiscount":false, "WithNds":true, "IsSumWithNdsView":true,
+  "ConsigneeId":null, "ConsigneeBankAccountId":null, "ContentTemplate":null,
+  "PaymentDocumentDate":undefined, "PaymentDocumentNumber":undefined, "FromContractor":
+"d857d97d-7f6a-40ac-9c70-081515b8b6dd", "PrincipalId":null, "NdsOperationType":7, "SellerInvoiceNumber":null,
+"DocumentImages":[], "CustomTemplateId":null, "IsTemplate":false, "AssetId":null, "CorrespondingAccountKey":null, 
+"AcceptanceType":null, "CustomPlaceholders":[], "StateContractIdentifier":null, "FromOurOrganization":true, 
+"ContractorIsOurOrganization":false,
+"OrganizationId":"00000000-0000-0000-0000-000000000000", "TimestampOnSave":true, 
+"Id":"00000000-0000-0000-0000-000000000000", "Revision":0, "Deleted":false, "Updated":0, "Created":null, "Tags":null,
+"IsTopRevision":null}, 
+
+"Items":[{"Id":null, 
+"Name":"Рекламные услуги Google AdWords оплачены 13 ноября 2018\nПредоплата 100%. \t250,00\nНДС 18/118 38,14",
+"Quantity":1, "Unit":"услуга", "Price":250, "Discount":0, "SumWithNds":250, "NdsRate":3}]}
