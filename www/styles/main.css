@@ -879,3 +879,33 @@ li {
 .green{
 	color:#00AA00;
 }
+.center {
+	margin:auto;
+}
+.centerh {
+	margin:0 auto;
+}
+.centerv {
+	margin:auto 0;
+}
+.p100banner section {
+	max-width: 468px;
+	height: 60px;
+	width: 100%;
+	margin:auto;
+}
+.p100banner section img{
+	width:47px;
+	height:auto;
+	float:left;
+	margin-right:12px;
+}
+.p100banner section b{
+	display:inline-block;
+	float:left;
+	font-size:22px;
+	line-height: 60px;
+}
+.p100banner section u{
+	clear:both;
+}

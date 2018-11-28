@@ -48,6 +48,7 @@
 				</h1>
 			</div>
 		</header>
+		<?php include TPLS . '/p100banner.php'; ?>
 		<div id="content">
 			<?php 
 				if ($_SERVER['REQUEST_URI'] != '/agreement'):
