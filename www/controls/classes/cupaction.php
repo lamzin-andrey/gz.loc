@@ -22,7 +22,11 @@ class CUpAction {
 		sess('add_adv_flag', 'unset');
 
 		if (defined('PAY_ENABLED')) {
-			$this->unavialableTpl =  TPLS . '/payform/form.tpl.php';
+			if (defined('PAY_PHIS_ENABLED')) { //оплата для физических лиц доступна
+				$this->unavialableTpl =  TPLS . '/payform/form.tpl.php';
+			} else {
+				$this->unavialableTpl =  TPLS . '/nophismsg.tpl.php';
+			}
 		}
 		
 		if ($id && $phone) {
