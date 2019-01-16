@@ -1,7 +1,7 @@
 <?php 
 require_once DR . '/controls/classes/cupaction.php';
 $upform = new CUpAction();
-if (defined('PAY_ENABLED')) {
+if (defined('PAY_ENABLED') && defined('PAY_PHIS_ENABLED')) {
 	$javascript = '<script type="text/javascript" src="/js/pay.js?' . ASSETS_VERSION . '"></script>
 ';
 }
