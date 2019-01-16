@@ -5,7 +5,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 
 	$authorized = (int)@$_SESSION['uid'];
 	$aUrl = explode("?", $_SERVER["REQUEST_URI"]);
+	
 	$url = $aUrl[0];
+	
+	$url = trim($aUrl[0]);
+	if ($url != '/') {
+		$url = preg_replace("#/$#", '', $aUrl[0]);
+	}
+	
 	$baseUrl = '';
 	
 	//переправить человека на страницу его города / региона, если на ней есть объявления
