@@ -66,6 +66,7 @@ class YaReciever {
 	*/
 	private function _incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId) {
 		Shared::incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId);
+		Shared::sendEmail($nSum, $aUserdata, $TODO);//TODO  Перенести туда rkresult::_sendEmail
 	}
 }
 

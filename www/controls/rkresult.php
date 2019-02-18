@@ -1,5 +1,6 @@
 <?php
 require_once DR . '/controls/classes/cpaycheck.php';
+require_once DR . '/lib/classes/mail/SampleMail.php';
 class RkResultReciever {
 	public function __construct() {
 		file_put_contents(__DIR__ . '/rklog.txt', "\n===========" . date('Y-m-d H:i:s') . "===========\n" . print_r($_POST, 1) . "\n" , FILE_APPEND);
@@ -65,7 +66,28 @@ class RkResultReciever {
 	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
 	*/
 	private function _incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId) {
-		Shared::incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId, 'wrong_rk_summ_log.txt');
+		$aUserdata = Shared::incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId, 'wrong_rk_summ_log.txt');
+		Shared::sendEmail($nSum, $aUserdata, $TODO);//TODO  Перенести туда rkresult::_sendEmail
+	}
+	/**
+	 * @description Отправка уведомления на email в случае поднятия
+	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
+	*/
+	private function _sendEmail(/*int*/ $nSum, array $aUserdata)
+	{
+		if ($aUserdata['email'] || $aUserdata['phone']) {
+			$mailer = new SampleMail();
+			$mailer->setSubject('На ' . SITE_NAME . ' поднято объявление');
+			$mailer->setPlainText("ООО, ИП!
+			На сайте " . SITE_NAME . "
+			Пользователь {$aUserdata['email']} оплатил {$nSum} рублей через робокассу.
+			Его телефон {$aUserdata['phone']}.
+			Подними задницу и пробей человеку чек.
+			");
+			$mailer->setAddressFrom([SITE_EMAIL => SITE_EMAIL]);
+			$mailer->setAddressTo([NOTICE_EMAIL => NOTICE_EMAIL]);
+			$mailer->send();
+		}
 	}
 }
 

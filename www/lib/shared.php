@@ -342,13 +342,14 @@ class Shared {
 	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
 	 * @param integer $requestLogId идентификатор записи в талблице в таблице ya_http_notice, логируется если не удалось найти запись в pay_transaction
 	 * @param string $logFileName имя файла в который логируется идентификатор записи, если не удалось найти запись в pay_transaction
+	 * @return array row from users
 	*/
 	static public function incrementUserAppCount($payTransactionId, $nSum, $requestLogId, $logFileName = 'wrong_summ_log.txt') {
-		$storedSumData = dbrow("SELECT sum, user_id FROM pay_transaction WHERE id = {$payTransactionId}");
+		$storedSumData = dbrow("SELECT sum, user_id, email, phone FROM pay_transaction WHERE id = {$payTransactionId}");
 		$storedSum = isset($storedSumData['sum']) ? $storedSumData['sum'] : 0;
 		if (!$storedSum) {
 			file_put_contents($logFileName, ($requestLogId. "\n"), FILE_APPEND);
-			return;
+			return ['sum' => 0, 'user_id' => 0, 'email' => '', 'phone' => ''];
 		}
 		$upcount = Paycheck::$offers[intval($storedSum)];
 		//если сумма, оплаченная пользователем не входит в перечень заданных в платежной форме,
@@ -383,6 +384,7 @@ class Shared {
 		//Увеличиваем баланс
 		$sql = "UPDATE users SET upcount = '{$upcount}' WHERE id = {$userId}";
 		query($sql);
+		return $storedSumData;
 	}
 	/**
 	 * @return StdClass {path:абсолютный путь к файлу, htmlPath:путь файлу для html, error:сообщение об ошибке}

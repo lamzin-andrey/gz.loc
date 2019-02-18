@@ -9,7 +9,9 @@ define("TPLS", DR . '/tpl');
 define("MAX_WIDTH", 240);
 define("MAX_HEIGHT", 240);
 define("ADMIN_PHONE", '000000');
-define("SITE_EMAIL", 'gazelme@mail.ru');
+define('SITE_EMAIL', '***@**.ru');
+define('NOTICE_EMAIL', '***@***.ru');
+define('SITE_NAME', 'gazel.me');
 define("H1_BEG", "Заказ ГАЗели в ");
 define('AUTO_MODERATION_ON', true);
 define('MONTH_IN_SEC', 30*24*3600);
@@ -17,7 +19,7 @@ define('MONTH_IN_SEC', 30*24*3600);
 define('SMS_INTERVAL', 63);//product 900
 define('SMS_SERVICE_ON', true);
 define('SMS_SERVICE_LOGIN', '****');
-define('SMS_SERVICE_PASSWORD', '***');//c1l36
+define('SMS_SERVICE_PASSWORD', '***');
 
 define('SMS_PILOT_API_KEY', '*****');
 
