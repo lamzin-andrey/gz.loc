@@ -929,3 +929,14 @@ li {
 .p100banner section u{
 	clear:both;
 }
+.flink {
+	display:inline-block;
+	margin-right: 25%;
+}
+.flink a{
+	font-size:11px;
+	
+}
+.clear {
+	clear:both;
+}

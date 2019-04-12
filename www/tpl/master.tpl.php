@@ -100,7 +100,10 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 						}
 					</script>
 				</div>
-				
+		<div class="flink right">
+			<a href="/images/Politika_zashity_i_obrabotki_personalnyh_dannyh_2019-04-12.doc">Политика конфидециальности</a>
+		</div>
+		<div class="clear"></div>
 		</div>
 	</body>
 </html>

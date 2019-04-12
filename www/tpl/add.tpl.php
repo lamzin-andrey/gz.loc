@@ -96,7 +96,7 @@ function addFormPostAction() {
 			<div class="both"></div>
 			
 			<div class="agreearea">
-				<?=FV::checkbox('agreement', '<a href="/agreement" target="_blank">Я прочитал и согласен с Пользовательским соглашением</a>');?>
+				<?=FV::checkbox('agreement', '<a href="/agreement" target="_blank">Я прочитал и согласен с Политикой конфидециальности</a>');?>
 			</div>
 			
 			<div>
