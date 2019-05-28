@@ -1,6 +1,7 @@
 <?php
 require_once DR . '/lib/classes/sms/epochta2.php';
 require_once DR . '/lib/classes/sms/smspilot.php';
+require_once DR . '/lib/classes/mail/SampleMail.php';
 class Worker {
 	public function __construct(){
 		$action = isset($_POST['action']) ? $_POST['action'] : 'automoderate';
@@ -9,6 +10,7 @@ class Worker {
 				$this->_automoderate();
 				$this->_sms();
 				$this->_upcountRestore();
+				$this->_testSendEmailToGoogle();
 				json_ok();
 				break;
 		}
@@ -107,6 +109,24 @@ class Worker {
 				$ids = join(',', $ids);
 				query("UPDATE main SET is_moderate = 1 WHERE id IN ({$ids})");
 			}
+		}
+	}
+	
+	private function _testSendEmailToGoogle() { 	return;
+		$aUserdata = ['email' => 'hobby@mail.ru', 'phone' => '80000001122'];
+		if ($aUserdata['email'] || $aUserdata['phone']) {
+			$mailer = new SampleMail();
+			$mailer->setSubject('На ' . SITE_NAME . ' поднято объявление');
+			$mailer->setPlainText("ООО, ИП!
+			На сайте " . SITE_NAME . "
+			Пользователь {$aUserdata['email']} оплатил {$nSum} рублей через робокассу.
+			Его телефон {$aUserdata['phone']}.
+			Подними задницу и пробей человеку чек.
+			");
+			$mailer->setAddressFrom([SITE_EMAIL => SITE_EMAIL]);
+			$mailer->setAddressTo([NOTICE_EMAIL => NOTICE_EMAIL]);
+			$scs = $mailer->send();
+			echo json_encode(['scs' => $scs]);
 		}
 	}
 }

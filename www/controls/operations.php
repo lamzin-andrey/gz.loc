@@ -39,16 +39,19 @@ class Operations {
 		}
 		$interval = $this->_readDateInterval();
 		
-		$cmd = "SELECT o.created, u.phone, oc.name, o.main_id, o.upcount, o.sum, o.pay_transaction_id 
+		$cmd = "SELECT o.created, u.phone, u.email AS uemail, oc.name, o.main_id, o.upcount, o.sum, pt.real_sum, o.pay_transaction_id 
 		FROM operations AS o
 		LEFT JOIN op_codes AS oc ON oc.id = o.op_code_id
+		LEFT JOIN pay_transaction AS pt ON pt.id = o.pay_transaction_id
 		LEFT JOIN users AS u ON u.id = o.user_id
 		WHERE {$phoneCondition}
 		{$typeCondition}
 		{$interval}
 		ORDER BY created DESC LIMIT {$offset}, {$limit}
 		";
+		
 		$this->rows = $data = query($cmd, $this->numRows);
+		
 		$this->prev = $page - 1;
 		$this->prev = $this->prev ? $this->prev : 1;
 		$this->next = $page + 1;

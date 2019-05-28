@@ -31,8 +31,15 @@ class YaReciever {
 				$yaRequestLogId = $this->_insertYandexNotificationData($operation_id, $notification_type, $datetime, $sender, $codepro, $amount, $withdraw_amount, 	$label, $operation_label, $unaccepted);
 				$nAff = dbvalue("SELECT is_confirmed FROM pay_transaction WHERE id = {$label}");
 				if ($nAff == 0) {
-					query("UPDATE pay_transaction SET is_confirmed = 1, ya_http_notice_id = {$yaRequestLogId} WHERE id = {$label}"); 
-					$this->_incrementUserAppCount($label, $withdraw_amount, $yaRequestLogId);
+					file_put_contents(__DIR__ . '/postlog.txt', "Will update pay_transaction!\n" , FILE_APPEND);
+					query("UPDATE pay_transaction SET 
+						is_confirmed = 1, 
+						ya_http_notice_id = {$yaRequestLogId},
+						real_sum = {$withdraw_amount}
+						WHERE id = {$label}"); 
+					$this->_incrementUserAppCount($label, $withdraw_amount, $yaRequestLogId, $withdraw_amount);//Тут пользователь реально 60 отдаёт
+				} else {
+					file_put_contents(__DIR__ . '/postlog.txt', "In pay_transaction found record with id = {$label}, it bad!!\n" , FILE_APPEND);
 				}
 			}
 			json_ok();
@@ -62,11 +69,14 @@ class YaReciever {
 	/**
 	 * @description Увелечение возможности поднимать объявления после успешной оплаты
 	 * @param integer $payTransactionId идентификатор из pay_transaction
-	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
+	 * @param float $nSum номинальная сумма 
+	 * @param float $nIncSum сумма фактически уплаченная пользователем, информация из нотайса
 	*/
-	private function _incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId) {
-		Shared::incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId);
-		Shared::sendEmail($nSum, $aUserdata, $TODO);//TODO  Перенести туда rkresult::_sendEmail
+	private function _incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId, $nIncSum) {
+		$sLogFile = (__DIR__ . '/postlog.txt');
+		file_put_contents($sLogFile, "reciever.php::_incrementUserAppCount got payTransactionId = {$payTransactionId}\n", FILE_APPEND);
+		$aUserdata = Shared::incrementUserAppCount($payTransactionId, $nSum, $yaRequestLogId, $sLogFile);
+		Shared::sendEmailAboutPayment($nIncSum, $aUserdata, 'yandex', $sLogFile);
 	}
 }
 

@@ -1,5 +1,5 @@
 <? include DR . "/tpl/adminmenu.tpl.php" ?>
-<? FV::$obj = $ops ?>
+<? FV::$obj = $ops; ?>
 <div id="mainsfrormadd" class="bgwhite">
 	<div id="add_legend">Операции  пользователя</div>
 	<hr id="add_hr"/>
@@ -56,14 +56,25 @@
 <div class="left approved">Идентификатор подтвержденной записи:</div>
 <div class="both"></div>
 </div>
+
 <?php foreach ($ops->rows as $row): ?>
+<?php
+	$sum = Shared::calcOutSum($row);
+?>
 <div class="operation">
 <div class="left created"><strong>Дата:</strong><?=Shared::formatDate($row['created'])?></div>
-<div class="left phone"><strong>Тел:</strong><?=Shared::formatPhone($row['phone'])?></div>
+<div class="left phone">
+	<div>
+		<strong>Тел:</strong><?=Shared::formatPhone($row['phone'])?>
+	</div>
+	<div>
+		<strong>Email:</strong><?=$row['uemail']?>
+	</div>
+</div>
 <div class="left operation_name"><strong>Операция:</strong><?=$row['name'] ?></div>
 <div class="left advlink"><strong>Ссылка:</strong><a href="/advert/<?=$row['main_id'] ?>"><?=$row['main_id'] ?></a></div>
 <div class="left upcount <?php if($row['upcount'] < 0):?> red <?php else:?> green <?php endif?>"><strong>Поднятий:</strong><?=$row['upcount']?></div>
-<div class="left sum"><strong>Сумма пользователя:</strong><?=($row['sum'] ? $row['sum'] : '0' ) ?></div>
+<div class="left sum"><strong>Сумма пользователя:</strong><?=$sum ?></div>
 <div class="left approved <?=($row['pay_transaction_id'] ? 'green' : 'red') ?>"><strong>Заказ:</strong><?=$row['pay_transaction_id']?></div>
 <div class="both"></div>
 </div>

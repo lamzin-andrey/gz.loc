@@ -1,5 +1,5 @@
 <?php
-
+require_once DR . '/lib/classes/mail/SampleMail.php';
 class Shared {
 	static public function preparePhone($phone) {
 		$phone = trim($phone);
@@ -345,13 +345,24 @@ class Shared {
 	 * @return array row from users
 	*/
 	static public function incrementUserAppCount($payTransactionId, $nSum, $requestLogId, $logFileName = 'wrong_summ_log.txt') {
-		$storedSumData = dbrow("SELECT sum, user_id, email, phone FROM pay_transaction WHERE id = {$payTransactionId}");
+		$sql = "SELECT pt.real_sum,  pt.sum, pt.user_id, u.email, u.phone
+		FROM pay_transaction AS pt
+		LEFT JOIN users AS u ON u.id = pt.user_id
+		
+		WHERE pt.id = {$payTransactionId}
+		";
+		$storedSumData = dbrow($sql);
 		$storedSum = isset($storedSumData['sum']) ? $storedSumData['sum'] : 0;
 		if (!$storedSum) {
-			file_put_contents($logFileName, ($requestLogId. "\n"), FILE_APPEND);
+			file_put_contents($logFileName, ('!$storedSum, requestLogId = ' . $requestLogId. ", 
+				payTransactionId = {$payTransactionId}\n"), FILE_APPEND);
+			file_put_contents($logFileName, ('Sql: "' . $sql . '"' . "\n"), FILE_APPEND);
 			return ['sum' => 0, 'user_id' => 0, 'email' => '', 'phone' => ''];
+		} else {
+			file_put_contents($logFileName, "storedSum = '{$storedSum}', nSum = '{$nSum}' \n", FILE_APPEND);
 		}
 		$upcount = Paycheck::$offers[intval($storedSum)];
+		file_put_contents($logFileName, "init upcount = '{$upcount}' \n", FILE_APPEND);
 		//если сумма, оплаченная пользователем не входит в перечень заданных в платежной форме,
 		//	находим среди заданных первый, меньший чем внесенная сумма, и считаем кол-во поднятий по этой стоимости.
 		if (intval($storedSum) != intval($nSum)) {
@@ -372,7 +383,9 @@ class Shared {
 			}
 		} else {
 			$upcount = Paycheck::$offers[intval($nSum)];
+			file_put_contents($logFileName, "ELSE380 upcount = '{$upcount}' \n", FILE_APPEND);
 		}
+		file_put_contents($logFileName, "calc upcount = '{$upcount}'\n", FILE_APPEND);
 		//записываем в истории операций
 		$userId = isset($storedSumData['user_id']) ? $storedSumData['user_id'] : 0;
 		$now = now();
@@ -383,7 +396,9 @@ class Shared {
 		query($sql);
 		//Увеличиваем баланс
 		$sql = "UPDATE users SET upcount = '{$upcount}' WHERE id = {$userId}";
+		file_put_contents($logFileName, "sql for up: '{$sql}'\n", FILE_APPEND);
 		query($sql);
+		$storedSumData['sum'] = $storedSumData['real_sum'];
 		return $storedSumData;
 	}
 	/**
@@ -441,5 +456,52 @@ class Shared {
 			//$this->imagePath = str_replace(DR, '', $dest);
 		}
 		return $r;
+	}
+	/**
+	 * @description Отправка уведомления на email в случае оплаты поднятий
+	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
+	*/
+	public static function sendEmailAboutPayment(/*float*/ $nSum, array $aUserdata, $paysystemname, $sLog = 'postlog.txt')
+	{
+		file_put_contents($sLog, "call sendEmailAboutPayment\n", FILE_APPEND);
+		file_put_contents($sLog, (print_r($aUserdata, 1) . "\n"), FILE_APPEND);
+		file_put_contents($sLog, "nSum = {$nSum}\n", FILE_APPEND);
+		if (!defined('SITE_NAME')) {
+			file_put_contents($sLog, "!defined('SITE_NAME')\n", FILE_APPEND);
+			include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+		}
+		
+		if ($aUserdata['email'] || $aUserdata['phone']) {
+			$mailer = new SampleMail();
+			$mailer->setSubject('На ' . SITE_NAME . ' поднято объявление');
+			$mailer->setPlainText("ООО, ИП!
+			На сайте " . SITE_NAME . "
+			Пользователь {$aUserdata['email']} оплатил {$nSum} рублей через {$paysystemname}.
+			Его телефон {$aUserdata['phone']}.
+			Поднимись и пробей человеку чек.
+			");
+			file_put_contents($sLog, "before set addresses\n", FILE_APPEND);
+			$mailer->setAddressFrom([SITE_EMAIL => SITE_EMAIL]);
+			$mailer->setAddressTo([NOTICE_EMAIL => NOTICE_EMAIL]);
+			file_put_contents($sLog, "before send\n", FILE_APPEND);
+			$b = $mailer->send();
+			$sb = ($b ? 'true' : 'false');
+			file_put_contents($sLog, "sendEmailAboutPayment - mail sended with status {$sb}\n", FILE_APPEND);
+		} else {
+			file_put_contents($sLog, "sendEmailAboutPayment - no actuial data\n", FILE_APPEND);
+			file_put_contents($sLog, (print_r($aUserdata, 1) . "\n"), FILE_APPEND);
+		}
+	}
+	/**
+	 * @description Считает сумму для вывода. Если определена pay_transaction.real_sum вернет её, иначе sum
+	 * @param array $row результат запроса к operations из Operations::_getRows
+	*/
+	public static function calcOutSum(array $row)
+	{
+		$sum = ($row['real_sum'] ? $row['real_sum'] : '' );//фактически уплаченная сумма
+		if (!$sum || !floatval($sum)) {
+			$sum = ($row['sum'] ? $row['sum'] : '0' );//номинальная сумма
+		}
+		return $sum;
 	}
 }

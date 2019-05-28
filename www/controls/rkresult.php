@@ -36,8 +36,11 @@ class RkResultReciever {
 				$rkRequestLogId = $this->_insertRkassaNotificationData($out_summ, $label, $incSumm, $paymentMethod, $incCurrLabel, $shp_item);
 				$nAff = dbvalue("SELECT is_confirmed FROM pay_transaction WHERE id = {$label}");
 				if ($nAff == 0) {
-					query("UPDATE pay_transaction SET is_confirmed = 1, rk_http_notice_id = {$rkRequestLogId} WHERE id = {$label}"); 
-					$this->_incrementUserAppCount($label, $out_summ, $rkRequestLogId);
+					query("UPDATE pay_transaction 
+						SET is_confirmed = 1, rk_http_notice_id = {$rkRequestLogId},
+						real_sum = {$incSumm}
+						WHERE id = {$label}"); 
+					$this->_incrementUserAppCount($label, $out_summ, $rkRequestLogId, $incSumm);
 				}
 			}
 			json_ok();
@@ -63,32 +66,15 @@ class RkResultReciever {
 	/**
 	 * @description Увелечение возможности поднимать объявления после успешной оплаты
 	 * @param integer $payTransactionId идентификатор из pay_transaction
-	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
+	 * @param float $nSum номинальная сумма 
+	 * @param float $nIncSum сумма фактически уплаченная пользователем, информация из нотайса
 	*/
-	private function _incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId) {
-		$aUserdata = Shared::incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId, 'wrong_rk_summ_log.txt');
-		Shared::sendEmail($nSum, $aUserdata, $TODO);//TODO  Перенести туда rkresult::_sendEmail
+	private function _incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId, $nIncSum) {
+		$sLog = (__DIR__ . '/postlogrk.txt');
+		$aUserdata = Shared::incrementUserAppCount($payTransactionId, $nSum, $rkRequestLogId, $sLog);
+		Shared::sendEmailAboutPayment($nIncSum, $aUserdata, 'robokassa', $sLog);
 	}
-	/**
-	 * @description Отправка уведомления на email в случае поднятия
-	 * @param float $nSum сумма фактически уплаченная пользователем, информация из нотайса
-	*/
-	private function _sendEmail(/*int*/ $nSum, array $aUserdata)
-	{
-		if ($aUserdata['email'] || $aUserdata['phone']) {
-			$mailer = new SampleMail();
-			$mailer->setSubject('На ' . SITE_NAME . ' поднято объявление');
-			$mailer->setPlainText("ООО, ИП!
-			На сайте " . SITE_NAME . "
-			Пользователь {$aUserdata['email']} оплатил {$nSum} рублей через робокассу.
-			Его телефон {$aUserdata['phone']}.
-			Подними задницу и пробей человеку чек.
-			");
-			$mailer->setAddressFrom([SITE_EMAIL => SITE_EMAIL]);
-			$mailer->setAddressTo([NOTICE_EMAIL => NOTICE_EMAIL]);
-			$mailer->send();
-		}
-	}
+	
 }
 
 new RkResultReciever();
