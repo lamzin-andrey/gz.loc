@@ -30,24 +30,35 @@
 			<div class="aformwrap upformwrap" id="upform">
 					<div id="uperror" class="both hide">Неверно введен код</div>
 					<div class="f10">Для того, чтобы поднять в результатах поиска объявление "<?=$upform->title ?>" 
-					введите текст с изображения ниже и нажмите кнопку "Поднять". 
+					<?=$upform->captcha_text_fragment ?> нажмите кнопку "Поднять". 
+					
 					</div>
 					<div>
-						<div class="left captwr tc">
-							<img width="174" id="cpi" src="/images/random"><br><a class="smbr" id="smbr" href="#">Кликните для обновления рисунка</a>
-						</div>
-						<div class="left capinputs capiwr">
-							<div class="left capinputs">
-								<div class="capinputs tc cpcodewr">
-									<input type="text" value="" id="cp" name="cp">
+						<?php if ($upform->isShowCaptcha): ?>
+							<div class="left captwr tc">
+								<img width="174" id="cpi" src="/images/random"><br><a class="smbr" id="smbr" href="#">Кликните для обновления рисунка</a>
+							</div>
+						<?php endif ?>
+						<?php if ($upform->isShowCaptcha): ?>
+							<div class="left capinputs capiwr">
+								<div class="left capinputs">
+									<div class="capinputs tc cpcodewr">
+										<input type="text" value="" id="cp" name="cp">
+									</div>
+									<div class="right upformbtn">
+										<?=FV::sub("sup", "Поднять"); ?>
+									</div>
 								</div>
-								<div class="right upformbtn">
+								<div class="both"></div>
+							</div>
+							<div class="both"></div>
+						<?php else:?>
+							<div class="slogan m50p">
+								<div class="upformbtn">
 									<?=FV::sub("sup", "Поднять"); ?>
 								</div>
 							</div>
-							<div class="both"></div>
-						</div>
-						<div class="both"></div>
+						<?php endif ?>
 					</div>
 			</div>
 			<input type="hidden" name="token" value="<?=@$_SESSION["utoken"] ?>" />

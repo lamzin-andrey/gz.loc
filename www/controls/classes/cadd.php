@@ -30,8 +30,19 @@ class CAdd {
 	public $phone;
 	public $email;
 	public $isAuthVerifyUser;
+
+	/**
+	 * Если каптча для авторизованых на форме подачи объявления не должна показываться и пользователь авторизован, примиет true
+	*/
+	public $captchaForAuthIsOff = false;
+	
+	/**
+	 * Если каптча для любых пользователей на форме подачи объявления не должна показываться, примиет true
+	*/
+	public $captchaForAllIsOff = false;
 	
 	public function __construct() {
+		$this->_setCaptchaVars();
 		CRequestPatcher::pathPost();
 		$this->readPost();
 		$this->checkCaptcha();
@@ -94,8 +105,11 @@ class CAdd {
 		if (count($_POST) == 0 || count($_FILES)) {
 			return;
 		}
-		if (@$_POST["cp"] != @$_SESSION["ccode"]) {
-			$this->errors["cp"] = "Неверно введен текст с изображения";
+		if ($this->captchaForAllIsOff || $this->captchaForAuthIsOff) {
+			return;
+		}
+		if (req('cp') != sess('ccode') ) {
+			$this->errors['cp'] = 'Неверно введен текст с изображения';
 			$this->cpError = 1;
 		}
 	}
@@ -398,5 +412,17 @@ class CAdd {
 		$d = intval(dbvalue('SELECT max(delta) FROM main'));
 		$d += 1;
 		return $d;
+	}
+	/**
+	 * @description Устанавливает поля класса связанные с каптчей на форме ввода
+	*/
+	protected function _setCaptchaVars()
+	{
+		if (defined('CAPTCHA_ADV_AUTH_OFF') && CAPTCHA_ADV_AUTH_OFF == true && intval( sess('uid') ) > 0) { 
+			$this->captchaForAuthIsOff = true;
+		}
+		if (defined('CAPTCHA_ADV_AL_OFF') && CAPTCHA_ADV_AL_OFF == true) { 
+			$this->captchaForAllIsOff = true;
+		}
 	}
 }

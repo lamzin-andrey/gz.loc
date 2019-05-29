@@ -6,9 +6,21 @@ class CUpAction {
 	public $title;
 	public $upCount = 10000;
 	public $payProxyEnabled = false;
+	/**
+	 * Если каптча на форме поднятия объявлений выводится, этот текст тоже выводится
+	*/
+	public $captcha_text_fragment = 'введите текст с изображения ниже и ';
+	/**
+	 * Если каптча на форме поднятия объявлений выводится, эта переменая равна true
+	*/
+	public $isShowCaptcha = true;
+	
 	/***/
 	public $unavialableTpl =  TPLS . '/mothexpiremsg.tpl.php';
 	public function __construct() {
+		
+		$this->_setCaptchaVars();
+		
 		$this->setPayProxyEnabled();
 		//получить id  ипроверить, есть ли право поднимать это объявлени
 		//если есть поднять если нет вывести сообщение об ошибке
@@ -39,7 +51,14 @@ class CUpAction {
 				$_SESSION["ok_msg"] = "У вас нет прав на действие с этим объявлением";
 				utils_302("/cabinet?status=1"); 
 			}
-			if (a($_SESSION, "ccode") && a($_POST, "cp") === @$_SESSION["ccode"]) {
+			/**  @var bool $bIsCaptchaSuccess принимает true только если правильнор введена каптча либо она отключена для данной формы */
+			$bIsCaptchaSuccess = false;
+			if (!$this->isShowCaptcha) {
+				$bIsCaptchaSuccess = true;
+			} else {
+				$bIsCaptchaSuccess = ( a($_POST, 'cp') === sess('ccode') );
+			}
+			if (a($_SESSION, "ccode") && $bIsCaptchaSuccess) {
 				//Если пользователь не верифицирован, надо показать ему сообщение Чтобы поднять объявление, вам надо подтвердить
 				//свой номер телефона. Сейчас вы будете перенаправлены на страницу подтверждения.
 				//Иначе все как здесь
@@ -178,5 +197,15 @@ class CUpAction {
 		//sample inline
 		$mailer->setPlainText("Форма оплаты не показывается, потому что не удается связаться с сайтом fastxampp.org", []);
 		$r = $mailer->send();
+	}
+	/**
+	 * @description Устанавливает поля, связанные с показываемой или не показываемой каптчей в форме поднятия объявления
+	*/
+	private function _setCaptchaVars()
+	{
+		if (defined('CAPTCHA_UPFORM_OFF') && CAPTCHA_UPFORM_OFF == true) { 
+			$this->captcha_text_fragment = '';
+			$this->isShowCaptcha = false;
+		}
 	}
 }

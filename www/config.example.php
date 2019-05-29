@@ -23,6 +23,16 @@ define('SMS_SERVICE_PASSWORD', '***');
 
 define('SMS_PILOT_API_KEY', '*****');
 
+//если хочешь отключить captcha на форме поднятия объявления - закомментируй
+define('CAPTCHA_UPFORM_OFF', true);
+
+//если хочешь отключить captcha на форме подачи объявления авторизованным - закоментируй
+define('CAPTCHA_ADV_AUTH_OFF', true);
+
+//если хочешь отключить captcha на форме подачи объявления неавторизованным и авторизованым - закоментируй
+define('CAPTCHA_ADV_AL_OFF', true);
+
+
 define('ASSETS_VERSION', '12');
 
 //Связано с оплатой

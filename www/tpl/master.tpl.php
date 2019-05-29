@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$GLOBALS["title"]?></title>
 		<?php $assetsVersion = ASSETS_VERSION; ?>
-		<link href="/styles/main.css?<?=$assetsVersion?>" media="all" rel="stylesheet" type="text/css" />
+		<link href="/styles/main.min.css?<?=$assetsVersion?>" media="all" rel="stylesheet" type="text/css" />
 		<?=(isset($css) ? $css : '') ?>
 		<script type="text/javascript" src="/js/mootools1.4.5.js"></script>
 		<?=(isset($javascript) ? $javascript : '') ?>

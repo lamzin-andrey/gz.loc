@@ -8,6 +8,7 @@ class CCabinetEdit extends CAdd {
 	public  $javascript;
 	public  $image;
 	public function __construct() {
+		$this->_setCaptchaVars();
 		CRequestPatcher::pathPost();
 		$this->loadRecord();
 		$this->readPost();
