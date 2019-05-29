@@ -1,6 +1,9 @@
 <?php
 require_once DR . '/lib/classes/mail/SampleMail.php';
 class Shared {
+	
+	static $authUserBalance = null;
+	
 	static public function preparePhone($phone) {
 		$phone = trim($phone);
 		$plus = 0;
@@ -503,5 +506,18 @@ class Shared {
 			$sum = ($row['sum'] ? $row['sum'] : '0' );//номинальная сумма
 		}
 		return $sum;
+	}
+	/**
+	 * @description Если пользователь авторизован, вернет его баланс (upcount)
+	*/
+	public static function getAuthUserBalance() {
+		if (static::$authUserBalance !== null) {
+			return static::$authUserBalance;
+		}
+		static::$authUserBalance = 0;
+		if ($uid = intval(sess('uid'))) {
+			static::$authUserBalance = intval( dbvalue('SELECT upcount FROM users WHERE id = ' . $uid) );
+		}
+		return static::$authUserBalance;
 	}
 }

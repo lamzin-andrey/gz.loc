@@ -55,10 +55,14 @@ class CUpAction {
 			$bIsCaptchaSuccess = false;
 			if (!$this->isShowCaptcha) {
 				$bIsCaptchaSuccess = true;
+				//если включена оплата, но на балансе нет денег, надо показать каптчу
+				if (defined('PAY_ENABLED') && PAY_ENABLED && defined('PAY_PHIS_ENABLED') && PAY_PHIS_ENABLED && Shared::getAuthUserBalance() == 0) {
+					$bIsCaptchaSuccess = false;
+				}
 			} else {
 				$bIsCaptchaSuccess = ( a($_POST, 'cp') === sess('ccode') );
 			}
-			if (a($_SESSION, "ccode") && $bIsCaptchaSuccess) {
+			if (a($_SESSION, 'ccode') && $bIsCaptchaSuccess) {
 				//Если пользователь не верифицирован, надо показать ему сообщение Чтобы поднять объявление, вам надо подтвердить
 				//свой номер телефона. Сейчас вы будете перенаправлены на страницу подтверждения.
 				//Иначе все как здесь
