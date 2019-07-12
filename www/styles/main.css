@@ -434,7 +434,7 @@ header.mainhead {
 	background-color: #FFB0B9;
 	padding: 10px 16px;
 	width:100%;
-	margin: 0 auto;
+	margin: 8px auto;
 	font-size:10pt;
 	display:none;
 	color:#aa0000;
@@ -444,7 +444,7 @@ header.mainhead {
 	background-color: #FFEFB0;
 	padding: 10px 16px;
 	width:100%;
-	margin: 0 auto;
+	margin: 8px auto;
 	font-size:10pt;
 	display:none;
 	color:#AA7300;
@@ -459,7 +459,7 @@ header.mainhead {
 	background-color: #B0FFC2;
 	padding: 10px 16px;
 	width:100%;
-	margin: 0 auto;
+	margin: 8px auto;
 	font-size:10pt;
 	display:none;
 }
@@ -557,29 +557,32 @@ li {
 	top:0px;
 	z-index:5;
 }
-.aformwrap input[type=button], .aformwrap input[type=submit]{
-	padding: 4px 6px;
-	border-radius:4px;
+.button,.aformwrap input[type=button], .aformwrap input[type=submit] {
+	padding: 5px 4px 1px;
+	border-radius: 4px;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+	background-color: #20DF4C;
+	background: linear-gradient(to top, #0ECD3A, #55DE76, #55DE76, #03AE2A);/*80EE9A, 55DE76, -> 0ECD3A*/
+	min-height: 24px;
+	margin: 0 auto;
+	cursor: pointer;
 	border:none;
-	font-weight:bold;
-	font-size:16px;
-	color:white;
-	text-align:center;
-	background-color : #20DF4C;
-	background: linear-gradient(to top, #10CF3C, #A0FFAC);
+	text-shadow: 1px 1px 0px black, 0 0 1px green;
+	/*color: #996e34;*/
 }
-.aformwrap input[type=button]:hover{
-	padding: 4px 6px;
+.aformwrap input[type=button], .aformwrap input[type=submit] {
+	padding: 7px 14px;
+}
+.button:hover, .aformwrap input[type=button]:hover, .aformwrap input[type=submit]:hover{
+	/*padding: 4px 6px;*/
 	background-color : #18CF3C;
-	background: linear-gradient(to top, #0ECD3A, #80EE9A);
+	background: linear-gradient(to top, #0ECD3A, #80EE9A, #80EE9A, #0ECD3A);
 	cursor:pointer;
 }
-.aformwrap input[type=submit]:hover{
-	padding: 4px 6px;
-	background-color : #18CF3C;
-	background: linear-gradient(to top, #0ECD3A, #80EE9A);
-	cursor:pointer;
-}
+
+
 .aphone {
 	height:62px;
 }

@@ -257,6 +257,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		$handler = "agreement.php";
 		$inner = TPLS . "/license.tpl.php";
 	}
+	if ($url == '/unsubscribe') {
+		$handler = "unsubscribe.php";
+		$inner = TPLS . "/unsubscribe.tpl.php";
+	}
 	/*if ($url == '/rkdemo') {
 		$handler = "rkdemo.php";
 		$inner = TPLS . "/rk/demo.tpl.php";
