@@ -62,7 +62,7 @@ class CUpAction {
 			} else {
 				$bIsCaptchaSuccess = ( a($_POST, 'cp') === sess('ccode') );
 			}
-			if (a($_SESSION, 'ccode') && $bIsCaptchaSuccess) {
+			if (a($_SESSION, 'ccode') || $bIsCaptchaSuccess) {
 				//Если пользователь не верифицирован, надо показать ему сообщение Чтобы поднять объявление, вам надо подтвердить
 				//свой номер телефона. Сейчас вы будете перенаправлены на страницу подтверждения.
 				//Иначе все как здесь
@@ -82,16 +82,23 @@ class CUpAction {
 		}
 	}
 	/**
+	 * @param  int $iAdvId Идентификатор объявления
+	 * @param  int $upCount Сколько ещё можно поднять (до вычета за текущее поднятие)
 	 * @return int статус 0 (удалось поднять объявление) или 2 (не удалось поднять объявление)
 	*/
-	static public function up($iAdvId) {
+	static public function up($iAdvId, $upCount) {
 		$id = $iAdvId;
 		$cmd = "SELECT max(delta) + 2 FROM main";
 		$d = dbvalue($cmd);
 		$now = now();
 		query("UPDATE main SET delta = {$d}, date_update='{$now}' WHERE id = {$id}", $nR, $aR);
 		if ($aR) {
-			$_SESSION["ok_msg"] = "Ваше объявление поднято в результатах поиска";
+			$sMsgSuffix = '';
+			if (!defined('PAY_ENABLED')) {
+				$n = ($upCount - 1);
+				$sMsgSuffix = ', в этом месяце можно поднять ещё ' . $n . ' ' . pluralize($n, '', 'раз', 'раза', 'раз');
+			}
+			$_SESSION["ok_msg"] = 'Ваше объявление поднято в результатах поиска' . $sMsgSuffix;
 			$date = date('Y-m-d');
 			query("INSERT INTO stat_up (_date, _count) VALUES ('{$date}', 1) ON DUPLICATE KEY UPDATE _count = _count + 1");
 			//utils_302("/cabinet?status=0"); //Все ок
@@ -121,7 +128,7 @@ class CUpAction {
 			if ($upCount - 1 < 0) {
 				sess('ok_msg', 'В этом месяце вы не можете поднимать объявления.');
 			} else {
-				$status = $this->_upAndDecrement($id, $uid);
+				$status = $this->_upAndDecrement($id, $uid, $upCount);
 			}
 			return $status;
 		}
@@ -146,14 +153,16 @@ class CUpAction {
 	 * @description Списание с кол-ва поднятий при включенном балансе пользователя
 	 * @param  int $uid идентификатор пользователя
 	 * @param  int $id идентификатор объявления
+	 * @param  int $upCount Сколько ещё можно поднять (до вычета за текущее поднятие)
 	 * @return int статус поднятия объявления
 	*/
-	private function _upAndDecrement($id, $uid) {
-		$status = self::up($id);
+	private function _upAndDecrement($id, $uid, $upCount) {
+		$status = self::up($id, $upCount);
 		$code = CODE_DEC_FOR_UP;
 		$time = now();
 		if ($status == 0) {
-			query("UPDATE users SET `upcount` = `upcount` - 1 WHERE id = {$uid}");
+			$sql = 'UPDATE users SET `upcount` = `upcount` - 1 WHERE id = ' . $uid;
+			query($sql);
 			query("INSERT INTO operations (`user_id`, `op_code_id`, `upcount`, `main_id`, `created`) 
 					VALUES(
 					{$uid},
