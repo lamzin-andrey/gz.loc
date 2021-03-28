@@ -1,0 +1,1 @@
+<script data-product='auto' data-type='osago' src='https://www.sravni.ru/widgets/loader.js' data-inframe='false' data-size='' data-cartypedefault='' data-open-in-new='true' data-theme='sravni_dark' data-aff_id='2479' data-offer_id='1064' data-aff_sub='6' data-source='3541'></script>

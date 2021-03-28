@@ -946,3 +946,17 @@ li {
 .m50p {
 	margin-top: 50px;
 }
+
+
+.osagobanner a {
+	text-decoration:none;
+}
+.osagobanner  section {
+	background-color:rgb(59, 62, 68);
+	color:white;
+	text-align:center;
+	font-size:22px;
+	margin:6px 0px;
+	padding:6px 0px;
+}
+/**/

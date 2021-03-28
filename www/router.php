@@ -282,6 +282,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/lib/shared.php";
 		$inner = TPLS . "/smsverify.tpl.php";
 	}
 	
+	if (strpos($url, 'osago') === 1) {
+		$handler = 'osago.php';
+		$inner = TPLS . '/o/sravni.tpl.php';
+		$showAddAdvBtn = false;
+		$showOsagoAdvert = false;
+	}
+	
 	if (strpos($url, "private") === 1) {
 		$css = isset($css) ? $css : '';
 		$css .= '<link href="/styles/admin.css?' . ASSETS_VERSION . '" media="all" rel="stylesheet" type="text/css" />';

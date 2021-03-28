@@ -48,7 +48,13 @@
 				</h1>
 			</div>
 		</header>
-		<?php include TPLS . '/p100banner.php'; ?>
+		
+		<?php if (!isset($showOsagoAdvert)) { ?>
+			<?php include TPLS . '/o/banner.php'; ?>
+			<?php include TPLS . '/p100banner.php'; ?>
+			
+		<?php } ?>
+		
 		<div id="content">
 			<?php 
 				if ($_SERVER['REQUEST_URI'] != '/agreement'):
