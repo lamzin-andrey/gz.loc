@@ -947,11 +947,28 @@ li {
 	margin-top: 50px;
 }
 
-
+/** sravni-osago  */
 .osagobanner a {
 	text-decoration:none;
 }
-.osagobanner  section {
+
+.osagobanner_sber  section {
+	background-color:#0dd149;
+	color:white;
+	text-align:center;
+	font-size:22px;
+	margin:6px 0px;
+	padding:6px 0px;
+}
+
+.osagobanner_sber  section b{
+  display:inline-block;
+  line-height:48px;
+  vertical-align:top;
+  margin-left: 4px;
+}
+
+.osagobanner  section  {
 	background-color:rgb(59, 62, 68);
 	color:white;
 	text-align:center;
@@ -960,9 +977,23 @@ li {
 	padding:6px 0px;
 }
 .sravni-green {
-	background-color: #0dd149;
+  background-color: #0dd149;
+  max-width:320px;
+  margin:auto;
+  border-radius: 4px;
+  height:48px;
+  line-height: 48px;
 }
-.sravni-banner {
+.sravni-tcolor {
+  color: #0dd149;
+}
+.block, .osagobanner_sber a {
+  text-decoration: none;
+}
+.sravni-banner, .sravni-sub {
 	margin-bottom:20px;
 }
-/**/
+.sravni-sub {
+  font-size:14px;
+}
+/** END sravni-osago  */
