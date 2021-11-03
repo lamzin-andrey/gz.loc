@@ -959,4 +959,10 @@ li {
 	margin:6px 0px;
 	padding:6px 0px;
 }
+.sravni-green {
+	background-color: #0dd149;
+}
+.sravni-banner {
+	margin-bottom:20px;
+}
 /**/
