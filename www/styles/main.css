@@ -811,7 +811,7 @@ li {
 	color:#3279B2
 }
 .blabla h2, a{
-	color:#3279B2
+	color:#1A1C1E;
 }
 .blabla p{
 	text-indent: 21px;
@@ -954,7 +954,7 @@ li {
 }
 
 .osagobanner_sber  section {
-	background-color: #01964c;/*#0dd149 0f0e0e*/;
+	background-color: #3d594b;/*#0dd149 0f0e0e*/;
 	color:white;
 	text-align:center;
 	font-size:22px;
@@ -988,6 +988,9 @@ li {
 .sravni-tcolor {
   color: #0dd149;
 }
+.sravni-tcolor-red {
+  color: #ff4545;
+}
 .block, .osagobanner_sber a {
   text-decoration: none;
 }
@@ -996,5 +999,48 @@ li {
 }
 .sravni-sub {
   font-size:14px;
+}
+
+.sravni-sub-btm {
+  margin-top:14px;
+}
+
+/**  */
+@media (min-width:392px) {
+
+.rgru-wr {
+	border: 1px solid gray;
+	padding: 5px 0px 7px 1px;
+	background-color: #f2f2f4;
+	height: 116px;
+}
+.rg-ru {
+	display: inline-block;
+	max-width: 62%;
+	margin-top: 59px;
+	text-decoration: hwb;
+	padding-left: 4px;
+}
+}
+
+@media (max-width:391px) {
+
+.rgru-wr {
+	border: 1px solid gray;
+	padding: 5px 0px 7px 1px;
+	background-color: #f2f2f4;
+	height: 116px;
+}
+.rgru-wr img{
+	
+}
+.rg-ru {
+	display: inline-block;
+	max-width: 50%;
+	margin-top: 59px;
+	text-decoration: hwb;
+	padding-left: 4px;
+	font-size: 13px;
+}
 }
 /** END sravni-osago  */
