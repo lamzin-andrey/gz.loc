@@ -8,6 +8,7 @@ href="https://go.sravni.ru/aff_c?aff_id=2479&offer_id=1064&source=3541&out=https
 	</section>
 </a>
 
+<div><b>Источник:</b></div>
 <div class="rgru-wr">
 	<img src="/images/o/r.jpg" class="left fl">
 	<a href="https://rg.ru/2022/09/02/koridor-bazovogo-tarifa-osago-s-13-sentiabria-budet-rasshiren-na-26-vverh-i-vniz.html"
