@@ -178,7 +178,7 @@
 	}
 }
 
-@media (max-width:375px) {
+@media (max-width:413px) {
 	#mainsfrormadd, .form {
 		max-width:unset!important;
 		width:unset!important;
@@ -380,16 +380,17 @@ body {
 	height:100%
 }
 #logoplace {
-	float:left;
+	/*! float:left; */
+	/*! text-align: center; */
 }
 #logoplace a{
 	text-decoration:none;
 	color:#29D4EA
 }
 #logo-out {
-	width:300px;
+	width:100%;
 	height:100px;
-	display:table-cell;
+	/*! display:table-cell; */
 	text-align:center;
 	vertical-align:middle;
 }
@@ -402,9 +403,9 @@ body {
 }
 
 #banner-out {
-	display:table-cell;
+	/*! display:table-cell; */
 	text-align:center;
-	vertical-align:middle;
+	/*! vertical-align:middle; */
 }
 #banner-in {
 	color: #424558;
@@ -926,7 +927,7 @@ li {
 .p100banner section b{
 	display:inline-block;
 	float:left;
-	font-size:22px;
+	font-size:17px;
 	line-height: 60px;
 }
 .p100banner section u{
