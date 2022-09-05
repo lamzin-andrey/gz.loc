@@ -2,7 +2,10 @@
 <noindex>
 <div class="osagobanner_sber s">
 	<a href="/osago"><section>
-		<img src="/images/o/f.png"><b>ОСТАЛОСЬ <?=13 - intval(date('d'))?> дней до подорожания ОСАГО! Успей оформить!</b>
+		<?php
+			$x = 13 - intval(date('d'));
+		?>
+		<img src="/images/o/f.png"><b><?=pluralize($x, '', 'ОСТАЛСЯ', 'ОСТАЛОСЬ', 'ОСТАЛОСЬ')?> <?=$x?>  <?=pluralize($x, '', 'день', 'дня', 'дней')?> до подорожания ОСАГО! Успей оформить!</b>
 	</section></a>
 </div>
 </noindex>
