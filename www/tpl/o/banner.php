@@ -2,7 +2,7 @@
 <noindex>
 <div class="osagobanner_sber s">
 	<a href="/osago"><section>
-		<img src="/images/o/s.png"><b> Сбер ОСАГО от 3 200 Р</b>
+		<b class="min60">-60%!</b> <img src="/images/o/s.png"><b>Сбер ОСАГО со скидкой до 60%</b>
 	</section></a>
 </div>
 </noindex>
