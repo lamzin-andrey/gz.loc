@@ -2,10 +2,7 @@
 <noindex>
 <div class="osagobanner_sber s">
 	<a href="/osago"><section>
-		<?php
-			$x = 13 - intval(date('d'));
-		?>
-		<img src="/images/o/f.png"><b><?=pluralize($x, '', 'ОСТАЛСЯ', 'ОСТАЛОСЬ', 'ОСТАЛОСЬ')?> <?=$x?>  <?=pluralize($x, '', 'день', 'дня', 'дней')?> до подорожания ОСАГО! Успей оформить!</b>
+		<img src="/images/o/s.png"><b> Сбер ОСАГО от 3 200 Р</b>
 	</section></a>
 </div>
 </noindex>
