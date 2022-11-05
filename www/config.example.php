@@ -65,4 +65,6 @@ define('ADV_GATE_PWD', '*****');
 
 define('POLITICS_DOC', '/images/Politika_zashity_i_obrabotki_personalnyh_dannyh_2019-08-14.doc');
 
+define('ORD_YA_AUTH_TOKEN','********');
+
 //mysql_close();
