@@ -54,7 +54,7 @@
 			<div id="logoplace">
 				<div id="logo-out">
 					<div id="logo-in">
-						<a href="/">
+						<a href="/" erid="<?=ERID_MAIN_INNER?>" data-erid="<?=ERID_MAIN_INNER?>" class="dashed novisible-dashed" data-id="<?=ERID_MAIN_INNER_ADV_ID?>">
 							<img src="/images/gazeli.png"/>
 						</a>
 					</div>				
@@ -92,7 +92,7 @@
 				<div id="counter-out">
 					<div id="counter-in">
 						<!--LiveInternet counter--><script type="text/javascript"><!--
-document.write("<a href='http://www.liveinternet.ru/click' "+
+document.write("<a href='http://www.liveinternet.ru/click' erid=\"<?=ERID_LIVE_INTERNET?>\" data-erid=\"<?=ERID_LIVE_INTERNET?>\" class=\"dashed novisible-dashed\" data-id=\"<?=ERID_LIVE_INTERNET_ADV_ID?>\""+
 "target=_blank><img src='//counter.yadro.ru/hit?t44.10;r"+
 escape(document.referrer)+((typeof(screen)=="undefined")?"":
 ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?

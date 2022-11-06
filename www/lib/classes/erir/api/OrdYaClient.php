@@ -4,8 +4,8 @@ class OrdYaClient
 {
 	const CONTRACTOR_ID = 1; // admin.id
 	const DISTRIBUTION = 'distribution'; // см. документацию метода contract
-	// const HOST = 'https://ord.yandex.ru/api/v1'; // см. документацию если слетит
-	const HOST = 'http://test.loc/ordyaapi/v1'; // см. документацию если слетит
+	const HOST = 'https://ord.yandex.ru/api/v1'; // см. документацию если слетит
+	// const HOST = 'http://test.loc/ordyaapi/v1'; // см. документацию если слетит
 	const CREATIVE_DEFAULT_DESCRIPTION = 'Объявление о грузоперевозках малогабаритным грузовым транспортом';
 	
 	
@@ -35,6 +35,8 @@ class OrdYaClient
 		
 		$url = self::HOST . '/contract';
 		$resp = $req->execute($url, $data);
+		var_dump($resp);
+		die;
 		$contractId = isset($resp->json->token) ? $resp->json->token : ''; // TODO здесь после проверки может всё поменяться
 		$requestId = isset($resp->json->request_id) ? $resp->json->request_id : ''; // TODO здесь после проверки может всё поменяться
 		$result = new StdClass();

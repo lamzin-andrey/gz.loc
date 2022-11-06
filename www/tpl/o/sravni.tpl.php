@@ -1,5 +1,6 @@
-<a  class="block osagobanner s"
+<a  class="block osagobanner s dashed novisible-dashed"
 href="https://go.sravni.ru/aff_c?aff_id=2479&offer_id=1064&source=3541&out=https%3A%2F%2Fwww.sravni.ru%2Fosago%2F%3F"
+erid="<?=ERID_SRAVNI_RU?>" data-erid="<?=ERID_SRAVNI_RU?>"  data-id="<?=ERID_SRAVNI_RU_ADV_ID?>"
 	target="_blank">
 	<section>
 		<div class="sravni-banner">Оформить ОСАГО в Сбере онлайн со скидкой до <b class="sravni-tcolor">60%</b></div>

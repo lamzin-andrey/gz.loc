@@ -52,15 +52,33 @@
 		через invoice за предыдущий месяц.
    На заглушке вроде бы работает, надо затестить с не заглушкой.
 
-6 В рендеринге объявления выводим erid если он не null
+6 В рендеринге объявления выводим erid если он не null									*
 
 7 Деплой
-  В конфиг не забыть добавить константу HTTP
+  В конфиг не забыть добавить константу HTTP и 
 	define('HTTP', 'http://');
+	define('ORD_YA_AUTH_TOKEN','y0_AgAAAAAO-_92AAhgQAAAAADTGB6WOfLHwpQpQhCsR9BY7zadq7FJzcc');
+	
+	define('ERID_SRAVNI_RU_INNER','wait-api-yo');
+	define('ERID_SRAVNI_RU','wait-api-yo');
+	define('ERID_GT','wait-api-yo');
+	define('ERID_LIVE_INTERNET', 'wait-api-yo');
+	define('ERID_MAIN_INNER', 'wait-api-yo');
+	Все ERID константы перенести из локального конфига.
+	id в них уже продовские.
+	Перед индексацией сделать видимыми объявления.
+	
+	Таблицу custom_creatives содержимое перенести.
+	
   Добавился контроллер showHandler.php
   Затронут контроллер worker.php
   изменено:      www/controls/classes/clist.php
   изменено:      www/tpl/mainpagelist_item.tpl.php
+  изменено:      www/tpl/master.tpl.php
+  изменено:      www/tpl/o/banner.php
+  изменено:      www/tpl/o/sravni.tpl.php
+  изменено:      www/tpl/p100banner.php
+
 
 
 
@@ -77,8 +95,34 @@
  Если в итоге получен маркер, сохраняем его 
 
 
+8! Надо составить список ссылок, которые не на объявления.
 
+Это конечно ссылка на Главторги, на LI, на Сравни.
+1 Заводим аккаунт, или находим свой с моим телефоном.
+2 Добавляем объявления, ждем, пока проиндексируются.
+3 Пишем ссылки erid для баннеров.
 
+Можно заранее подготовить для них константы в конфиге.
+
+Внедряем:
+	define('ERID_SRAVNI_RU_INNER','wait-api-yo-ERID_SRAVNI_RU_INNER');		*
+	define('ERID_SRAVNI_RU_INNER_ADV_ID', 2432);						*
+	define('ERID_SRAVNI_RU','wait-api-yo');								*
+	define('ERID_SRAVNI_RU_ADV_ID', 2782);								*
+	define('ERID_GT','wait-api-yo');									*
+	define('ERID_GT_ADV_ID', 2783);										*
+	define('ERID_LIVE_INTERNET', 'wait-api-yo');
+	define('ERID_LIVE_INTERNET_ADV_ID', 2785);
+	define('ERID_MAIN_INNER', 'wait-api-yo');							*
+	define('ERID_MAIN_INNER_ADV_ID', 2784);								*
+	
+Здесь id уже с прода
+
+Для указанных в этихз константах main_id надо доработать invoice 
+ и возможно creative пусть берут ссылки откуда надо.
+ 
+То есть табличка main_id url
+GetErid смотрит в неё и берет из неё
 --------------------------------------
 
 Первым длом поправить транслит-функцию _ вместо /

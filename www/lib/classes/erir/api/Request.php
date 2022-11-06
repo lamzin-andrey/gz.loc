@@ -104,7 +104,7 @@ class RequestOrd {
 			'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 			'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
 			//'Accept-Encoding: gzip, deflate',
-			'Content-Type: application/x-www-form-urlencoded',
+			'Content-Type: application/json',
 			'Authorization: Bearer ' . ORD_YA_AUTH_TOKEN
 		);
 		if ($is_xhr) {

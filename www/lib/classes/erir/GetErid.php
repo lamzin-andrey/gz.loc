@@ -163,6 +163,10 @@ class GetErid {
 	
 	private function getUrl($mainId, $regionUrl, $codename)
 	{
+		$url = dbrow("SELECT url FROM custom_creatives WHERE main_id = {$mainId} LIMIT 1;");
+		if ($url) {
+			return $url;
+		}
 		return HTTP . SITE_NAME . '/' . $regionUrl . '/' . $codename . '/' . $mainId;
 	}
 }
