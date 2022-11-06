@@ -11,6 +11,7 @@ define("MAX_HEIGHT", 240);
 define("ADMIN_PHONE", '+***');
 define("SITE_EMAIL", 'admin@gazel.me');
 define("SITE_NAME", 'gazel.me');
+define('HTTP', 'http://');
 define('NOTICE_EMAIL', 'n@gmail.com');
 define("H1_BEG", "Заказ ГАЗели в ");
 define('AUTO_MODERATION_ON', true);

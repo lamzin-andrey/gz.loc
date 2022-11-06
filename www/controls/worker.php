@@ -2,6 +2,7 @@
 require_once DR . '/lib/classes/sms/epochta2.php';
 require_once DR . '/lib/classes/sms/smspilot.php';
 require_once DR . '/lib/classes/mail/SampleMail.php';
+require_once DR . '/lib/classes/erir/GetErid.php';
 class Worker {
 	public function __construct(){
 		$action = isset($_POST['action']) ? $_POST['action'] : 'automoderate';
@@ -11,6 +12,7 @@ class Worker {
 				$this->_sms();
 				$this->_upcountRestore();
 				$this->_testSendEmailToGoogle();
+				$this->_getErid();
 				json_ok();
 				break;
 		}
@@ -128,6 +130,12 @@ class Worker {
 			$scs = $mailer->send();
 			echo json_encode(['scs' => $scs]);
 		}
+	}
+	
+	private function _getErid()
+	{
+		$e = new GetErid();
+		$e->process();
 	}
 }
 

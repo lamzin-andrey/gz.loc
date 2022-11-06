@@ -4,13 +4,10 @@ class OrdYaClient
 {
 	const CONTRACTOR_ID = 1; // admin.id
 	const DISTRIBUTION = 'distribution'; // см. документацию метода contract
-	const HOST = 'https://ord.yandex.ru/api/v1'; // см. документацию если слетит
+	// const HOST = 'https://ord.yandex.ru/api/v1'; // см. документацию если слетит
+	const HOST = 'http://test.loc/ordyaapi/v1'; // см. документацию если слетит
 	const CREATIVE_DEFAULT_DESCRIPTION = 'Объявление о грузоперевозках малогабаритным грузовым транспортом';
 	
-	public function __construct()
-	{
-		
-	}
 	
 	/**
 	 * $userCreated 'Y-m-d H:i:s' время создания первого объявления пользователя
@@ -32,16 +29,17 @@ class OrdYaClient
 		$date = $this->date($userCreated);
 		$amount = 0;
 		$isVat = false;
-		$req = new Request();
+		$req = new RequestOrd();
 		
 		$data = compact($id, $type, $clientId, $contractorId, $isRegReport, $actionType, $subjectType, $number, $date, $amount, $isVat);
 		
-		$url = self::HOST . '/contract'
+		$url = self::HOST . '/contract';
 		$resp = $req->execute($url, $data);
-		$contractId = $resp->json->token; // TODO здесь после проверки может всё поменяться
+		$contractId = isset($resp->json->token) ? $resp->json->token : ''; // TODO здесь после проверки может всё поменяться
+		$requestId = isset($resp->json->request_id) ? $resp->json->request_id : ''; // TODO здесь после проверки может всё поменяться
 		$result = new StdClass();
 		$result->contractId = $contractId;
-		$result->requestId = $request_id;
+		$result->requestId = $requestId;
 		
 		return $result;
 	}
@@ -65,14 +63,15 @@ class OrdYaClient
 		$description = self::CREATIVE_DEFAULT_DESCRIPTION;
 		$data = compact($id, $type, $form, $urls, $okveds, $fiasRegionList, $description);
 		
-		$req = new Request();
+		$req = new RequestOrd();
 		
-		$url = self::HOST . '/creative'
+		$url = self::HOST . '/creative';
 		$resp = $req->execute($url, $data);
-		$creativeId = $resp->json->token ? $resp->json->token : ''; // TODO здесь после проверки может всё поменяться
+		$creativeId = isset($resp->json->token) ? $resp->json->token : ''; // TODO здесь после проверки может всё поменяться
+		$requestId = isset($resp->json->request_id) ? $resp->json->request_id : ''; // TODO здесь после проверки может всё поменяться
 		$result = new StdClass();
 		$result->creativeId = $creativeId;
-		$result->requestId = $request_id;
+		$result->requestId = $requestId;
 		
 		return $result;
 	}
@@ -100,11 +99,11 @@ class OrdYaClient
 		
 		$data = compact($id, $contractId, $clientRole, $contractorRole, $date, $startDate, $endDate, $amount, $isVat, $number, $items);
 		
-		$req = new Request();
+		$req = new RequestOrd();
 		
-		$url = self::HOST . '/invoice'
+		$url = self::HOST . '/invoice';
 		$resp = $req->execute($url, $data);
-		$status = $resp->json->token ? $resp->json->token : '';
+		$status = isset($resp->json->token) ? $resp->json->token : '';
 		$result = new StdClass();
 		$result->status = $status;
 		$result->requestId = $request_id;
@@ -153,20 +152,22 @@ class OrdYaClient
 	public function getStatus($requestId)
 	{
 		
-		$req = new Request();
+		$req = new RequestOrd();
 		
 		$url = self::HOST . '/status?reqid=' . $requestId;
 		$resp = $req->execute($url);
-		$creativeId = $resp->json->token ? $resp->json->token : '';
-		$status = $resp->json->status ? $resp->json->status : '';
+		$creativeId = isset($resp->json->token) ? $resp->json->token : '';
+		$status = isset($resp->json->status) ? $resp->json->status : '';
+		$objectId = isset($resp->json->object_id) ? $resp->json->object_id : '';
 		$result = new StdClass();
 		$result->creativeId = $creativeId;
 		$result->status = $status;
+		$result->objectId = $objectId;
 		
 		return $result;
 	}
 	
-	private date($datetime)
+	private function date($datetime)
 	{
 		$a = explode(' ', $datetime);
 		return trim($a[0]);
