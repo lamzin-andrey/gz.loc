@@ -80,7 +80,7 @@ class OrdYaClient
 	 * $dateEnd invoices.date_end
 	 * 
 	 * @return {
-	 * 	creativeId, // готовый маркер креативности
+	 * 	status, 
 	 *  requestId   // с чем ходить за статусом
 	 * }
 	*/
@@ -103,15 +103,16 @@ class OrdYaClient
 		
 		$url = self::HOST . '/invoice';
 		$resp = $req->execute($url, $data);
-		$status = isset($resp->json->token) ? $resp->json->token : '';
+		$status = isset($resp->json->status) ? $resp->json->status : '';
+		$requestId = isset($resp->json->request_id) ? $resp->json->request_id : '';
 		$result = new StdClass();
 		$result->status = $status;
-		$result->requestId = $request_id;
+		$result->requestId = $requestId;
 		
 		return $result;
 	}
 	
-	private function createItem($invoiceId, $userId, $dateStart, $dateEnd, $mainId, $amount, $imps)
+	private function createItems($invoiceId, $userId, $dateStart, $dateEnd, $mainId, $amount, $imps)
 	{
 		$amountPerShow = 0;
 		if (!$imps) {

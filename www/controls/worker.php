@@ -3,6 +3,7 @@ require_once DR . '/lib/classes/sms/epochta2.php';
 require_once DR . '/lib/classes/sms/smspilot.php';
 require_once DR . '/lib/classes/mail/SampleMail.php';
 require_once DR . '/lib/classes/erir/GetErid.php';
+require_once DR . '/lib/classes/erir/SendInvoice.php';
 class Worker {
 	public function __construct(){
 		$action = isset($_POST['action']) ? $_POST['action'] : 'automoderate';
@@ -13,6 +14,7 @@ class Worker {
 				$this->_upcountRestore();
 				$this->_testSendEmailToGoogle();
 				$this->_getErid();
+				$this->_sendInvoice();
 				json_ok();
 				break;
 		}
@@ -136,6 +138,12 @@ class Worker {
 	{
 		$e = new GetErid();
 		$e->process();
+	}
+	
+	private function _sendInvoice()
+	{
+		$sender = new SendInvoice();
+		$sender->process();
 	}
 }
 

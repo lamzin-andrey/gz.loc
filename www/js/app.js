@@ -563,4 +563,17 @@ function setAutoFlag(data) {
 */	
 function worker() {
 	Tool.post("/worker", {}, function(){});
+	sendShowedId();
 }	
+/**
+ * @description Отправка показанных
+*/	
+function sendShowedId() {
+	var ls = document.getElementsByClassName('dashed'), i, data = [];
+	for (i = 0; i < ls.length; i++) {
+		if (ls[i].tagName == 'A' && ls[i].hasAttribute('data-id')) {
+			data.push(ls[i].getAttribute('data-id'));
+		}
+	}
+	Tool.post("/shown", {list: data}, function(){});
+}
