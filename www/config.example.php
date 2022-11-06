@@ -68,4 +68,17 @@ define('POLITICS_DOC', '/images/Politika_zashity_i_obrabotki_personalnyh_dannyh_
 
 define('ORD_YA_AUTH_TOKEN','********');
 
+
+// STATIC ERIDS
+define('ERID_SRAVNI_RU_INNER','wait-api-yo-ERID_SRAVNI_RU_INNER');		
+define('ERID_SRAVNI_RU_INNER_ADV_ID', 2432);						
+define('ERID_SRAVNI_RU','wait-api-yo');								
+define('ERID_SRAVNI_RU_ADV_ID', 2782);								
+define('ERID_GT','wait-api-yo');									
+define('ERID_GT_ADV_ID', 2783);										
+define('ERID_LIVE_INTERNET', 'wait-api-yo');
+define('ERID_LIVE_INTERNET_ADV_ID', 2785);
+define('ERID_MAIN_INNER', 'wait-api-yo');							
+define('ERID_MAIN_INNER_ADV_ID', 2784);
+
 //mysql_close();
