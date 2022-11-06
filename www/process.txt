@@ -59,6 +59,9 @@
 	define('HTTP', 'http://');
   Добавился контроллер showHandler.php
   Затронут контроллер worker.php
+  изменено:      www/controls/classes/clist.php
+  изменено:      www/tpl/mainpagelist_item.tpl.php
+
 
 
 Запрос будет происходить сеансами.
