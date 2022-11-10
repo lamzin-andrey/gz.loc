@@ -10,6 +10,9 @@ class GetErid {
 	
 	public function process()
 	{
+		
+		return;
+		
 		$list = $this->getListEridNull();
 		
 		foreach ($list as $n => $row) {

@@ -8,6 +8,7 @@ class SendInvoice {
 	}
 	public function process()
 	{
+		return;
 		$list = $this->getNoSendInvoices();
 		
 		foreach ($list as $n => $row) {
