@@ -54,7 +54,7 @@
 			<div id="logoplace">
 				<div id="logo-out">
 					<div id="logo-in">
-						<a href="/" erid="<?=ERID_MAIN_INNER?>" data-erid="<?=ERID_MAIN_INNER?>" class="dashed novisible-dashed" data-id="<?=ERID_MAIN_INNER_ADV_ID?>">
+						<a href="/" class="dashed novisible-dashed">
 							<img src="/images/gazeli.png"/>
 						</a>
 					</div>				
@@ -70,8 +70,9 @@
 		</header>
 		
 		<?php if (!isset($showOsagoAdvert)) { ?>
-			<?php include TPLS . '/o/banner.php'; ?>
-			<?php include TPLS . '/p100banner.php'; ?>
+			<?php // include TPLS . '/o/banner.php'; ?>
+			<?php // include TPLS . '/p100banner.php'; ?>
+			<?php include DR . '/lib/classes/erir/banner/banners/erirbanner.php'; ?>
 			
 		<?php } ?>
 		

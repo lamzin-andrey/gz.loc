@@ -1,8 +1,9 @@
 		<li>
 			<img src="<?=$n['image'] ?>" class="ii" title="<?=$n['addtext'] ?>" />
 			<div class="shortitemtext left">
-				<header><a href="<?=$n["link"] ?>" erid="<?=$n["ordya_erid"] ?>" data-erid="<?=$n["ordya_erid"] ?>" title="<?=$n['addtext'] ?>"><?=$n['title'] ?></a></header>
+				<header><a href="<?=$n["link"] ?>"  title="<?=$n['addtext'] ?>"><?=$n['title'] ?></a></header>
 				<div class="text">
+					<?php // erid="?=$n["ordya_erid"] ?" data-erid="?=$n["ordya_erid"] ?" ?>
 					<?php if ($n['price'] > 0) {?><div class="vprice b"><span class="name">Цена:</span> <?=Shared::price($n['price']) ?></div><?} ?>
 					<div class="name"><?=$n['region_name'] ?>  <?=$n['city_name'] ?></div>
 					<div class="name"><?=$n['name'] ?></div>

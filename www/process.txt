@@ -78,6 +78,9 @@
   изменено:      www/tpl/o/banner.php
   изменено:      www/tpl/o/sravni.tpl.php
   изменено:      www/tpl/p100banner.php
+  
+  styles/main.css
+  www/tpl/erir/
 
 После получения не забыть установить полученные erid в константы!
 

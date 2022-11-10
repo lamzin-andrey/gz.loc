@@ -1049,3 +1049,42 @@ li {
 	font-size: 44px;
 }
 /** END sravni-osago  */
+
+/** erir banner */
+.erir-m--banner {
+	background-color: gray;
+	color: white!important;
+	font-size:32px;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.erir-m--banner a{
+	color: white!important;
+}
+/** END erir banner */
+
+/** erir article */
+.garant-quote {
+	background-color: #EBEBEB;
+	border-radius: 6px;
+}
+.garant-quote-left-border {
+	background-color: #00BB6D;
+	width:10px;
+	float:left;
+	height: 400px;
+}
+.garant-quote-content {
+	padding-left:10px;
+	float:left;
+	max-width: 900px;
+	width:90%;
+}
+.garant-link {
+	color: #5ACD94;
+}
+.no-garant-text {
+	padding-left:10px;
+}
+/** END erir article */

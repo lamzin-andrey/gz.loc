@@ -184,3 +184,5 @@ UPDATE regions SET fias_id = '8276c6a1-1a86-4f0d-8920-aba34d4cc34a'
 
 UPDATE regions SET fias_id = '5c48611f-5de6-4771-9695-7e36a4e7529d'
  WHERE region_name IN('Республика Алтай');
+
+

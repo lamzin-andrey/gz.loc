@@ -1,0 +1,1 @@
+try{(function(w,d){throw'The domain is blocked';})(window,document);}catch(e){if(window.console&&window.console.log&&typeof(window.console.log)=='function'){window.console.log(e);}}

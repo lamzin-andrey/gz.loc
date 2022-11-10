@@ -1,0 +1,1169 @@
+if (location.host !== 'eng.skillbox.ru') {
+    window.advcake_attempt = window.advcake_attempt || 0;
+    try {
+
+        var advcake_helper = {
+            uid: function() {
+                return Math.random().toString(36).slice(2);
+            },
+            guid: function() {
+                function s4() {
+                    return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+                }
+                return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
+            },
+            get_q: function(e) {
+                var t = window.location.search;
+                return t = t.match(new RegExp(e + "=([^&=]+)")), t ? t[1] : "";
+            },
+            queryBuilder: function(data) {
+                var query = [];
+                for (var key in data) {
+                    query.push(key + '=' + data[key]);
+                }
+                return query.join('&');
+            },
+            getUrlElement: function(url) {
+                var a = document.createElement('a');
+                a.href = url;
+                return a;
+            },
+            setCookie: function(e, t, n) {
+                n = n || {};
+                var o = n.expires;
+                if ("number" === typeof o && o) {
+                    var r = new Date;
+                    r.setTime(r.getTime() + 1000 * o), o = n.expires = r;
+                }
+                o && o.toUTCString && (n.expires = o.toUTCString()), t = encodeURIComponent(t);
+                var i = e + "=" + t;
+                for (var a in n) {
+                    i += "; " + a;
+                    var c = n[a];
+                    c !== !0 && (i += "=" + c);
+                }
+                document.cookie = i;
+            },
+            getCookie: function(e) {
+                var t = document.cookie.match(new RegExp("(?:^|; )" + e.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
+                return t ? decodeURIComponent(t[1]) : void 0;
+            },
+            getDate: function() {
+                var date = new Date();
+                return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2);
+            },
+            cleanString: function(string) {
+                if (string === undefined || string === null) {
+                    return '';
+                }
+                string = string.replace(/['"]/g, '');
+                return string.replace(/&quot;/g, '');
+            },
+            post: function(url, data) {
+                var async = true;
+                var method = 'POST';
+                var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+                var xhr = new XHR();
+
+                var body = data;
+                var multipart = false;
+
+                if (typeof data === 'object') {
+                    var boundary = String(Math.random()).slice(2);
+                    var boundaryMiddle = '--' + boundary + '\r\n';
+                    var boundaryLast = '--' + boundary + '--\r\n';
+
+                    var bodyParts = ['\r\n'];
+                    for (var key in data) {
+                        if (!data.hasOwnProperty(key)) continue;
+                        bodyParts.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + data[key] + '\r\n');
+                    }
+                    multipart = true;
+                    body = bodyParts.join(boundaryMiddle) + boundaryLast;
+                }
+
+                if ("withCredentials" in xhr) {
+                    try {
+                        xhr.open(method, url, async);
+                        if (multipart) {
+                            xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+                        }
+                    } catch (x) {
+                        return false;
+                    }
+                    xhr.send(body);
+                    xhr.onreadystatechange = function() {
+                        return 4 === xhr.readyState;
+                    };
+                }
+            },
+            get: function(url, data) {
+                var async = true;
+                var method = 'GET';
+                var xhr = new XMLHttpRequest();
+                if ("withCredentials" in xhr) {
+                    try {
+                        xhr.open(method, url + '?' + advcake_helper.queryBuilder(data), async);
+                    } catch (x) {
+                        return false;
+                    }
+                    xhr.send();
+                    xhr.onreadystatechange = function() {
+                        return 4 === xhr.readyState;
+                    };
+                }
+            },
+            pixel: function(url, data) {
+                (new Image()).src = url + '?' + advcake_helper.queryBuilder(data);
+            }
+        };
+
+        var advcake_int = {
+            domain: ".skillbox.ru",
+
+            hitUrl: "//hit.acstat.com/skillbox/",
+            postbackUrl: 'https://api.advcake.com/postback/skillbox',
+
+            utm_source: "utm_source",
+            utm_partner: "utm_campaign",
+            utm_webmaster: "utm_content",
+            utm_params: "advcake_params",
+
+            cookie_partner: "advcake_utm_partner",
+            cookie_webmaster: "advcake_utm_webmaster",
+            cookie_params: "advcake_click_id",
+
+            cookie_session_id: "advcake_session_id",
+            cookie_track_id: "advcake_trackid",
+            cookie_track_url: "advcake_track_url",
+            cookie_lifetime: 2592000,
+
+            vars: {
+                page_hash: ''
+            },
+
+            init: function() {
+
+                advcake_int.checkDomain();
+
+                advcake_int.setPageHash();
+
+
+                advcake_int.setSessionId();
+
+                if (advcake_int.checkCommon()) {
+                    advcake_int.setTrackUrl();
+                    advcake_int.setPartner();
+                    advcake_int.setWebmaster();
+                    advcake_int.setClickId();
+                }
+            },
+
+            checkDomain: function() {
+                if (window.advcake_attempt < 5 && location.host && location.host.indexOf(advcake_int.domain.substring(1)) === -1) {
+                    window.advcake_attempt++;
+                    throw 'incorrect_domain';
+                }
+            },
+
+            checkCommon: function() {
+                return advcake_helper.get_q(advcake_int.utm_source) !== "" || advcake_helper.get_q('gclid') || advcake_helper.get_q('yclid');
+            },
+
+            checkCake: function() {
+                return advcake_helper.get_q(advcake_int.utm_source) === 'advcake' || advcake_helper.get_q('advcake');
+            },
+
+            setPageHash: function() {
+                advcake_int.vars.page_hash = advcake_helper.uid();
+            },
+
+            setSessionId: function() {
+                if (advcake_int.getSessionId() === undefined) {
+                    advcake_helper.setCookie(advcake_int.cookie_session_id, advcake_helper.guid(), {
+                        expires: advcake_int.cookie_lifetime,
+                        domain: advcake_int.domain,
+                        path: "/"
+                    });
+                }
+            },
+            getSessionId: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_session_id);
+            },
+
+
+            setTrackId: function() {
+                if (advcake_int.checkCommon() || advcake_int.getTrackId() === '') {
+                    advcake_helper.setCookie(advcake_int.cookie_track_id, advcake_helper.guid(), {
+                        expires: advcake_int.cookie_lifetime,
+                        domain: advcake_int.domain,
+                        path: "/"
+                    });
+                }
+            },
+            getTrackId: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_track_id) || '';
+            },
+
+
+            setWebmaster: function() {
+                advcake_helper.setCookie(advcake_int.cookie_webmaster, advcake_int.parseWebmaster(), {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getWebmaster: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_webmaster) || '';
+            },
+            parseWebmaster: function() {
+                return advcake_helper.get_q(advcake_int.utm_webmaster);
+            },
+
+
+            setPartner: function() {
+                advcake_helper.setCookie(advcake_int.cookie_partner, advcake_int.parsePartner(), {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getPartner: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_partner) || '';
+            },
+            parsePartner: function() {
+                return advcake_helper.get_q(advcake_int.utm_partner);
+            },
+
+
+            setClickId: function() {
+                advcake_helper.setCookie(advcake_int.cookie_params, advcake_int.parseClickId(), {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getClickId: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_params) || '';
+            },
+            parseClickId: function() {
+                return advcake_helper.get_q(advcake_int.utm_params);
+            },
+
+
+            setTrackUrl: function() {
+                advcake_helper.setCookie(advcake_int.cookie_track_url, location.href, {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getTrackUrl: function(encode) {
+                encode = encode || true;
+                var url = advcake_helper.getCookie(advcake_int.cookie_track_url) || '';
+                return encode ? encodeURIComponent(url) : url;
+            },
+
+
+            getQuerySource: function() {
+                return advcake_helper.get_q(advcake_int.utm_source);
+            },
+            getQueryMedium: function() {
+                return advcake_helper.get_q("utm_medium");
+            },
+            getReferrer: function(encode) {
+                encode = encode || true;
+                return encode ? encodeURIComponent(document.referrer) : document.referrer;
+            },
+            isIframe: function() {
+                return window !== window.top ? 1 : 0;
+            },
+            getIframeLand: function(encode) {
+                encode = encode || true;
+                var iframe_land = '';
+                try {
+                    if (advcake_int.isIframe()) {
+                        iframe_land = window.top.location.href;
+                    }
+                } catch (e) {}
+                return encode ? encodeURIComponent(iframe_land) : iframe_land;
+            },
+            getLand: function(encode) {
+                encode = encode || true;
+                return encode ? encodeURIComponent(location.href) : location.href;
+            },
+
+            sendHit: function() {
+                advcake_helper.pixel(advcake_int.hitUrl, {
+                    "sid": advcake_int.getSessionId(),
+                    "t_tid": advcake_int.getTrackId(),
+                    "t_dp": advcake_int.getClickId(),
+                    "wid": advcake_int.getWebmaster(),
+                    "par": advcake_int.getPartner(),
+                    "ref": advcake_int.getReferrer(),
+                    "t_t": advcake_int.getQueryMedium(),
+                    "t_if": advcake_int.isIframe(),
+                    "t_s": advcake_int.getQuerySource(),
+                    "if_p": advcake_int.getIframeLand(),
+                    "ih": innerHeight,
+                    "iw": innerWidth,
+                    "s_w": screen.width,
+                    "s_h": screen.height,
+                    "land": advcake_int.getLand(),
+                    "t_url": advcake_int.getTrackUrl()
+                });
+            }
+        };
+
+        advcake_int.init();
+        advcake_int.sendHit();
+
+
+        window.advcakeCorrection = function(data) {
+
+            if (typeof data !== 'undefined' && typeof data.pageType !== 'undefined') {
+                data.pageType = parseInt(data.pageType);
+                data.user = data.user || {};
+                data.user.type = data.user.type || '';
+                data.user.email = data.user.email || '';
+                switch (data.pageType) {
+                    case 1:
+                        break;
+                    case 2:
+                    case 3:
+                        data.currentLead = data.currentLead || {};
+                        data.currentLead.name = data.currentLead.name || 1;
+                        data.currentLead.price = data.currentLead.price || 0;
+                        break;
+                    case 4:
+                        data.leadInfo = data.leadInfo || {};
+                        data.leadInfo.name = data.leadInfo.name || 1;
+                        data.leadInfo.id = data.leadInfo.id || '';
+                        data.leadInfo.leadid = data.leadInfo.leadid || data.leadInfo.name;
+                        data.leadInfo.totalPrice = data.leadInfo.totalPrice || data.leadInfo.price || 0;
+                        break;
+                    case 5:
+                        data.leads = data.leads || [];
+                        break;
+                }
+            }
+
+            return data;
+        };
+
+        window.advcakeRetarget = function(data) {
+            try {
+                switch (data.pageType) {
+                    case 2: //Product Page
+                        var prd_name = location.pathname.replace(/\//g, '');
+                        var product = window.dataLayer[4].crto.products[0];
+                        product.name = prd_name;
+                        window.APRT_DATA = {
+                            pageType: 2,
+                            currentProduct: product
+                        };
+                        break;
+                    case 4: //Thanks for order
+                        var datum = window.dataLayer[5].crto;
+                        var prd_name = location.pathname.replace(/\//g, '');
+                        var order_id = datum.transactionid;
+                        var total_price = datum.products.reduce(function(sum, prd) {
+                            return sum + prd.price * prd.quantity;
+                        }, 0);
+                        var products = datum.products.map(function(prd) {
+                            prd.name = prd_name;
+                            return prd;
+                        });
+                        window.APRT_DATA = {
+                            pageType: 6,
+                            purchasedProducts: products,
+                            orderInfo: {
+                                id: order_id,
+                                totalPrice: total_price
+                            }
+                        };
+                        break;
+                    default: // nothing
+                        window.APRT_DATA = {
+                            pageType: 0
+                        };
+                        break;
+                }
+                // (function(w, d) {
+                //     try {
+                //         var el = 'getElementsByTagName',
+                //             rs = 'readyState';
+                //         if (d[rs] !== 'interactive' && d[rs] !== 'complete') {
+                //             var c = arguments.callee;
+                //             return setTimeout(function() {
+                //                 c(w, d)
+                //             }, 100);
+                //         }
+                //         var s = d.createElement('script');
+                //         s.type = 'text/javascript';
+                //         s.async = s.defer = true;
+                //         s.src = '//aprtx.com/code/skillbox/';
+                //         var p = d[el]('body')[0] || d[el]('head')[0];
+                //         if (p) p.appendChild(s);
+                //     } catch (x) {
+                //         if (w.console) w.console.log(x);
+                //     }
+                // })(window, document);
+            } catch (e) {}
+
+            // adspartners
+            try {
+                switch (parseInt(data.pageType)) {
+                    case 1: //main
+                        window.APRT_DATA = {
+                            pageType: 1
+                        };
+                        break;
+                    case 2: //Product Page
+                        window.APRT_DATA = {
+                            pageType: 2,
+                            currentProduct: {
+                                name: data.currentLead.name,
+                                quantity: 1
+                            }
+                        };
+                        break;
+                    case 3: //Order Page
+                        window.APRT_DATA = {
+                            pageType: 5,
+                            basketProducts: [{
+                                name: data.currentLead.name,
+                                quantity: 1
+                            }]
+                        };
+                        break;
+                    case 6: //Thanks for order
+                        window.APRT_DATA = {
+                            pageType: 6,
+                            purchasedProducts: [{
+                                name: data.leadInfo.name,
+                                quantity: 1
+                            }],
+                            orderInfo: data.leadInfo
+                        };
+                        break;
+                    default: // nothing
+                        window.APRT_DATA = {
+                            pageType: 0
+                        };
+                        break;
+                }
+                (function(w, d) {
+                    try {
+                        var el = 'getElementsByTagName',
+                            rs = 'readyState';
+                        if (d[rs] !== 'interactive' && d[rs] !== 'complete') {
+                            var c = arguments.callee;
+                            return setTimeout(function() {
+                                c(w, d)
+                            }, 100);
+                        }
+                        var s = d.createElement('script');
+                        s.type = 'text/javascript';
+                        s.async = s.defer = true;
+                        s.src = '//dmrtx.com/code/skillbox/';
+                        var p = d[el]('body')[0] || d[el]('head')[0];
+                        if (p) p.appendChild(s);
+                    } catch (x) {
+                        if (w.console) w.console.log(x);
+                    }
+                })(window, document);
+            } catch (e) {}
+
+
+
+            //Gdeslon
+            try {
+                var src = 'https://gdeslon.ru/landing.js?mid=93459';
+                switch (data.pageType) {
+                    case 1:
+                        src += '&mode=main';
+                        break;
+                    case 2: //Product Page
+                        var product = window.dataLayer[4].crto.products[0];
+                        src += '&mode=card&codes=' + product.id + ':' + product.price;
+                        break;
+                    default: // nothing
+                        src += '&mode=other';
+                        break;
+                }
+                var s = document.createElement('script');
+                s.setAttribute('src', src);
+                s.setAttribute('async', 'true');
+                s.setAttribute('type', 'text/javascript');
+                document.body.appendChild(s);
+            } catch (e) {}
+
+            try {
+                switch (data.pageType) {
+                    case 2: //Product Page
+                        var prd_name = location.pathname.replace(/\//g, '');
+                        var product = window.dataLayer[4].crto.products[0];
+                        product.name = prd_name;
+                        window.APRT_DATA = {
+                            pageType: 2,
+                            currentProduct: product
+                        };
+                        break;
+                    case 4: //Thanks for order
+                        var datum = window.dataLayer[5].crto;
+                        var prd_name = location.pathname.replace(/\//g, '');
+                        var order_id = datum.transactionid;
+                        var total_price = datum.products.reduce(function(sum, prd) {
+                            return sum + prd.price * prd.quantity;
+                        }, 0);
+                        var products = datum.products.map(function(prd) {
+                            prd.name = prd_name;
+                            return prd;
+                        });
+                        window.APRT_DATA = {
+                            pageType: 6,
+                            purchasedProducts: products,
+                            orderInfo: {
+                                id: order_id,
+                                totalPrice: total_price
+                            }
+                        };
+                        break;
+                    default: // nothing
+                        window.APRT_DATA = {
+                            pageType: 0
+                        };
+                        break;
+                }
+                // (function(w, d) {
+                //     try {
+                //         var el = 'getElementsByTagName',
+                //             rs = 'readyState';
+                //         if (d[rs] !== 'interactive' && d[rs] !== 'complete') {
+                //             var c = arguments.callee;
+                //             return setTimeout(function() {
+                //                 c(w, d)
+                //             }, 100);
+                //         }
+                //         var s = d.createElement('script');
+                //         s.type = 'text/javascript';
+                //         s.async = s.defer = true;
+                //         s.src = '//aprtx.com/code/skillbox/';
+                //         var p = d[el]('body')[0] || d[el]('head')[0];
+                //         if (p) p.appendChild(s);
+                //     } catch (x) {
+                //         if (w.console) w.console.log(x);
+                //     }
+                // })(window, document);
+            } catch (e) {}
+
+            try {
+                var cityads = function(d) {
+                    var xscr = d.createElement('script');
+                    xscr.async = 1;
+                    xscr.src = '//x.cnt.my/async/track/?r=' + Math.random();
+                    var x = document.getElementsByTagName("script")[0];
+                    x.parentNode.insertBefore(xscr, x);
+                };
+                if (data.user !== undefined) {
+                    localStorage.setItem('advcake_email', data.user.email || '');
+                }
+                switch (data.pageType) {
+                    case 2: //Order Page
+                        var product_id = window.dataLayer[3].crto.products[0];
+                        window.xcnt_product_id = product_id;
+                        break;
+                    case 4: //Thanks for order
+                        var datum = window.dataLayer[5].crto;
+                        var products = datum.products.map(function(prd) {
+                            return prd.id;
+                        }).join();
+                        var quantity = datum.products.map(function(prd) {
+                            return prd.quantity;
+                        }).join();
+                        var order_id = datum.transactionid;
+
+                        window.xcnt_basket_products = products;
+                        window.xcnt_basket_quantity = quantity;
+
+                        cityads(document);
+
+                        var email = localStorage.getItem('advcake_email');
+                        window.advcake_data.forEach(function(d) {
+                            if (d.user !== undefined) {
+                                email = d.user.email;
+                            }
+                        });
+
+                        window.xcnt_order_products = products;
+                        window.xcnt_order_quantity = quantity;
+                        window.xcnt_order_id = order_id;
+                        window.xcnt_order_total = datum.products.reduce(function(sum, prd) {
+                            return sum + prd.price * prd.quantity;
+                        }, 0);
+                        window.xcnt_order_currency = 'RUR';
+                        window.xcnt_user_email = email;
+                        break;
+                    default: // nothing
+                        break;
+                }
+                cityads(document);
+
+            } catch (e) {}
+        };
+
+
+        window.advcakeEvents = function(data) {
+            if (!data || typeof data !== 'object' || Array.isArray(data)) {
+                return;
+            }
+
+            if (typeof window.advcakeCorrection === "function") {
+                data = window.advcakeCorrection(data);
+            }
+            if (typeof data !== 'undefined') {
+
+                if (typeof window.advcakeRetarget === "function") {
+                    window.advcakeRetarget(data);
+                }
+            }
+        };
+
+        window.advcake_data = window.advcake_data || [];
+
+
+        if (window.advcake_data_push_flag !== true) {
+            window.advcake_data_push_flag = true;
+            var cakePush = window.advcake_data.push;
+            window.advcake_data.push = function(data) {
+                var a = cakePush.apply(this, arguments);
+                window.advcakeEvents(data);
+                return a;
+            };
+        }
+
+        if (typeof window.advcake_data === 'object' && typeof window.advcake_data.forEach !== 'undefined') {
+            window.advcake_data.forEach(function(data) {
+                if (typeof data === 'object') {
+                    window.advcakeEvents(data);
+                }
+            });
+        }
+
+        if (window.location.pathname === '/') {
+            window.advcake_data = window.advcake_data || [];
+            window.advcake_data.push({
+                pageType: 1
+            })
+        }
+
+        // /marathon/ orders
+        (function() {
+            if (location.pathname == '/marathon/') {
+                function cakeMarathon(data) {
+                    if (data.event == 'email.subscribe' && window.advcake_helper) {
+
+                        var order = {
+                            id: 'no',
+                            trackId: window.advcake_helper.getCookie("advcake_trackid"),
+                            url: window.advcake_helper.getCookie("advcake_url"),
+                            dataAdvcake: JSON.stringify(data)
+                        };
+
+                        function cakePost(url, data) {
+                            var async = true;
+                            var method = 'POST';
+                            var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+                            var xhr = new XHR();
+
+                            var body = data;
+                            var multipart = false;
+
+                            if (typeof data === 'object') {
+                                var boundary = String(Math.random()).slice(2);
+                                var boundaryMiddle = '--' + boundary + '\r\n';
+                                var boundaryLast = '--' + boundary + '--\r\n';
+
+                                var bodyParts = ['\r\n'];
+                                for (var key in data) {
+                                    if (!data.hasOwnProperty(key)) continue;
+                                    bodyParts.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + data[key] + '\r\n');
+                                }
+                                multipart = true;
+                                body = bodyParts.join(boundaryMiddle) + boundaryLast;
+                            }
+
+                            if ("withCredentials" in xhr) {
+                                try {
+                                    xhr.open(method, url, async);
+                                    if (multipart) {
+                                        xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+                                    }
+                                } catch (x) {
+                                    return false;
+                                }
+                                xhr.send(body);
+                                xhr.onreadystatechange = function() {
+                                    return 4 === xhr.readyState;
+                                };
+                            }
+                        }
+                        cakePost('https://api.advcake.com/postback/skillbox-marthon', order);
+                    }
+                }
+                window.dataLayer = window.dataLayer || [];
+                if (window.advcake_datalayer_push_flag !== true) {
+                    window.advcake_datalayer_push_flag = true;
+                    var layerPush = window.dataLayer.push;
+                    window.dataLayer.push = function(data) {
+                        var a = layerPush.apply(this, arguments);
+                        cakeMarathon(data);
+                        return a;
+                    };
+                }
+                if (typeof window.dataLayer === 'object' && typeof window.dataLayer.forEach !== 'undefined') {
+                    window.dataLayer.forEach(function(data) {
+                        if (typeof data === 'object') {
+                            cakeMarathon(data);
+                        }
+                    });
+                }
+            }
+        })();
+
+        //cityads
+        (function(d) {
+            var xscr = d.createElement('script');
+            xscr.async = 1;
+            xscr.src = '//x.cnt.my/async/track/?r=' + Math.random();
+            var x = document.getElementsByTagName("script")[0];
+            x.parentNode.insertBefore(xscr, x);
+        })(document)
+
+    } catch (e) {
+        if (e === 'incorrect_domain') {
+            (function(a) {
+                var b = a.createElement("script");
+                b.async = 1;
+                b.src = "//code.acstat.com/?r=" + Math.random();
+                a = a.getElementsByTagName("script")[0];
+                a.parentNode.insertBefore(b, a)
+            })(document);
+        }
+    }
+
+} else {
+    window.advcake_attempt = window.advcake_attempt || 0;
+    try {
+
+        var advcake_helper = {
+            uid: function() {
+                return Math.random().toString(36).slice(2);
+            },
+            guid: function() {
+                function s4() {
+                    return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+                }
+                return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
+            },
+            get_q: function(e) {
+                var t = window.location.search;
+                return t = t.match(new RegExp(e + "=([^&=]+)")), t ? t[1] : "";
+            },
+            queryBuilder: function(data) {
+                var query = [];
+                for (var key in data) {
+                    query.push(key + '=' + data[key]);
+                }
+                return query.join('&');
+            },
+            getUrlElement: function(url) {
+                var a = document.createElement('a');
+                a.href = url;
+                return a;
+            },
+            setCookie: function(e, t, n) {
+                n = n || {};
+                var o = n.expires;
+                if ("number" === typeof o && o) {
+                    var r = new Date;
+                    r.setTime(r.getTime() + 1000 * o), o = n.expires = r;
+                }
+                o && o.toUTCString && (n.expires = o.toUTCString()), t = encodeURIComponent(t);
+                var i = e + "=" + t;
+                for (var a in n) {
+                    i += "; " + a;
+                    var c = n[a];
+                    c !== !0 && (i += "=" + c);
+                }
+                document.cookie = i;
+            },
+            getCookie: function(e) {
+                var t = document.cookie.match(new RegExp("(?:^|; )" + e.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
+                return t ? decodeURIComponent(t[1]) : void 0;
+            },
+            getDate: function() {
+                var date = new Date();
+                return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2);
+            },
+            cleanString: function(string) {
+                if (string === undefined || string === null) {
+                    return '';
+                }
+                string = string.replace(/['"]/g, '');
+                return string.replace(/&quot;/g, '');
+            },
+            post: function(url, data) {
+                var async = true;
+                var method = 'POST';
+                var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+                var xhr = new XHR();
+
+                var body = data;
+                var multipart = false;
+
+                if (typeof data === 'object') {
+                    var boundary = String(Math.random()).slice(2);
+                    var boundaryMiddle = '--' + boundary + '\r\n';
+                    var boundaryLast = '--' + boundary + '--\r\n';
+
+                    var bodyParts = ['\r\n'];
+                    for (var key in data) {
+                        if (!data.hasOwnProperty(key)) continue;
+                        bodyParts.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + data[key] + '\r\n');
+                    }
+                    multipart = true;
+                    body = bodyParts.join(boundaryMiddle) + boundaryLast;
+                }
+
+                if ("withCredentials" in xhr) {
+                    try {
+                        xhr.open(method, url, async);
+                        if (multipart) {
+                            xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+                        }
+                    } catch (x) {
+                        return false;
+                    }
+                    xhr.send(body);
+                    xhr.onreadystatechange = function() {
+                        return 4 === xhr.readyState;
+                    };
+                }
+            },
+            get: function(url, data) {
+                var async = true;
+                var method = 'GET';
+                var xhr = new XMLHttpRequest();
+                if ("withCredentials" in xhr) {
+                    try {
+                        xhr.open(method, url + '?' + advcake_helper.queryBuilder(data), async);
+                    } catch (x) {
+                        return false;
+                    }
+                    xhr.send();
+                    xhr.onreadystatechange = function() {
+                        return 4 === xhr.readyState;
+                    };
+                }
+            },
+            pixel: function(url, data) {
+                (new Image()).src = url + '?' + advcake_helper.queryBuilder(data);
+            }
+        };
+
+        var advcake_int = {
+            domain: ".skillbox.ru",
+
+            hitUrl: "//hit.acstat.com/kesparu/",
+            postbackUrl: 'https://api.advcake.com/postback/kesparu',
+
+            utm_source: "utm_source",
+            utm_partner: "utm_campaign",
+            utm_webmaster: "utm_content",
+            utm_params: "advcake_params",
+
+            cookie_partner: "kespa_advcake_utm_partner",
+            cookie_webmaster: "kespa_advcake_utm_webmaster",
+            cookie_params: "kespa_advcake_click_id",
+
+            cookie_session_id: "kespa_advcake_session_id",
+            cookie_track_id: "kespa_advcake_trackid",
+            cookie_track_url: "kespa_advcake_track_url",
+            cookie_lifetime: 2592000,
+
+            vars: {
+                page_hash: ''
+            },
+
+            init: function() {
+
+                advcake_int.checkDomain();
+
+                advcake_int.setPageHash();
+
+
+                advcake_int.setSessionId();
+
+                if (advcake_int.checkCommon()) {
+                    advcake_int.setTrackId();
+                    advcake_int.setTrackUrl();
+                    advcake_int.setPartner();
+                    advcake_int.setWebmaster();
+                    advcake_int.setClickId();
+                }
+            },
+
+            checkDomain: function() {
+                if (window.advcake_attempt < 5 && location.host && location.host.indexOf(advcake_int.domain.substring(1)) === -1) {
+                    window.advcake_attempt++;
+                    throw 'incorrect_domain';
+                }
+            },
+
+            checkCommon: function() {
+                return advcake_helper.get_q(advcake_int.utm_source) !== "" || advcake_helper.get_q('gclid') || advcake_helper.get_q('yclid');
+            },
+
+            checkCake: function() {
+                return advcake_helper.get_q(advcake_int.utm_source) === 'advcake' || advcake_helper.get_q('advcake');
+            },
+
+            setPageHash: function() {
+                advcake_int.vars.page_hash = advcake_helper.uid();
+            },
+
+            setSessionId: function() {
+                if (advcake_int.getSessionId() === undefined) {
+                    advcake_helper.setCookie(advcake_int.cookie_session_id, advcake_helper.guid(), {
+                        expires: advcake_int.cookie_lifetime,
+                        domain: advcake_int.domain,
+                        path: "/"
+                    });
+                }
+            },
+            getSessionId: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_session_id);
+            },
+
+
+            setTrackId: function() {
+                if (advcake_int.checkCommon() || advcake_int.getTrackId() === '') {
+                    advcake_helper.setCookie(advcake_int.cookie_track_id, advcake_helper.guid(), {
+                        expires: advcake_int.cookie_lifetime,
+                        domain: advcake_int.domain,
+                        path: "/"
+                    });
+                }
+            },
+            getTrackId: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_track_id) || '';
+            },
+
+
+            setWebmaster: function() {
+                advcake_helper.setCookie(advcake_int.cookie_webmaster, advcake_int.parseWebmaster(), {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getWebmaster: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_webmaster) || '';
+            },
+            parseWebmaster: function() {
+                return advcake_helper.get_q(advcake_int.utm_webmaster);
+            },
+
+
+            setPartner: function() {
+                advcake_helper.setCookie(advcake_int.cookie_partner, advcake_int.parsePartner(), {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getPartner: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_partner) || '';
+            },
+            parsePartner: function() {
+                return advcake_helper.get_q(advcake_int.utm_partner);
+            },
+
+
+            setClickId: function() {
+                advcake_helper.setCookie(advcake_int.cookie_params, advcake_int.parseClickId(), {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getClickId: function() {
+                return advcake_helper.getCookie(advcake_int.cookie_params) || '';
+            },
+            parseClickId: function() {
+                return advcake_helper.get_q(advcake_int.utm_params);
+            },
+
+
+            setTrackUrl: function() {
+                advcake_helper.setCookie(advcake_int.cookie_track_url, location.href, {
+                    expires: advcake_int.cookie_lifetime,
+                    domain: advcake_int.domain,
+                    path: "/"
+                });
+            },
+            getTrackUrl: function(encode) {
+                encode = encode || true;
+                var url = advcake_helper.getCookie(advcake_int.cookie_track_url) || '';
+                return encode ? encodeURIComponent(url) : url;
+            },
+
+
+            getQuerySource: function() {
+                return advcake_helper.get_q(advcake_int.utm_source);
+            },
+            getQueryMedium: function() {
+                return advcake_helper.get_q("utm_medium");
+            },
+            getReferrer: function(encode) {
+                encode = encode || true;
+                return encode ? encodeURIComponent(document.referrer) : document.referrer;
+            },
+            isIframe: function() {
+                return window !== window.top ? 1 : 0;
+            },
+            getIframeLand: function(encode) {
+                encode = encode || true;
+                var iframe_land = '';
+                try {
+                    if (advcake_int.isIframe()) {
+                        iframe_land = window.top.location.href;
+                    }
+                } catch (e) {}
+                return encode ? encodeURIComponent(iframe_land) : iframe_land;
+            },
+            getLand: function(encode) {
+                encode = encode || true;
+                return encode ? encodeURIComponent(location.href) : location.href;
+            },
+
+            sendHit: function() {
+                advcake_helper.pixel(advcake_int.hitUrl, {
+                    "sid": advcake_int.getSessionId(),
+                    "t_tid": advcake_int.getTrackId(),
+                    "t_dp": advcake_int.getClickId(),
+                    "wid": advcake_int.getWebmaster(),
+                    "par": advcake_int.getPartner(),
+                    "ref": advcake_int.getReferrer(),
+                    "t_t": advcake_int.getQueryMedium(),
+                    "t_if": advcake_int.isIframe(),
+                    "t_s": advcake_int.getQuerySource(),
+                    "if_p": advcake_int.getIframeLand(),
+                    "ih": innerHeight,
+                    "iw": innerWidth,
+                    "s_w": screen.width,
+                    "s_h": screen.height,
+                    "land": advcake_int.getLand(),
+                    "t_url": advcake_int.getTrackUrl()
+                });
+            }
+        };
+
+        advcake_int.init();
+        advcake_int.sendHit();
+
+
+        window.advcakeCorrection = function(data) {
+
+            if (typeof data !== 'undefined' && typeof data.pageType !== 'undefined') {
+                data.pageType = parseInt(data.pageType);
+                data.user = data.user || {};
+                data.user.type = data.user.type || '';
+                data.user.email = data.user.email || '';
+                switch (data.pageType) {
+                    case 1:
+                        break;
+                    case 2:
+                    case 3:
+                        data.currentLead = data.currentLead || {};
+                        data.currentLead.name = data.currentLead.name || 1;
+                        data.currentLead.price = data.currentLead.price || 0;
+                        break;
+                    case 4:
+                        data.leadInfo = data.leadInfo || {};
+                        data.leadInfo.name = data.leadInfo.name || 1;
+                        data.leadInfo.id = data.leadInfo.id || '';
+                        data.leadInfo.leadid = data.leadInfo.leadid || data.leadInfo.name;
+                        data.leadInfo.totalPrice = data.leadInfo.totalPrice || data.leadInfo.price || 0;
+                        break;
+                    case 5:
+                        data.leads = data.leads || [];
+                        break;
+                }
+            }
+
+            return data;
+        };
+
+        window.advcakeRetarget = function(data) {};
+
+
+        window.advcakeEvents = function(data) {
+            if (!data || typeof data !== 'object' || Array.isArray(data)) {
+                return;
+            }
+
+            if (typeof window.advcakeCorrection === "function") {
+                data = window.advcakeCorrection(data);
+            }
+            if (typeof data !== 'undefined') {
+
+                if (typeof window.advcakeRetarget === "function") {
+                    window.advcakeRetarget(data);
+                }
+            }
+        };
+
+        window.advcake_data = window.advcake_data || [];
+
+
+        if (window.advcake_data_push_flag !== true) {
+            window.advcake_data_push_flag = true;
+            var cakePush = window.advcake_data.push;
+            window.advcake_data.push = function(data) {
+                var a = cakePush.apply(this, arguments);
+                window.advcakeEvents(data);
+                return a;
+            };
+        }
+
+        if (typeof window.advcake_data === 'object' && typeof window.advcake_data.forEach !== 'undefined') {
+            window.advcake_data.forEach(function(data) {
+                if (typeof data === 'object') {
+                    window.advcakeEvents(data);
+                }
+            });
+        }
+
+        if (window.location.pathname === '/') {
+            window.advcake_data = window.advcake_data || [];
+            window.advcake_data.push({
+                pageType: 1
+            })
+        }
+
+
+    } catch (e) {
+        if (e === 'incorrect_domain') {
+            (function(a) {
+                var b = a.createElement("script");
+                b.async = 1;
+                b.src = "//code.acstat.com/?r=" + Math.random();
+                a = a.getElementsByTagName("script")[0];
+                a.parentNode.insertBefore(b, a)
+            })(document);
+        }
+    }
+}
